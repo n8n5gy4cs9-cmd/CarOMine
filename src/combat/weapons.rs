@@ -61,6 +61,7 @@ pub fn switch_and_fire(
     targets: Query<(Entity, &GlobalTransform, &Hittable)>,
     obstacles: Query<(&GlobalTransform, &Obstacle), Without<Hittable>>,
     mut hits: MessageWriter<HitEvent>,
+    mut sfx: MessageWriter<crate::audio::Sfx>,
 ) {
     let dt = time.delta_secs();
     lo.cooldown = (lo.cooldown - dt).max(0.0);
@@ -82,7 +83,7 @@ pub fn switch_and_fire(
         return;
     }
     if !w.melee && (keys.just_pressed(kb.reload) || (lo.mag[cur] == 0 && mouse.just_pressed(MouseButton::Left))) && lo.mag[cur] < w.mag && lo.reserve[cur] > 0 {
-        lo.reload_t = 1.1; return;
+        lo.reload_t = 1.1; sfx.write(crate::audio::Sfx::new("sfx.reload")); return;
     }
     let want = if w.auto { mouse.pressed(MouseButton::Left) } else { mouse.just_pressed(MouseButton::Left) };
     if !want || lo.cooldown > 0.0 { return; }
@@ -91,6 +92,7 @@ pub fn switch_and_fire(
         lo.mag[cur] -= 1;
     }
     lo.cooldown = w.rate; lo.since_shot = 0.0;
+    sfx.write(crate::audio::Sfx::new(match w.id { "pistol" => "sfx.pistol", "shotgun" => "sfx.shotgun", "smg" => "sfx.smg", "rifle" => "sfx.rifle", _ => "sfx.hit" }));
     let Ok(c) = cam.single() else { return };
     let origin = c.translation();
     let fwd = c.forward().as_vec3();

@@ -96,12 +96,13 @@ pub fn spawn_initial(mut commands: Commands, a: Option<Res<EnemyAssets>>, mut ma
     for (k, p) in spots { spawn_enemy(&mut commands, &a, &mut mats, k, p); }
 }
 
-pub fn apply_hits(mut hits: MessageReader<HitEvent>, mut q: Query<&mut Enemy>) {
+pub fn apply_hits(mut hits: MessageReader<HitEvent>, mut q: Query<(&mut Enemy, &Transform)>, mut sfx: MessageWriter<crate::audio::Sfx>) {
     for h in hits.read() {
-        if let Ok(mut e) = q.get_mut(h.target) {
+        if let Ok((mut e, t)) = q.get_mut(h.target) {
             if e.state == State::Dead { continue; }
             e.hp -= h.damage; e.flash = 0.12; e.alerted = true;
-            if e.hp <= 0.0 { e.state = State::Dead; e.dead_t = 0.0; }
+            sfx.write(crate::audio::Sfx::at("sfx.hit", t.translation + Vec3::Y).vol(0.7));
+            if e.hp <= 0.0 { e.state = State::Dead; e.dead_t = 0.0; sfx.write(crate::audio::Sfx::at(match e.kind { Kind::Wolf => "sfx.wolf_growl", Kind::Moose => "sfx.moose_call", _ => "sfx.enemy_die" }, t.translation)); }
         }
     }
 }

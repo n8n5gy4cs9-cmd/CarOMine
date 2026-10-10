@@ -74,7 +74,10 @@ pub fn input(
     player: Query<&Transform, (With<Player>, Without<Car>)>,
     mut cars: Query<&mut Car>,
     mut parts: Query<&mut CarParts>,
+    mut sfx: MessageWriter<crate::audio::Sfx>,
 ) {
+    if keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::KeyF) { sfx.write(crate::audio::Sfx::new("sfx.ratchet")); }
+    if keys.just_pressed(KeyCode::ArrowUp) || keys.just_pressed(KeyCode::ArrowDown) || keys.just_pressed(KeyCode::Tab) { sfx.write(crate::audio::Sfx::new("sfx.ui_click").vol(0.5)); }
     let (Ok(mut p), Ok(mut car), Ok(pt)) = (parts.single_mut(), cars.single_mut(), player.single()) else { return };
     if keys.just_pressed(KeyCode::Tab) { ws.page = match ws.page { Page::Parts => Page::Fluids, Page::Fluids => Page::Manual, Page::Manual => Page::Parts }; ws.sel = 0; ws.msg.clear(); }
     let rows = if ws.page == Page::Parts { N } else { 1 };

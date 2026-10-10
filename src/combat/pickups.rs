@@ -44,6 +44,7 @@ pub fn collect(
     player: Query<&Transform, With<crate::player::Player>>,
     q: Query<(Entity, &Transform, &Pickup)>,
     mut started: Local<bool>,
+    mut sfx: MessageWriter<crate::audio::Sfx>,
 ) {
     let Some(a) = a else { return };
     if !*started {
@@ -85,6 +86,6 @@ pub fn collect(
             PickupKind::Money => { stats.money += 20; true }
             PickupKind::Coffee | PickupKind::Sausage => { stats.hp = (stats.hp + 10.0).min(100.0); true }
         };
-        if used { commands.entity(e).despawn(); }
+        if used { commands.entity(e).despawn(); sfx.write(crate::audio::Sfx::new("sfx.pickup")); }
     }
 }

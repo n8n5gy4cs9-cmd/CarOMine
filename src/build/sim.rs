@@ -19,6 +19,7 @@ pub fn sim(
     tod: Res<TimeOfDay>,
     mut ign: MessageReader<Ignition>,
     mut toasts: ResMut<Toasts>,
+    mut sfx: MessageWriter<crate::audio::Sfx>,
     mut q: Query<(&mut Car, &mut CarParts, Option<&Driven>)>,
 ) {
     let dt = time.delta_secs().min(0.1);
@@ -31,8 +32,9 @@ pub fn sim(
         // ---------- ignition
         for _ in 0..ignitions {
             if driven.is_none() { continue; }
-            if car.running { car.running = false; toasts.say("Engine off."); continue; }
+            if car.running { car.running = false; sfx.write(crate::audio::Sfx::new("sfx.engine_stall").vol(0.6)); toasts.say("Engine off."); continue; }
             p.crank_t = 1.0;
+            sfx.write(crate::audio::Sfx::new(if p.battery < 0.2 || !p.get(Slot::Battery).installed { "sfx.starter_click" } else { "sfx.engine_start" }));
             if !p.get(Slot::Battery).installed || p.battery < 0.03 { toasts.say(if p.get(Slot::Battery).installed { "Nothing happens. The battery is dead. (Charge it in the workshop: T)" } else { "Nothing happens. There is no battery." }); continue; }
             if p.battery < 0.2 { toasts.say("click-click-click... the battery is too weak."); p.battery = (p.battery - 0.01).max(0.0); continue; }
             if !p.get(Slot::Engine).installed { toasts.say("The starter spins freely... there is no engine!"); p.battery -= 0.03; continue; }
@@ -121,10 +123,11 @@ pub fn sim(
 }
 
 /// Crashes break specific parts.
-pub fn on_crash(mut crashes: MessageReader<Crash>, mut q: Query<(&Car, &mut CarParts)>, mut toasts: ResMut<Toasts>, time: Res<Time>, mut stats: ResMut<PlayerStats>) {
+pub fn on_crash(mut sfx: MessageWriter<crate::audio::Sfx>, mut crashes: MessageReader<Crash>, mut q: Query<(&Car, &mut CarParts)>, mut toasts: ResMut<Toasts>, time: Res<Time>, mut stats: ResMut<PlayerStats>) {
     let t = time.elapsed_secs();
     for c in crashes.read() {
         let Ok((car, mut p)) = q.get_mut(c.car) else { continue };
+        sfx.write(crate::audio::Sfx::at("sfx.crash", c.point).vol((c.speed / 12.0).clamp(0.2, 1.0)));
         let sev = ((c.speed - 2.5) / 14.0).clamp(0.0, 1.0);
         if sev <= 0.0 { continue; }
         let front = car.v_long >= -0.5;

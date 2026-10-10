@@ -186,6 +186,24 @@
           "title": "Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)",
           "status": "wip",
           "notes": "headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom"
+        },
+        {
+          "id": "T-049",
+          "title": "Proper lighting pass: bloom, tonemapping + exposure per time of day, SSAO, colour grading (cold blue night / warm low sun), light shafts, soft shadows tuned",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-050",
+          "title": "Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-051",
+          "title": "Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke",
+          "status": "todo",
+          "notes": ""
         }
       ]
     },
@@ -232,6 +250,18 @@
         {
           "id": "T-066",
           "title": "Agency missions: 'side jobs' for money, combat arenas in the countryside",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-052",
+          "title": "Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-053",
+          "title": "Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'",
           "status": "todo",
           "notes": ""
         }
@@ -424,8 +454,8 @@
         {
           "id": "T-142",
           "title": "Audio engine integration: spatial SFX, music state machine, volume sliders",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/audio.rs: Sfx messages, music state machine (menu/drive/night/combat), engine/tyre/wind loops, spatial listener; hooks in weapons/enemy/pickups/vehicle/build/player. (cannot hear in sandbox: no audio device)"
         },
         {
           "id": "T-143",

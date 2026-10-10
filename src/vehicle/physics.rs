@@ -7,7 +7,7 @@ const G: f32 = 9.81;
 #[derive(Resource, Default)]
 pub struct DevDrive { pub throttle: f32, pub steer: f32, pub handbrake: bool }
 
-pub fn read_input(mut ign: MessageWriter<crate::build::Ignition>, dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
+pub fn read_input(mut sfx: MessageWriter<crate::audio::Sfx>, mut ign: MessageWriter<crate::build::Ignition>, dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
     let Ok(mut car) = q.single_mut() else { return };
     let dt = time.delta_secs();
     let steer = (keys.pressed(kb.left) as i32 - keys.pressed(kb.right) as i32) as f32;
@@ -30,6 +30,7 @@ pub fn read_input(mut ign: MessageWriter<crate::build::Ignition>, dev: Option<Re
     car.handbrake = keys.pressed(kb.handbrake);
     if let Some(d) = dev { if d.throttle != 0.0 { car.throttle = d.throttle; car.brake = 0.0; car.gear = 1; } if d.steer != 0.0 { car.steer_in = d.steer; } if d.handbrake { car.handbrake = true; } }
     if keys.just_pressed(kb.ignition) { ign.write(crate::build::Ignition); }
+    if keys.just_pressed(kb.horn) { sfx.write(crate::audio::Sfx::new("sfx.horn")); }
     if keys.just_pressed(kb.lights) { car.lights = !car.lights; }
     if keys.just_pressed(kb.wipers) { car.wipers = (car.wipers + 1) % 3; }
 }

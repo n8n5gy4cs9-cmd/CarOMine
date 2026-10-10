@@ -108,6 +108,7 @@ pub fn spawn_start_car(mut commands: Commands, server: Res<AssetServer>, man: Re
 
 /// E near the car -> get in; E inside -> get out.
 pub fn enter_exit(
+    mut sfx: MessageWriter<crate::audio::Sfx>,
     mut commands: Commands,
     keys: Res<ButtonInput<KeyCode>>,
     kb: Res<Keybinds>,
@@ -116,6 +117,7 @@ pub fn enter_exit(
     cars: Query<(Entity, &Transform, Option<&Driven>), With<Car>>,
 ) {
     if !keys.just_pressed(kb.interact) { return; }
+    sfx.write(crate::audio::Sfx::new("sfx.door"));
     let Ok((pe, mut p, mut pt, mut pv)) = player.single_mut() else { return };
     let Ok(cam) = cam.single() else { return };
     // already driving -> exit

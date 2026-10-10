@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **33/69 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **34/74 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -53,7 +53,7 @@
 - [x] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json  
   _note: assets.md generated: python3 tools/gen_assets_md.py_
 
-## P3 World (2/9)
+## P3 World (2/12)
 
 - [x] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km  
   _note: world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot_
@@ -72,8 +72,11 @@
   _note: weather.rs: 2500-flake snowfall. TODO: weather states (blizzard etc.)_
 - [~] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)  
   _note: headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom_
+- [ ] **T-049** Proper lighting pass: bloom, tonemapping + exposure per time of day, SSAO, colour grading (cold blue night / warm low sun), light shafts, soft shadows tuned
+- [ ] **T-050** Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky
+- [ ] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke
 
-## P4 Player + FPS (4/7)
+## P4 Player + FPS (4/9)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
@@ -88,6 +91,8 @@
 - [~] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
   _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
 - [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
+- [ ] **T-052** Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway
+- [ ] **T-053** Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'
 
 ## P5 Vehicle simulation (3/9)
 
@@ -137,12 +142,13 @@
 - [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
 - [ ] **T-126** Localization (EN default, FI)
 
-## P8 UI + audio integration (2/6)
+## P8 UI + audio integration (3/6)
 
 - [~] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights  
   _note: combat/hud.rs: hp/armor/money/ammo/speed/gear/rpm/fuel/clock/snow%. TODO: proper gauges, needs bars_
 - [ ] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)
-- [ ] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders
+- [x] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders  
+  _note: src/audio.rs: Sfx messages, music state machine (menu/drive/night/combat), engine/tyre/wind loops, spatial listener; hooks in weapons/enemy/pickups/vehicle/build/player. (cannot hear in sandbox: no audio device)_
 - [ ] **T-143** Inventory + tool wheel UI
 - [x] **T-144** Developer console (backtick or F1): pauses game, command history (up/down), help  
   _note: src/console.rs_

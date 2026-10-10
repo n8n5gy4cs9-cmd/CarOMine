@@ -81,6 +81,8 @@ pub fn look(driving: Query<(), With<crate::vehicle::Driven>>, motion: Res<Accumu
 }
 
 pub fn walk(
+    mut sfx: MessageWriter<crate::audio::Sfx>,
+    mut step_acc: Local<f32>,
     cheats: Res<crate::console::Cheats>,
     driving: Query<(), With<crate::vehicle::Driven>>,
     time: Res<Time>,
@@ -139,6 +141,7 @@ pub fn walk(
     if np.y <= gh { np.y = gh; p.vel.y = 0.0; p.on_ground = true; } else if np.y > gh + 0.05 { p.on_ground = false; }
     // keep inside world
     np.x = np.x.clamp(-WORLD_HALF + 5.0, WORLD_HALF - 5.0); np.z = np.z.clamp(-WORLD_HALF + 5.0, WORLD_HALF - 5.0);
+    if p.on_ground { *step_acc += Vec2::new(p.vel.x, p.vel.z).length() * dt; if *step_acc > 2.3 { *step_acc = 0.0; sfx.write(crate::audio::Sfx::new("sfx.step_snow").vol(if crouch { 0.2 } else { 0.5 })); } }
     t.translation = np;
     let target = if crouch { EYE_CROUCH } else { EYE_STAND };
     p.eye += (target - p.eye) * (10.0 * dt).min(1.0);
