@@ -12,11 +12,12 @@ pub struct Settings {
     pub sfx_volume: f32,
     pub render_distance: f32,
     pub invert_y: bool,
+    pub language: String,
 }
 
 impl Default for Settings {
     fn default() -> Self {
-        Self { mouse_sensitivity: 0.0022, fov_degrees: 75.0, master_volume: 0.8, music_volume: 0.5, sfx_volume: 0.8, render_distance: 600.0, invert_y: false }
+        Self { mouse_sensitivity: 0.0022, fov_degrees: 75.0, master_volume: 0.8, music_volume: 0.5, sfx_volume: 0.8, render_distance: 600.0, invert_y: false, language: "en".into() }
     }
 }
 

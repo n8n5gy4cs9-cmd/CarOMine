@@ -13,13 +13,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Resource, Serialize, Deserialize, Clone, Default, Debug)]
 pub struct Story { pub intro_shown: bool, pub ever_ran: bool, pub inspected: bool, pub hq_spawned: bool, pub boss_dead: bool, pub ended: bool }
 
-pub fn objective(s: &Story, p: &CarParts) -> String {
-    if !(p.get(Slot::Engine).installed && p.get(Slot::Gearbox).installed) { return "Build the car: install the engine + gearbox in the garage shed (T next to the car)".into(); }
-    if !s.ever_ran { return "Get it running: battery, plugs, fuel filter, coolant, fuel... then press I".into(); }
-    if p.tyre == TyreType::Summer { return "Winter is here: buy and fit winter tyres (auto parts shop, workshop)".into(); }
-    if !s.inspected { return "Pass the katsastus (inspection station, village) - see the manual for what they check".into(); }
-    if !s.boss_dead { return "Drive south to Helsinki and settle things with the Director (marker on the south edge)".into(); }
-    "Free roam. The Director is dead. Take gigs, upgrade the car, or drive off into the Finnish sunset.".into()
+pub fn objective_key(s: &Story, p: &CarParts) -> &'static str {
+    if !(p.get(Slot::Engine).installed && p.get(Slot::Gearbox).installed) { return "obj.build"; }
+    if !s.ever_ran { return "obj.run"; }
+    if p.tyre == TyreType::Summer { return "obj.tyres"; }
+    if !s.inspected { return "obj.inspect"; }
+    if !s.boss_dead { return "obj.helsinki"; }
+    "obj.free"
 }
 
 pub const CHECK_LIST: &str = "  engine/gearbox/radiator/battery/belt present, brakes >= 50%, tyres fitted & not flat,\n  winter tyres, lights + fuse, windshield, wiper blades, body panels, emissions (plugs, engine)";
@@ -47,9 +47,9 @@ fn track(mut story: ResMut<Story>, car: Query<&Car>, mut toasts: ResMut<Toasts>)
 }
 use crate::vehicle::Car;
 
-fn hud(story: Res<Story>, parts: Query<&CarParts>, mut q: Query<&mut Text, With<StoryHud>>) {
+fn hud(story: Res<Story>, tr: Res<crate::i18n::Strings>, parts: Query<&CarParts>, mut q: Query<&mut Text, With<StoryHud>>) {
     let (Ok(p), Ok(mut t)) = (parts.single(), q.single_mut()) else { return };
-    t.0 = format!("OBJECTIVE: {}", objective(&story, p));
+    t.0 = format!("{}: {}", tr.t("hud.objective"), tr.t(objective_key(&story, p)));
 }
 
 /// Intro on a fresh game.

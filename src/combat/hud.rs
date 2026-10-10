@@ -36,6 +36,7 @@ pub fn update_hud(
     lo: Res<Loadout>,
     fl: Res<super::flashlight::Flashlight>,
     needs: Res<crate::life::needs::Needs>,
+    tr: Res<crate::i18n::Strings>,
     tod: Res<crate::world::sky::TimeOfDay>,
     ws: Res<crate::vehicle::windshield::Windshield>,
     cars: Query<&Car, With<crate::vehicle::Driven>>,
@@ -44,10 +45,10 @@ pub fn update_hud(
     )>,
     mut hurt: Query<&mut BackgroundColor, With<HudHurt>>,
 ) {
-    if let Ok(mut t) = texts.p0().single_mut() { t.0 = format!("HP {:.0}  ARMOR {:.0}  EUR {}   LIGHT {} {:.0}%\nFOOD {:.0}%  ENERGY {:.0}%  WARM {:.0}%", stats.hp.ceil(), stats.armor.ceil(), stats.money, if fl.on { "ON" } else { "off" }, fl.battery * 100.0, needs.hunger * 100.0, needs.energy * 100.0, needs.warmth * 100.0); }
+    if let Ok(mut t) = texts.p0().single_mut() { t.0 = format!("{} {:.0}  {} {:.0}  {} {}   {} {} {:.0}%\n{} {:.0}%  {} {:.0}%  {} {:.0}%", tr.t("hud.hp"), stats.hp.ceil(), tr.t("hud.armor"), stats.armor.ceil(), tr.t("hud.eur"), stats.money, tr.t("hud.light"), if fl.on { tr.t("hud.on") } else { tr.t("hud.off") }, fl.battery * 100.0, tr.t("hud.food"), needs.hunger * 100.0, tr.t("hud.energy"), needs.energy * 100.0, tr.t("hud.warm"), needs.warmth * 100.0); }
     if let Ok(mut t) = texts.p1().single_mut() {
         let w = &WEAPONS[lo.current];
-        t.0 = if w.melee { w.name.to_string() } else if lo.reload_t > 0.0 { format!("{} - reloading...", w.name) } else { format!("{}  {}/{}", w.name, lo.mag[lo.current], lo.reserve[lo.current]) };
+        t.0 = if w.melee { w.name.to_string() } else if lo.reload_t > 0.0 { format!("{} - {}", w.name, tr.t("hud.reloading")) } else { format!("{}  {}/{}", w.name, lo.mag[lo.current], lo.reserve[lo.current]) };
     }
     let (h, m) = (tod.hour as u32, ((tod.hour.fract()) * 60.0) as u32);
     if let Ok(mut t) = texts.p2().single_mut() {
@@ -58,7 +59,7 @@ pub fn update_hud(
             Err(_) => format!("{:02}:{:02}", h, m),
         };
     }
-    if let Ok(mut t) = texts.p3().single_mut() { t.0 = if stats.hp <= 0.0 { "YOU DIED".into() } else { String::new() }; }
+    if let Ok(mut t) = texts.p3().single_mut() { t.0 = if stats.hp <= 0.0 { tr.t("hud.died") } else { String::new() }; }
     if let Ok(mut b) = hurt.single_mut() { b.0 = Color::srgba(0.8, 0.0, 0.0, (stats.hurt_flash * 0.5).min(0.45) + if stats.hp <= 0.0 { 0.3 } else { 0.0 }); }
 }
 

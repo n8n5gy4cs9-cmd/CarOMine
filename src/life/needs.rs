@@ -50,11 +50,11 @@ pub fn tick(
 }
 
 /// Kela pays unemployment benefit every morning at 08:00.
-pub fn kela(tod: Res<TimeOfDay>, mut needs: ResMut<Needs>, mut stats: ResMut<PlayerStats>, mut toasts: ResMut<crate::build::Toasts>, mut missions: ResMut<missions::Missions>) {
+pub fn kela(tr: Res<crate::i18n::Strings>, tod: Res<TimeOfDay>, mut needs: ResMut<Needs>, mut stats: ResMut<PlayerStats>, mut toasts: ResMut<crate::build::Toasts>, mut missions: ResMut<missions::Missions>) {
     let (p, c) = (needs.prev_hour, tod.hour);
     if (p < 8.0 && c >= 8.0) || (p > c && c >= 8.0 && p < 24.0 && false) {
         stats.money += 35;
-        toasts.say("Kela: unemployment benefit +35 EUR. (Thanks, Finland.)");
+        toasts.say(tr.tn("toast.kela", 35));
         missions.new_day();
     }
     needs.prev_hour = c;
@@ -66,13 +66,14 @@ pub fn prompt(
     driven: Query<(), With<crate::vehicle::Driven>>,
     player: Query<&Transform, (With<crate::player::Player>, Without<crate::vehicle::Car>)>,
     missions: Res<missions::Missions>,
+    tr: Res<crate::i18n::Strings>,
     mut q: Query<&mut Text, With<PromptText>>,
 ) {
     let Ok(mut t) = q.single_mut() else { return };
     let mut s = String::new();
     let car_near = player.single().ok().and_then(|p| cars.single().ok().map(|c| (p.translation.distance(c.translation), c.translation))).filter(|(d, _)| *d < 3.6 && driven.is_empty());
-    if let Some(z) = near.0 { s = z.prompt().to_string(); }
-    else if car_near.is_some() { s = "E: get in the car   T: workshop".into(); }
+    if let Some(z) = near.0 { s = tr.t(z.prompt_key()); }
+    else if car_near.is_some() { s = tr.t("prompt.car"); }
     else if !driven.is_empty() { s = String::new(); }
     let _ = &missions;
     t.0 = s;

@@ -1,6 +1,8 @@
 //! Main menu, pause menu, load screen, settings. Keyboard driven: Up/Down, Enter, Left/Right to adjust, Esc back.
 use crate::console::Console;
 use crate::save::{self, PendingLoad, SaveRequest};
+use crate::i18n::{Strings, LANGS};
+use crate::manifest::AssetManifest;
 use crate::settings::Settings;
 use crate::state::GameState;
 use bevy::prelude::*;
@@ -41,19 +43,20 @@ fn reset_menu(mut m: ResMut<Menu>) { m.screen = Screen::Root; m.sel = 0; m.note.
 fn has_autosave() -> bool { save::read("autosave").is_some() }
 
 /// Items for the current screen (label, value-suffix).
-fn items(m: &Menu, state: GameState, s: &Settings) -> Vec<String> {
+fn items(m: &Menu, state: GameState, s: &Settings, t: &Strings) -> Vec<String> {
     match (m.screen, state) {
         (Screen::Root, GameState::MainMenu) => {
-            let mut v = vec!["New game".to_string()];
-            v.push(if has_autosave() { "Continue (autosave)".into() } else { "Continue (no save yet)".into() });
-            v.extend(["Load game".into(), "Settings".into(), "Quit".into()]);
+            let mut v = vec![t.t("menu.new")];
+            v.push(if has_autosave() { t.t("menu.continue") } else { t.t("menu.continue_none") });
+            v.extend([t.t("menu.load"), t.t("menu.settings"), t.t("menu.quit")]);
             v
         }
-        (Screen::Root, _) => vec!["Resume".into(), "Save: slot 1".into(), "Save: slot 2".into(), "Save: slot 3".into(), "Load game".into(), "Settings".into(), "Quit to desktop".into()],
-        (Screen::Load, _) => { let mut v: Vec<String> = save::SLOTS.iter().map(|s| format!("{:<9} {}", s, save::summary(s))).collect(); v.push("Back".into()); v }
+        (Screen::Root, _) => vec![t.t("menu.resume"), t.tn("menu.save_slot", 1), t.tn("menu.save_slot", 2), t.tn("menu.save_slot", 3), t.t("menu.load"), t.t("menu.settings"), t.t("menu.quit_desktop")],
+        (Screen::Load, _) => { let mut v: Vec<String> = save::SLOTS.iter().map(|s| format!("{:<9} {}", s, save::summary(s))).collect(); v.push(t.t("menu.back")); v }
         (Screen::Settings, _) => vec![
-            format!("Master volume   < {:.0}% >", s.master_volume * 100.0), format!("Music volume    < {:.0}% >", s.music_volume * 100.0), format!("SFX volume      < {:.0}% >", s.sfx_volume * 100.0),
-            format!("Mouse sens      < {:.1} >", s.mouse_sensitivity * 1000.0), format!("Field of view   < {:.0} >", s.fov_degrees), format!("Invert Y        < {} >", if s.invert_y { "yes" } else { "no" }), "Back".into(),
+            format!("{:<16}< {:.0}% >", t.t("set.master"), s.master_volume * 100.0), format!("{:<16}< {:.0}% >", t.t("set.music"), s.music_volume * 100.0), format!("{:<16}< {:.0}% >", t.t("set.sfx"), s.sfx_volume * 100.0),
+            format!("{:<16}< {:.1} >", t.t("set.sens"), s.mouse_sensitivity * 1000.0), format!("{:<16}< {:.0} >", t.t("set.fov"), s.fov_degrees), format!("{:<16}< {} >", t.t("set.invert"), if s.invert_y { t.t("set.yes") } else { t.t("set.no") }),
+            format!("{:<16}< {} >", t.t("set.lang"), LANGS.iter().find(|(c, _)| *c == s.language).map(|(_, n)| *n).unwrap_or("English")), t.t("menu.back"),
         ],
     }
 }
@@ -69,10 +72,12 @@ fn input(
     mut save_req: MessageWriter<SaveRequest>,
     mut exit: MessageWriter<AppExit>,
     mut cam: Query<&mut Projection, With<crate::player::PlayerCamera>>,
+    mut strings: ResMut<Strings>,
+    man: Res<AssetManifest>,
 ) {
     let st = *state.get();
     if !matches!(st, GameState::MainMenu | GameState::Paused) || con.open { return; }
-    let list = items(&m, st, &s);
+    let list = items(&m, st, &s, &strings);
     let n = list.len();
     if keys.just_pressed(KeyCode::ArrowDown) { m.sel = (m.sel + 1) % n; }
     if keys.just_pressed(KeyCode::ArrowUp) { m.sel = (m.sel + n - 1) % n; }
@@ -109,6 +114,7 @@ fn input(
                 3 => s.mouse_sensitivity = (s.mouse_sensitivity + d * 0.0002).clamp(0.0004, 0.01),
                 4 => { s.fov_degrees = (s.fov_degrees + d * 5.0).clamp(50.0, 120.0); if d != 0.0 { if let Ok(mut p) = cam.single_mut() { if let Projection::Perspective(pp) = &mut *p { pp.fov = s.fov_degrees.to_radians(); } } } }
                 5 => if d != 0.0 || enter { s.invert_y = !s.invert_y },
+                6 => if d != 0.0 || enter { let i = LANGS.iter().position(|(c, _)| *c == s.language).unwrap_or(0); s.language = LANGS[(i + 1) % LANGS.len()].0.to_string(); strings.set_lang(&man, &s.language); s.save(); },
                 _ => if enter { s.save(); m.screen = Screen::Root; m.sel = 0; },
             }
             if d != 0.0 { s.save(); }
@@ -121,6 +127,7 @@ fn refresh(
     state: Res<State<GameState>>,
     m: Res<Menu>,
     s: Res<Settings>,
+    strings: Res<Strings>,
     con: Res<Console>,
     mut root: Query<&mut Visibility, With<MenuUi>>,
     mut text: Query<&mut Text, With<MenuText>>,
@@ -130,9 +137,9 @@ fn refresh(
     if let Ok(mut v) = root.single_mut() { *v = if show { Visibility::Inherited } else { Visibility::Hidden }; }
     if !show { return; }
     let Ok(mut t) = text.single_mut() else { return };
-    let title = match (st, m.screen) { (GameState::MainMenu, Screen::Root) => "C A R O M I N E\nNurmijarvi, winter. Build the car. Survive.\n".to_string(), (_, Screen::Root) => "PAUSED\n".into(), (_, Screen::Load) => "LOAD GAME\n".into(), (_, Screen::Settings) => "SETTINGS\n".into() };
+    let title = match (st, m.screen) { (GameState::MainMenu, Screen::Root) => format!("{}\n{}\n", strings.t("menu.title"), strings.t("menu.tagline")), (_, Screen::Root) => format!("{}\n", strings.t("menu.paused")), (_, Screen::Load) => format!("{}\n", strings.t("menu.load_title")), (_, Screen::Settings) => format!("{}\n", strings.t("menu.settings_title")) };
     let mut out = format!("{title}\n");
-    for (i, it) in items(&m, st, &s).iter().enumerate() { out += &format!("{} {}\n", if i == m.sel { ">" } else { " " }, it); }
+    for (i, it) in items(&m, st, &s, &strings).iter().enumerate() { out += &format!("{} {}\n", if i == m.sel { ">" } else { " " }, it); }
     out += &format!("\n{}\n", m.note);
     if st == GameState::MainMenu && m.screen == Screen::Root {
         out += "\nWASD move  Shift run  Ctrl crouch  Space jump  E car/use  T workshop  I ignition  V wipers  L lights  H horn\nF flashlight  X mount light  1-5 weapons  LMB fire  R reload  `/F1 console  Esc pause\n\nby Crowelian 2026 + Sonnet";

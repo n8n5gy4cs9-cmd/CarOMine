@@ -40,7 +40,7 @@ pub fn setup_scatter(mut commands: Commands, server: Res<AssetServer>, man: Res<
     });
 }
 
-fn put(commands: &mut Commands, parent: Entity, k: &Kind, variant: u32, pos: Vec3, scale: f32) {
+pub fn put(commands: &mut Commands, parent: Entity, k: &Kind, variant: u32, pos: Vec3, scale: f32) {
     let v = (variant as usize) % k.mats.len();
     let e = commands
         .spawn((
@@ -65,7 +65,7 @@ pub fn scatter_chunk(commands: &mut Commands, parent: Entity, c: IVec2, a: &Scat
             let x = ox + (i as f32 + hash2(gi, gj, 1)) * cell;
             let z = oz + (j as f32 + hash2(gi, gj, 2)) * cell;
             if road_dist(x, z) < ROAD_HALF_W + 3.0 || lake_dist(x, z) < 6.0 { continue; }
-            if Vec2::new(x, z).distance(CABIN) < 22.0 || Vec2::new(x, z).distance(VILLAGE) < 55.0 || Vec2::new(x, z).distance(HQ) < 52.0 { continue; }
+            if Vec2::new(x, z).distance(CABIN) < 22.0 || Vec2::new(x, z).distance(VILLAGE) < 55.0 || Vec2::new(x, z).distance(HQ) < 52.0 || farm_near(x, z, 38.0).is_some() { continue; }
             let forest = fbm(x / 140.0, z / 140.0, SEED + 21, 3);
             let r = hash2(gi, gj, 3);
             let y = height_at(x, z);

@@ -126,6 +126,36 @@
           "title": "Auto-generate assets.md (clean table on top + detailed section) from manifest.json",
           "status": "done",
           "notes": "assets.md generated: python3 tools/gen_assets_md.py"
+        },
+        {
+          "id": "T-031",
+          "title": "ART PASS 1 - Characters: regenerate ALL enemy sheets (goon, hunter, neighbour, wolf, moose + boss Director) in retro 'Doom / Rise of the Triad' pixel-realistic style: 8 angles, shaded forms (3-4 tone ramps per material, dithering, hard dark outline), anatomically proportioned humans (head/torso/arms/legs, clothing folds, boots, facial features), animal anatomy for wolf/moose, walk x4 / attack x2 / pain / death x4 frames",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-032",
+          "title": "ART PASS 2 - Player first-person hands + weapons: regenerate fists, pistol, shotgun, SMG, hunting rifle (+flashlight attachment, muzzle flash, shell ejection) as Doom/ROTT-style hand-shaded sprites: gloved/knuckled hands w/ sleeves, metal highlights, wood grain, 4+ frames (idle, fire, recoil, reload), higher res (e.g. 192x144)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-033",
+          "title": "ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-034",
+          "title": "ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-035",
+          "title": "Art tooling: tools/pixelkit.py (palette ramps, dither, outline, shading from a 3D-ish light model, sheet packer) so every sprite is built from shaded primitives; keep manifest ids/grids/sprites.json unchanged so replacement is drop-in",
+          "status": "todo",
+          "notes": ""
         }
       ]
     },
@@ -204,6 +234,12 @@
           "title": "Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke",
           "status": "wip",
           "notes": "stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog"
+        },
+        {
+          "id": "T-068",
+          "title": "Farmsteads: deterministic farm sites (house, barn, sauna, fenced yard, flattened + cleared) streamed with chunks",
+          "status": "done",
+          "notes": "layout::farm_site_in_cell + village::spawn_farm"
         }
       ]
     },
@@ -305,13 +341,13 @@
           "id": "T-084",
           "title": "Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop",
           "status": "wip",
-          "notes": "part damage on crash done. TODO: visible body deformation/mesh swap, smoke, broken parts drop"
+          "notes": "visible body squash/tilt from panel damage (vehicle::body_damage). TODO: real mesh deformation, dents/decals, broken-off parts"
         },
         {
           "id": "T-085",
           "title": "Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid",
-          "status": "wip",
-          "notes": "windshield.rs: snow accumulation, wipers 2 speeds, frost, night tint verified. TODO: swept-arc partial clearing, washer fluid, defrost key"
+          "status": "done",
+          "notes": "windshield: 20 strips, snow per strip, wiper sweeps a fan-shaped cleared arc, wiper blade wear scales clearing, frost, night tint"
         },
         {
           "id": "T-086",
@@ -436,8 +472,8 @@
         {
           "id": "T-126",
           "title": "Localization (EN default, FI)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "i18n.rs + assets/data/strings_{en,fi}.json (86 keys): menu, settings (language toggle), HUD, prompts, objectives, Kela toast localized. TODO: workshop/dialog/manual/sim toasts/missions text"
         },
         {
           "id": "T-127",
@@ -520,18 +556,24 @@
         {
           "id": "T-161",
           "title": "macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "packaging/macos_bundle.sh (.app, universal option) written; untested (needs a Mac)"
         },
         {
           "id": "T-162",
           "title": "Windows + Linux builds, CI release artifacts",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "packaging/linux_windows.md instructions; CI release artifacts TODO"
         },
         {
           "id": "T-163",
           "title": "Playtest balance pass, bug list, README screenshots",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-165",
+          "title": "Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling",
           "status": "todo",
           "notes": ""
         }

@@ -87,6 +87,8 @@ pub fn stream_chunks(
     mat: Option<Res<TerrainMaterial>>,
     anchor: Query<&GlobalTransform, With<StreamAnchor>>,
     scatter: Option<Res<super::scatter::ScatterAssets>>,
+    bassets: Option<Res<super::village::BuildingAssets>>,
+    mut mats: ResMut<Assets<StandardMaterial>>,
 ) {
     let (Some(mat), Some(scatter)) = (mat, scatter) else { return };
     let Ok(t) = anchor.single() else { return };
@@ -111,6 +113,13 @@ pub fn stream_chunks(
             .spawn((Mesh3d(meshes.add(build_chunk_mesh(k.x, k.y))), MeshMaterial3d(mat.0.clone()), Transform::default(), Visibility::default()))
             .id();
         scatter_chunk(&mut commands, e, k, &scatter);
+        if let Some(ba) = &bassets {
+            // farmsteads whose centre lies in this chunk
+            for i in -1..=1 { for j in -1..=1 {
+                let (ci, cj) = (((k.x as f32 + 0.5) * CHUNK / 520.0).floor() as i32 + i, ((k.y as f32 + 0.5) * CHUNK / 520.0).floor() as i32 + j);
+                if let Some(p) = farm_site_in_cell(ci, cj) { if (p.x / CHUNK).floor() as i32 == k.x && (p.y / CHUNK).floor() as i32 == k.y { super::village::spawn_farm(&mut commands, ba, &scatter, &mut meshes, &mut mats, e, p); } }
+            } }
+        }
         chunks.0.insert(k, e);
     }
 }

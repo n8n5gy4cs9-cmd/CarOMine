@@ -143,6 +143,22 @@
   "license": "CC0",
   "notes": "glb, metres, +Y up, -Z forward"
  },
+ "data.strings_en": {
+  "path": "data/strings_en.json",
+  "kind": "data",
+  "use": "UI text table: English",
+  "source": "hand-written (tools/strings)",
+  "license": "CC0",
+  "notes": "key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here"
+ },
+ "data.strings_fi": {
+  "path": "data/strings_fi.json",
+  "kind": "data",
+  "use": "UI text table: Finnish",
+  "source": "hand-written (tools/strings)",
+  "license": "CC0",
+  "notes": "key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here"
+ },
  "enemy.goon": {
   "path": "sprites/enemies/goon.png",
   "kind": "sprite",

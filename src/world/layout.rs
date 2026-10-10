@@ -63,6 +63,12 @@ pub fn height_at(x: f32, z: f32) -> f32 {
             h += (ch - h) * (1.0 - smoothstep(r - 6.0, r + 20.0, d));
         }
     }
+    // flatten farmsteads
+    if let Some(c) = farm_near(x, z, 70.0) {
+        let d = Vec2::new(x, z).distance(c);
+        let ch = base_height(c.x, c.y) * 0.9 + 0.2;
+        h += (ch - h) * (1.0 - smoothstep(30.0, 66.0, d));
+    }
     // lake basin
     let ld = lake_dist(x, z);
     if ld < 25.0 {
@@ -70,6 +76,23 @@ pub fn height_at(x: f32, z: f32) -> f32 {
         h = h + (lh - h) * (1.0 - smoothstep(-5.0, 25.0, ld)).max(0.0);
     }
     h
+}
+
+/// Farmsteads: one candidate per 520 m cell (deterministic). Returns the site if (x,z) lies within `r` metres of one.
+pub fn farm_site_in_cell(i: i32, j: i32) -> Option<Vec2> {
+    if hash2(i, j, 900) > 0.6 { return None; }
+    let p = Vec2::new((i as f32 + 0.15 + 0.7 * hash2(i, j, 901)) * 520.0, (j as f32 + 0.15 + 0.7 * hash2(i, j, 902)) * 520.0);
+    if p.x.abs() > WORLD_HALF - 120.0 || p.y.abs() > WORLD_HALF - 120.0 { return None; }
+    if p.distance(CABIN) < 140.0 || p.distance(VILLAGE) < 160.0 || p.distance(HQ) < 160.0 { return None; }
+    if lake_dist(p.x, p.y) < 70.0 || road_dist(p.x, p.y) < 45.0 { return None; }
+    Some(p)
+}
+pub fn farm_near(x: f32, z: f32, r: f32) -> Option<Vec2> {
+    let (ci, cj) = ((x / 520.0).floor() as i32, (z / 520.0).floor() as i32);
+    for di in -1..=1 { for dj in -1..=1 {
+        if let Some(p) = farm_site_in_cell(ci + di, cj + dj) { if p.distance(Vec2::new(x, z)) < r { return Some(p); } }
+    } }
+    None
 }
 
 pub fn height_vec(p: Vec3) -> f32 { height_at(p.x, p.z) }

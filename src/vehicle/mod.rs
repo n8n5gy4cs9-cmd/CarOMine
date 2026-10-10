@@ -81,7 +81,7 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
     let car = commands
         .spawn((Car::new(yaw), crate::build::CarParts::starter_shell(), Transform::from_xyz(pos.x, height_at(pos.x, pos.y), pos.y).with_rotation(Quat::from_rotation_y(yaw)), Visibility::default()))
         .with_children(|c| {
-            c.spawn((WorldAssetRoot(body), Transform::default()));
+            c.spawn((WorldAssetRoot(body), Transform::default(), BodyVisual));
             for (front, fz) in [(true, -1.35f32), (false, 1.35)] {
                 for side in [-1.0f32, 1.0] {
                     c.spawn((WorldAssetRoot(wheel_scene()), Transform::from_xyz(side * 0.78, 0.32, fz), WheelVisual { front, side }));
@@ -102,6 +102,23 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
 
 #[derive(Component)]
 pub struct Headlight;
+
+/// The car body model; squashed/tilted according to panel damage so crashes are visible.
+#[derive(Component)]
+pub struct BodyVisual;
+
+pub fn body_damage(mut q: Query<(&mut Transform, &ChildOf), With<BodyVisual>>, parts: Query<&crate::build::CarParts>) {
+    use crate::build::Slot;
+    for (mut t, p) in &mut q {
+        let Ok(cp) = parts.get(p.parent()) else { continue };
+        let d = |s: Slot| { let x = cp.get(s); if x.installed { 1.0 - x.cond } else { 1.0 } };
+        let front = (d(Slot::Hood) + d(Slot::Bumper)) * 0.5;
+        let side = (d(Slot::DoorL) - d(Slot::DoorR)) * 0.5;
+        t.scale = Vec3::new(1.0 - 0.04 * (d(Slot::DoorL) + d(Slot::DoorR)) * 0.5, 1.0 - 0.06 * front, 1.0 - 0.07 * front);
+        t.rotation = Quat::from_rotation_z(side * 0.05) * Quat::from_rotation_x(front * 0.03);
+        t.translation.y = -0.03 * front;
+    }
+}
 
 pub fn spawn_start_car(mut commands: Commands, server: Res<AssetServer>, man: Res<crate::manifest::AssetManifest>, existing: Query<(), With<Car>>) {
     if !existing.is_empty() { return; }
@@ -187,6 +204,7 @@ impl Plugin for VehiclePlugin {
                     physics::drive,
                     physics::visuals,
                     driver_look,
+                    body_damage,
                     windshield::update,
                     windshield::show,
                 )

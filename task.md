@@ -1,15 +1,15 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **47/79 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **49/86 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
-- [ ] **T-041** Snow terrain material + footprints/tire tracks decals
-- [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
-- [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
-- [~] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
-- [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky
+- [ ] **T-031** ART PASS 1 - Characters: regenerate ALL enemy sheets (goon, hunter, neighbour, wolf, moose + boss Director) in retro 'Doom / Rise of the Triad' pixel-realistic style: 8 angles, shaded forms (3-4 tone ramps per material, dithering, hard dark outline), anatomically proportioned humans (head/torso/arms/legs, clothing folds, boots, facial features), animal anatomy for wolf/moose, walk x4 / attack x2 / pain / death x4 frames
+- [ ] **T-032** ART PASS 2 - Player first-person hands + weapons: regenerate fists, pistol, shotgun, SMG, hunting rifle (+flashlight attachment, muzzle flash, shell ejection) as Doom/ROTT-style hand-shaded sprites: gloved/knuckled hands w/ sleeves, metal highlights, wood grain, 4+ frames (idle, fire, recoil, reload), higher res (e.g. 192x144)
+- [ ] **T-033** ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)
+- [ ] **T-034** ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique
+- [ ] **T-035** Art tooling: tools/pixelkit.py (palette ramps, dither, outline, shading from a 3D-ish light model, sheet packer) so every sprite is built from shaded primitives; keep manifest ids/grids/sprites.json unchanged so replacement is drop-in
 
 ## P0 Planning (1/1)
 
@@ -31,7 +31,7 @@
 - [x] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)  
   _note: src/manifest.rs, src/settings.rs, .github/workflows/ci.yml_
 
-## P2 Asset generation (placeholders) (11/11)
+## P2 Asset generation (placeholders) (11/16)
 
 - [x] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types  
   _note: tools/gen_enemies.py: goon,hunter,neighbour,wolf,moose sheets 10x8 grid; sprites.json_
@@ -52,8 +52,13 @@
 - [x] **T-029** Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk
 - [x] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json  
   _note: assets.md generated: python3 tools/gen_assets_md.py_
+- [ ] **T-031** ART PASS 1 - Characters: regenerate ALL enemy sheets (goon, hunter, neighbour, wolf, moose + boss Director) in retro 'Doom / Rise of the Triad' pixel-realistic style: 8 angles, shaded forms (3-4 tone ramps per material, dithering, hard dark outline), anatomically proportioned humans (head/torso/arms/legs, clothing folds, boots, facial features), animal anatomy for wolf/moose, walk x4 / attack x2 / pain / death x4 frames
+- [ ] **T-032** ART PASS 2 - Player first-person hands + weapons: regenerate fists, pistol, shotgun, SMG, hunting rifle (+flashlight attachment, muzzle flash, shell ejection) as Doom/ROTT-style hand-shaded sprites: gloved/knuckled hands w/ sleeves, metal highlights, wood grain, 4+ frames (idle, fire, recoil, reload), higher res (e.g. 192x144)
+- [ ] **T-033** ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)
+- [ ] **T-034** ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique
+- [ ] **T-035** Art tooling: tools/pixelkit.py (palette ramps, dither, outline, shading from a 3D-ish light model, sheet packer) so every sprite is built from shaded primitives; keep manifest ids/grids/sprites.json unchanged so replacement is drop-in
 
-## P3 World (3/12)
+## P3 World (4/13)
 
 - [x] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km  
   _note: world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot_
@@ -78,6 +83,8 @@
   _note: weather-driven linear fog (blizzard whiteout), morning/evening mist, fog colour tied to sky, volumetric density from weather+mist_
 - [~] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke  
   _note: stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog_
+- [x] **T-068** Farmsteads: deterministic farm sites (house, barn, sauna, fenced yard, flattened + cleared) streamed with chunks  
+  _note: layout::farm_site_in_cell + village::spawn_farm_
 
 ## P4 Player + FPS (8/10)
 
@@ -102,7 +109,7 @@
 - [x] **T-067** Enemy population director (combat/director.rs): spawns by area/time/weather near player, culls far  
   _note: combat/director.rs_
 
-## P5 Vehicle simulation (4/9)
+## P5 Vehicle simulation (5/9)
 
 - [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
   _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
@@ -113,9 +120,9 @@
 - [x] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake  
   _note: driver seat + chase camera (C, mouse orbit); mirrors/wheel model TODO_
 - [~] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop  
-  _note: part damage on crash done. TODO: visible body deformation/mesh swap, smoke, broken parts drop_
-- [~] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  
-  _note: windshield.rs: snow accumulation, wipers 2 speeds, frost, night tint verified. TODO: swept-arc partial clearing, washer fluid, defrost key_
+  _note: visible body squash/tilt from panel damage (vehicle::body_damage). TODO: real mesh deformation, dents/decals, broken-off parts_
+- [x] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  
+  _note: windshield: 20 strips, snow per strip, wiper sweeps a fan-shaped cleared arc, wiper blade wear scales clearing, frost, night tint_
 - [~] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain  
   _note: headlights toggle L. TODO: brake lights, interior light, battery drain_
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
@@ -156,7 +163,8 @@
   _note: src/save.rs: JSON saves in ./saves (autosave every 3 min + slot1-3), player/car/parts/inventory/time/weather; console save/load; verified round trip_
 - [~] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs  
   _note: flavour text: intro, Kela, katsastus, makkara, sauna. TODO: NPC dialogue, radio chatter, easter eggs, Finnish strings_
-- [ ] **T-126** Localization (EN default, FI)
+- [~] **T-126** Localization (EN default, FI)  
+  _note: i18n.rs + assets/data/strings_{en,fi}.json (86 keys): menu, settings (language toggle), HUD, prompts, objectives, Kela toast localized. TODO: workshop/dialog/manual/sim toasts/missions text_
 - [ ] **T-127** Mailbox: parts ordered by phone arrive next day (MSC Teemo style); TV with Finnish channels; cabin interior (walkable)
 - [ ] **T-128** Boss fight polish: unique boss sprite, phases, minions; second endgame area; New Game+
 
@@ -176,9 +184,12 @@
 - [ ] **T-146** Pause menu: 'Quit to main menu' (needs world teardown/reset), new-game reset
 - [ ] **T-147** Key rebinding UI + gamepad support
 
-## P9 Polish + release (0/4)
+## P9 Polish + release (0/5)
 
 - [ ] **T-160** Performance pass (M1 Max 60fps+, instancing, culling)
-- [ ] **T-161** macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build
-- [ ] **T-162** Windows + Linux builds, CI release artifacts
+- [~] **T-161** macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build  
+  _note: packaging/macos_bundle.sh (.app, universal option) written; untested (needs a Mac)_
+- [~] **T-162** Windows + Linux builds, CI release artifacts  
+  _note: packaging/linux_windows.md instructions; CI release artifacts TODO_
 - [ ] **T-163** Playtest balance pass, bug list, README screenshots
+- [ ] **T-165** Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling

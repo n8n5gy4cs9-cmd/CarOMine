@@ -14,8 +14,8 @@ pub enum ZoneKind { Home, Sauna, Market, AutoShop, Inspection }
 pub struct Zone { pub pos: Vec2, pub radius: f32, pub kind: ZoneKind }
 
 impl Zone {
-    pub fn prompt(&self) -> &'static str {
-        match self.kind { ZoneKind::Home => "E: cabin (sleep / eat / phone / firewood)", ZoneKind::Sauna => "E: sauna", ZoneKind::Market => "E: K-market", ZoneKind::AutoShop => "E: Auto parts shop", ZoneKind::Inspection => "E: Katsastus - vehicle inspection (30 EUR)" }
+    pub fn prompt_key(&self) -> &'static str {
+        match self.kind { ZoneKind::Home => "prompt.home", ZoneKind::Sauna => "prompt.sauna", ZoneKind::Market => "prompt.market", ZoneKind::AutoShop => "prompt.parts", ZoneKind::Inspection => "prompt.inspect" }
     }
 }
 

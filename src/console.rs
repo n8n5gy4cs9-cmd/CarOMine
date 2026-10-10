@@ -216,12 +216,13 @@ fn exec_cmds(
             "time" => { if let Some(h) = num(1) { tod.hour = h.rem_euclid(24.0); out.push(format!("time {:.1}", tod.hour)); } else { out.push(format!("time is {:.2} (usage: time <0-24>)", tod.hour)); } }
             "timespeed" => { tod.speed = num(1).unwrap_or(1.0) / 60.0; out.push(format!("1 game hour = {:.1} real seconds", 1.0 / tod.speed.max(1e-6))); }
             "snow" | "weather" => { weather.intensity = num(1).unwrap_or(0.8).clamp(0.0, 1.0); out.push(format!("snowfall {:.2}", weather.intensity)); }
-            "ws" => { ws.snow = num(1).unwrap_or(0.0).clamp(0.0, 1.0); out.push(format!("windshield snow {:.2}", ws.snow)); }
+            "ws" => { ws.set_all(num(1).unwrap_or(0.0)); out.push(format!("windshield snow {:.2}", ws.snow)); }
             "fov" => { if let (Some(f), Ok(mut p)) = (num(1), cam.single_mut()) { if let Projection::Perspective(pp) = &mut *p { pp.fov = f.clamp(30.0, 140.0).to_radians(); settings.fov_degrees = f; out.push(format!("fov {f}")); } } }
             "sens" => { settings.mouse_sensitivity = num(1).unwrap_or(0.0022) * 0.001; out.push("sensitivity set (value x0.001)".into()); }
             "tp" | "teleport" => {
                 let dest = match a(1) {
                     "cabin" | "home" => Some(CABIN + Vec2::new(-8.0, -9.0)), "village" => Some(VILLAGE + Vec2::new(0.0, 10.0)),
+                    "farm" => { let c = player.single().map(|(t, _)| t.translation).unwrap_or(Vec3::ZERO); let (ci, cj) = ((c.x / 520.0).floor() as i32, (c.z / 520.0).floor() as i32); let mut best: Option<Vec2> = None; for di in -4..=4 { for dj in -4..=4 { if let Some(p) = farm_site_in_cell(ci + di, cj + dj) { if best.map_or(true, |b| p.distance(Vec2::new(c.x, c.z)) < b.distance(Vec2::new(c.x, c.z))) { best = Some(p); } } } } best.map(|p| p + Vec2::new(0.0, 50.0)) }
                     "garage" => Some(GARAGE + Vec2::new(8.0, 0.0)), "lake" => Some(LAKE_C + Vec2::new(-LAKE_R - 12.0, 0.0)), "shop" => Some(VILLAGE + Vec2::new(10.0, 4.0)),
                     _ => match (num(1), num(2)) { (Some(x), Some(z)) => Some(Vec2::new(x, z)), _ => None },
                 };

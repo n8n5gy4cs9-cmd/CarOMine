@@ -71,7 +71,10 @@ fn gable(w: f32, d: f32, h: f32) -> Mesh {
 
 pub struct HouseSpec { pub pos: Vec2, pub yaw: f32, pub w: f32, pub d: f32, pub h: f32, pub wall: Wall, pub windows: u32, pub door: bool, pub open_front: bool }
 
-pub fn spawn_house(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Assets<Mesh>, mats: &mut Assets<StandardMaterial>, s: &HouseSpec) {
+pub fn spawn_house(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Assets<Mesh>, mats: &mut Assets<StandardMaterial>, s: &HouseSpec) -> Entity { spawn_house_in(commands, a, meshes, mats, s, None) }
+
+/// Same, optionally parented (e.g. to a terrain chunk so it streams out with it).
+pub fn spawn_house_in(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Assets<Mesh>, mats: &mut Assets<StandardMaterial>, s: &HouseSpec, parent: Option<Entity>) -> Entity {
     let wall_mat = match s.wall { Wall::Red => &a.wall_red, Wall::Wood => &a.wall_wood, Wall::Cream => &a.wall_cream, Wall::Brick => &a.wall_brick, Wall::Yellow => &a.wall_yellow };
     // per-building material copy so texture tiles at a sensible rate
     let mut wm = mats.get(wall_mat).cloned().unwrap_or_default();
@@ -80,7 +83,7 @@ pub fn spawn_house(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Ass
     let ground = height_at(s.pos.x, s.pos.y);
     let rot = Quat::from_rotation_y(s.yaw);
     let roof_h = s.d * 0.32;
-    commands.spawn((Transform::from_xyz(s.pos.x, ground, s.pos.y).with_rotation(rot), Visibility::default())).with_children(|c| {
+    let root = commands.spawn((Transform::from_xyz(s.pos.x, ground, s.pos.y).with_rotation(rot), Visibility::default())).with_children(|c| {
         let t = 0.25; // wall thickness
         if s.open_front {
             // back wall (-x), side walls, no front (+x)
@@ -112,13 +115,16 @@ pub fn spawn_house(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Ass
                 c.spawn((Mesh3d(a.window_quad.clone()), MeshMaterial3d(a.door.clone()), Transform::from_xyz(0.0, 1.05, s.d / 2.0 + 0.03).with_scale(Vec3::new(1.1, 2.1, 1.0))));
             }
         }
-    });
+    }).id();
+    if let Some(p) = parent { commands.entity(p).add_child(root); }
     // colliders: circles along the footprint perimeter
     let rotm = |v: Vec2| Vec2::new(v.x * s.yaw.cos() + v.y * s.yaw.sin(), -v.x * s.yaw.sin() + v.y * s.yaw.cos());
     let step = 1.8;
     let mut add = |lx: f32, lz: f32, commands: &mut Commands| {
         let w = s.pos + rotm(Vec2::new(lx, lz));
-        commands.spawn((Transform::from_xyz(w.x, ground, w.y), GlobalTransform::default(), Obstacle(1.1)));
+        let e = commands.spawn((Transform::from_xyz(w.x, ground, w.y), GlobalTransform::default(), Obstacle(1.1))).id();
+        // colliders live in world space, so parent them to the chunk (identity transform), not the rotated house
+        if let Some(p) = parent { commands.entity(p).add_child(e); }
     };
     let nx = (s.w / step).ceil() as i32; let nz = (s.d / step).ceil() as i32;
     for i in 0..=nx {
@@ -130,6 +136,7 @@ pub fn spawn_house(commands: &mut Commands, a: &BuildingAssets, meshes: &mut Ass
         add(-s.w / 2.0, z, commands);
         if !s.open_front { add(s.w / 2.0, z, commands); }
     }
+    root
 }
 
 pub fn spawn_village(mut commands: Commands, a: Option<Res<BuildingAssets>>, mut meshes: ResMut<Assets<Mesh>>, mut mats: ResMut<Assets<StandardMaterial>>, mut done: Local<bool>) {
@@ -163,4 +170,26 @@ pub fn window_glow(tod: Res<super::sky::TimeOfDay>, a: Option<Res<BuildingAssets
     let Some(a) = a else { return };
     let night = 1.0 - super::sky::sky_state(tod.hour).day;
     if let Some(mut m) = mats.get_mut(&a.window) { m.emissive = LinearRgba::new(3.0, 2.1, 0.9, 1.0) * night; }
+}
+
+/// A Finnish farmstead: red house, big barn, small sauna, fenced yard. Everything is parented to the terrain chunk.
+pub fn spawn_farm(commands: &mut Commands, a: &BuildingAssets, sc: &super::scatter::ScatterAssets, meshes: &mut Assets<Mesh>, mats: &mut Assets<StandardMaterial>, chunk: Entity, c: Vec2) {
+    use super::noise::hash2;
+    let yaw = (hash2(c.x as i32, c.y as i32, 910) * 4.0).floor() * std::f32::consts::FRAC_PI_2;
+    let rot = |v: Vec2| Vec2::new(v.x * yaw.cos() + v.y * yaw.sin(), -v.x * yaw.sin() + v.y * yaw.cos());
+    let pick = |salt: u32| if hash2(c.x as i32, c.y as i32, salt) < 0.5 { Wall::Red } else { Wall::Yellow };
+    let specs = [(Vec2::new(0.0, 0.0), 9.0, 6.0, 3.0, pick(911), 4, true), (Vec2::new(-20.0, -6.0), 14.0, 9.0, 4.6, Wall::Red, 0, false), (Vec2::new(14.0, -9.0), 4.0, 3.4, 2.3, Wall::Wood, 1, true)];
+    for (off, w, d, h, wall, win, door) in specs {
+        spawn_house_in(commands, a, meshes, mats, &HouseSpec { pos: c + rot(off), yaw, w, d, h, wall, windows: win, door, open_front: false }, Some(chunk));
+    }
+    // fence ring with gaps
+    let mut i = 0;
+    while i < 28 {
+        let ang = i as f32 / 28.0 * std::f32::consts::TAU;
+        if !(i % 14 < 2) {
+            let p = c + Vec2::new(ang.cos(), ang.sin()) * 30.0;
+            super::scatter::put(commands, chunk, &sc.fence, 0, Vec3::new(p.x, height_at(p.x, p.y), p.y), 1.0);
+        }
+        i += 1;
+    }
 }
