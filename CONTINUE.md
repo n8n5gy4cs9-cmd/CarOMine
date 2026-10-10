@@ -18,4 +18,7 @@
 - In progress: none.
 - Next exact step: T-010 - create Cargo project (`cargo init --name caromine`), add Bevy, window + states.
 - Environment notes: Linux cloud sandbox (no GPU) -> can only `cargo check`, not run visuals. Python3 + Pillow + numpy available for asset generators.
+- Toolchain: Bevy **0.20** needs rustc >= 1.97.1 (`rustup update stable`). Linux build deps: libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev. First cargo check ~3 min.
+- Bevy 0.20 API gotchas learned: `DirectionalLight.shadow_maps_enabled` (not shadows_enabled). Check `~/.cargo/registry/src/*/bevy_*-0.20*/` source when an API differs from older docs.
+- Helper: `tools/commit.sh T-xxx "msg"` commits + pushes to main.
 - Known issues: none yet.

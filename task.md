@@ -1,24 +1,25 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **1/64 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **2/64 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
-- [ ] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1
 - [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
 - [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
+- [ ] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types
 
 ## P0 Planning (1/1)
 
 - [x] **T-001** Write PRD.md, PRD.json, PLAN.md, ARCHITECTURE.md, task.md, assets.md, CONTINUE.md  
   _note: Planning docs written_
 
-## P1 Foundation (Rust + Bevy) (0/5)
+## P1 Foundation (Rust + Bevy) (1/5)
 
-- [ ] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1
+- [x] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1  
+  _note: Bevy 0.20 window, GameState, placeholder scene; cargo check OK_
 - [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux

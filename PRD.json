@@ -22,8 +22,8 @@
         {
           "id": "T-010",
           "title": "Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "Bevy 0.20 window, GameState, placeholder scene; cargo check OK"
         },
         {
           "id": "T-011",
