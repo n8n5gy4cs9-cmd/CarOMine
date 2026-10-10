@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **13/65 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **14/65 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -8,15 +8,15 @@
 - [~] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
-- [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
 - [ ] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)
+- [ ] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km
 
 ## P0 Planning (1/1)
 
 - [x] **T-001** Write PRD.md, PRD.json, PLAN.md, ARCHITECTURE.md, task.md, assets.md, CONTINUE.md  
   _note: Planning docs written_
 
-## P1 Foundation (Rust + Bevy) (1/6)
+## P1 Foundation (Rust + Bevy) (2/6)
 
 - [x] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1  
   _note: Bevy 0.20 window, GameState, placeholder scene; cargo check OK_
@@ -24,7 +24,8 @@
   _note: Generator side done (assetlib.reg); Rust loader = T-011b_
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
-- [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
+- [x] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md  
+  _note: cloned RoR, shadow-warrior, NBlood; eduke32 blocked (403) -> NBlood covers; docs/REFERENCE_NOTES.md_
 - [ ] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)
 
 ## P2 Asset generation (placeholders) (11/11)

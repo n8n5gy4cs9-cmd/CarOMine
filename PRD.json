@@ -46,8 +46,8 @@
         {
           "id": "T-014",
           "title": "Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "cloned RoR, shadow-warrior, NBlood; eduke32 blocked (403) -> NBlood covers; docs/REFERENCE_NOTES.md"
         },
         {
           "id": "T-011b",
