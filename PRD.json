@@ -1,0 +1,451 @@
+{
+  "game": "CarOMine",
+  "author": "Crowelian 2026 + Sonnet",
+  "version": "0.0.1",
+  "phases": [
+    {
+      "id": "P0",
+      "name": "Planning",
+      "tasks": [
+        {
+          "id": "T-001",
+          "title": "Write PRD.md, PRD.json, PLAN.md, ARCHITECTURE.md, task.md, assets.md, CONTINUE.md",
+          "status": "done",
+          "notes": "Planning docs written"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "Foundation (Rust + Bevy)",
+      "tasks": [
+        {
+          "id": "T-010",
+          "title": "Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-011",
+          "title": "Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-012",
+          "title": "Config + keybinds (RON/JSON), settings menu stub",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-013",
+          "title": "GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-014",
+          "title": "Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "Asset generation (placeholders)",
+      "tasks": [
+        {
+          "id": "T-020",
+          "title": "tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-021",
+          "title": "gen: trees (spruce/pine/birch/bare), bushes, rocks, snow drifts, fences",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-022",
+          "title": "gen: items/pickups (ammo, medkit, coffee, sausage, bolts, parts icons, money)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-023",
+          "title": "gen: weapon first-person sprites (fists, pistol, shotgun, SMG, hunting rifle) + muzzle flash",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-024",
+          "title": "gen: tileable textures (snow, packed snow, ice, road, gravel, wood, brick, metal, glass, rust)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-025",
+          "title": "gen: house/building facade sprites + 2D/3D hybrid billboards (cabin, red barn, sauna, shop)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-026",
+          "title": "gen: HUD/UI sprites, fonts bitmap, crosshair, windshield snow/frost overlay frames",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-027",
+          "title": "tools/gen_audio.py: placeholder SFX (engine loop, gunshots, steps, wipers, crash, UI) as WAV/OGG",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-028",
+          "title": "gen: placeholder music (menu, drive, night, combat) via chiptune synth",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-029",
+          "title": "Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-030",
+          "title": "Auto-generate assets.md (clean table on top + detailed section) from manifest.json",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "World",
+      "tasks": [
+        {
+          "id": "T-040",
+          "title": "Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-041",
+          "title": "Snow terrain material + footprints/tire tracks decals",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-042",
+          "title": "Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-043",
+          "title": "Forest/bush scatter (spruce/pine/birch), density map, fields, clearings",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-044",
+          "title": "Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-045",
+          "title": "Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-046",
+          "title": "Day/night cycle, sun/moon, aurora borealis at night, fog, sky",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-047",
+          "title": "Snowfall particles + weather states (clear, snow, blizzard)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-048",
+          "title": "Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "Player + FPS",
+      "tasks": [
+        {
+          "id": "T-060",
+          "title": "First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-061",
+          "title": "Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-062",
+          "title": "Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-063",
+          "title": "Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-064",
+          "title": "Pickups, health, armor, items, interaction raycast (E key)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-065",
+          "title": "Damage/hit feedback, gibs/blood (snow-red), enemy drops",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-066",
+          "title": "Agency missions: 'side jobs' for money, combat arenas in the countryside",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "Vehicle simulation",
+      "tasks": [
+        {
+          "id": "T-080",
+          "title": "Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-081",
+          "title": "Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-082",
+          "title": "Engine model: torque curve, temperature, oil, fuel, battery, starter, choke",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-083",
+          "title": "Enter/exit car, steering wheel view, interior cam, mirrors, handbrake",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-084",
+          "title": "Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-085",
+          "title": "Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-086",
+          "title": "Lights: headlights/high-beam/fog, brake lights, interior light; battery drain",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-087",
+          "title": "Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-088",
+          "title": "RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "Car building + repair",
+      "tasks": [
+        {
+          "id": "T-100",
+          "title": "Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-101",
+          "title": "Garage mode: lift car, remove/install parts, bolt tightening (simplified), tool wheel (wrench, jack)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-102",
+          "title": "Malfunction system: realistic faults (dead battery, fouled plugs, flat tire, clogged fuel filter, blown fuse, leaking coolant, worn brakes, frozen fuel line)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-103",
+          "title": "Diagnosis hints: symptoms -> cause (sounds, smoke, dashboard lights), in-game manual 'Korjaamo-opas'",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-104",
+          "title": "Easy-repair flow after crash (simple repair minigames, cheaper than MSC)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-105",
+          "title": "Starting project car: old Finnish-style winter wreck delivered in boxes; goal = build + pass inspection (katsastus)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-106",
+          "title": "Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "Game loop + life sim",
+      "tasks": [
+        {
+          "id": "T-120",
+          "title": "Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-121",
+          "title": "Economy: unemployment benefit, odd jobs, agency gigs, shops (K-market, auto parts, gas)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-122",
+          "title": "Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-123",
+          "title": "Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-124",
+          "title": "Save/load system (JSON), autosave, multiple slots",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-125",
+          "title": "Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-126",
+          "title": "Localization (EN default, FI)",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P8",
+      "name": "UI + audio integration",
+      "tasks": [
+        {
+          "id": "T-140",
+          "title": "HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-141",
+          "title": "Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-142",
+          "title": "Audio engine integration: spatial SFX, music state machine, volume sliders",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-143",
+          "title": "Inventory + tool wheel UI",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "P9",
+      "name": "Polish + release",
+      "tasks": [
+        {
+          "id": "T-160",
+          "title": "Performance pass (M1 Max 60fps+, instancing, culling)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-161",
+          "title": "macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-162",
+          "title": "Windows + Linux builds, CI release artifacts",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-163",
+          "title": "Playtest balance pass, bug list, README screenshots",
+          "status": "todo",
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}

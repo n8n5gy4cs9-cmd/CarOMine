@@ -1,0 +1,107 @@
+# CarOMine - TASKS
+
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **1/64 done.**
+> Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
+
+## NEXT UP
+
+- [ ] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1
+- [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
+- [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
+- [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
+- [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
+
+## P0 Planning (1/1)
+
+- [x] **T-001** Write PRD.md, PRD.json, PLAN.md, ARCHITECTURE.md, task.md, assets.md, CONTINUE.md  
+  _note: Planning docs written_
+
+## P1 Foundation (Rust + Bevy) (0/5)
+
+- [ ] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1
+- [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
+- [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
+- [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
+- [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
+
+## P2 Asset generation (placeholders) (0/11)
+
+- [ ] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types
+- [ ] **T-021** gen: trees (spruce/pine/birch/bare), bushes, rocks, snow drifts, fences
+- [ ] **T-022** gen: items/pickups (ammo, medkit, coffee, sausage, bolts, parts icons, money)
+- [ ] **T-023** gen: weapon first-person sprites (fists, pistol, shotgun, SMG, hunting rifle) + muzzle flash
+- [ ] **T-024** gen: tileable textures (snow, packed snow, ice, road, gravel, wood, brick, metal, glass, rust)
+- [ ] **T-025** gen: house/building facade sprites + 2D/3D hybrid billboards (cabin, red barn, sauna, shop)
+- [ ] **T-026** gen: HUD/UI sprites, fonts bitmap, crosshair, windshield snow/frost overlay frames
+- [ ] **T-027** tools/gen_audio.py: placeholder SFX (engine loop, gunshots, steps, wipers, crash, UI) as WAV/OGG
+- [ ] **T-028** gen: placeholder music (menu, drive, night, combat) via chiptune synth
+- [ ] **T-029** Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk
+- [ ] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json
+
+## P3 World (0/9)
+
+- [ ] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km
+- [ ] **T-041** Snow terrain material + footprints/tire tracks decals
+- [ ] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
+- [ ] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings
+- [ ] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
+- [ ] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
+- [ ] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky
+- [ ] **T-047** Snowfall particles + weather states (clear, snow, blizzard)
+- [ ] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)
+
+## P4 Player + FPS (0/7)
+
+- [ ] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings
+- [ ] **T-061** Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons
+- [ ] **T-062** Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling
+- [ ] **T-063** Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour
+- [ ] **T-064** Pickups, health, armor, items, interaction raycast (E key)
+- [ ] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops
+- [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
+
+## P5 Vehicle simulation (0/9)
+
+- [ ] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox
+- [ ] **T-081** Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag
+- [ ] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke
+- [ ] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake
+- [ ] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop
+- [ ] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid
+- [ ] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain
+- [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
+- [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
+
+## P6 Car building + repair (0/7)
+
+- [ ] **T-100** Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats
+- [ ] **T-101** Garage mode: lift car, remove/install parts, bolt tightening (simplified), tool wheel (wrench, jack)
+- [ ] **T-102** Malfunction system: realistic faults (dead battery, fouled plugs, flat tire, clogged fuel filter, blown fuse, leaking coolant, worn brakes, frozen fuel line)
+- [ ] **T-103** Diagnosis hints: symptoms -> cause (sounds, smoke, dashboard lights), in-game manual 'Korjaamo-opas'
+- [ ] **T-104** Easy-repair flow after crash (simple repair minigames, cheaper than MSC)
+- [ ] **T-105** Starting project car: old Finnish-style winter wreck delivered in boxes; goal = build + pass inspection (katsastus)
+- [ ] **T-106** Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning
+
+## P7 Game loop + life sim (0/7)
+
+- [ ] **T-120** Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving
+- [ ] **T-121** Economy: unemployment benefit, odd jobs, agency gigs, shops (K-market, auto parts, gas)
+- [ ] **T-122** Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone
+- [ ] **T-123** Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)
+- [ ] **T-124** Save/load system (JSON), autosave, multiple slots
+- [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
+- [ ] **T-126** Localization (EN default, FI)
+
+## P8 UI + audio integration (0/4)
+
+- [ ] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights
+- [ ] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)
+- [ ] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders
+- [ ] **T-143** Inventory + tool wheel UI
+
+## P9 Polish + release (0/4)
+
+- [ ] **T-160** Performance pass (M1 Max 60fps+, instancing, culling)
+- [ ] **T-161** macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build
+- [ ] **T-162** Windows + Linux builds, CI release artifacts
+- [ ] **T-163** Playtest balance pass, bug list, README screenshots
