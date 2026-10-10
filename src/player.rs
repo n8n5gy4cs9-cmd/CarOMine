@@ -81,6 +81,7 @@ pub fn look(driving: Query<(), With<crate::vehicle::Driven>>, motion: Res<Accumu
 }
 
 pub fn walk(
+    cheats: Res<crate::console::Cheats>,
     driving: Query<(), With<crate::vehicle::Driven>>,
     time: Res<Time>,
     keys: Res<ButtonInput<KeyCode>>,
@@ -100,7 +101,22 @@ pub fn walk(
     if keys.pressed(kb.right) { wish += right; }
     if keys.pressed(kb.left) { wish -= right; }
     let crouch = keys.pressed(kb.crouch);
-    let speed = if crouch { 1.8 } else if keys.pressed(kb.run) { 7.0 } else { 4.2 };
+    if cheats.fly {
+        // noclip: fly along the look direction
+        let look = Quat::from_rotation_y(p.yaw) * Quat::from_rotation_x(p.pitch);
+        let mut v = Vec3::ZERO;
+        if keys.pressed(kb.forward) { v += look * Vec3::NEG_Z; }
+        if keys.pressed(kb.back) { v += look * Vec3::Z; }
+        if keys.pressed(kb.right) { v += look * Vec3::X; }
+        if keys.pressed(kb.left) { v -= look * Vec3::X; }
+        if keys.pressed(kb.jump) { v += Vec3::Y; }
+        if keys.pressed(kb.crouch) { v -= Vec3::Y; }
+        let sp = 14.0 * cheats.speed_mult * if keys.pressed(kb.run) { 3.0 } else { 1.0 };
+        t.translation += v.normalize_or_zero() * sp * dt;
+        p.vel = Vec3::ZERO; p.on_ground = false;
+        return;
+    }
+    let speed = cheats.speed_mult * if crouch { 1.8 } else if keys.pressed(kb.run) { 7.0 } else { 4.2 };
     let wish = wish.normalize_or_zero() * speed;
     let grip = match surface_at(t.translation.x, t.translation.z) { Surface::Ice => 1.2, Surface::PackedSnow => 7.0, _ => 9.0 };
     let accel = if p.on_ground { grip } else { 1.0 };

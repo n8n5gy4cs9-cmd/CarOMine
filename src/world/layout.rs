@@ -89,3 +89,6 @@ pub fn surface_at(x: f32, z: f32) -> Surface {
     if rd < ROAD_HALF_W { return if fbm(x / 9.0, z / 9.0, SEED + 3, 2) > 0.62 { Surface::Ice } else { Surface::PackedSnow }; }
     Surface::Snow
 }
+
+/// Open-front garage shed next to the cabin: car building happens here.
+pub const GARAGE: Vec2 = Vec2::new(CABIN.x - 26.0, CABIN.y + 4.0);

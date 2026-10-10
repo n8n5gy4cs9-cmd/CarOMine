@@ -16,6 +16,7 @@
 ## STATE (update me!)
 - Done: P1, P2 (assets), world core, player walk, vehicle sim + windshield (all verified by headless screenshots).
 - Next: T-045 village+cabin buildings, T-044 road visuals, T-066 missions/spawn director, P6 parts/faults (T-100..), T-141 menus, audio wiring (bevy `wav` feature, T-142). Weapons: keys 1-5, LMB fire, R reload. Dev: CAROMINE_LINEUP=1 spawns all enemies in front of player.
+- CONSOLE: press backtick or F1 in game (pauses). `help` lists commands; cheats iddqd idkfa idclip dnstuff; also god/fly/give/spawn/tp/time/snow/car bring. Add new dev commands in src/console.rs exec_cmds + HELP text. Dev env: CAROMINE_CMDS="a;b" CAROMINE_CONSOLE_OPEN=1.
 - Run game: `cargo run --release` (use `--release`; debug build is slow). Controls: WASD, Shift run, Ctrl crouch, Space jump, E enter/exit car, I ignition, W/S gas/brake-reverse, A/D steer, Space handbrake, L lights, V wipers.
 - Headless screenshot (needs `apt-get install mesa-vulkan-drivers xvfb libxkbcommon-x11-0`):
   `CAROMINE_AUTOSTART=1 CAROMINE_SHOT=/tmp/s.png CAROMINE_SHOT_FRAMES=150 CAROMINE_HOUR=11 CAROMINE_POS=55,28,135,-8 xvfb-run -a -s "-screen 0 1280x720x24" env WGPU_BACKEND=vulkan ./target/debug/caromine`

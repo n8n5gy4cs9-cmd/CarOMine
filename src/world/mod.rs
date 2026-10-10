@@ -4,6 +4,7 @@ pub mod noise;
 pub mod scatter;
 pub mod sky;
 pub mod terrain;
+pub mod village;
 pub mod weather;
 
 use crate::state::GameState;
@@ -15,7 +16,7 @@ impl Plugin for WorldPlugin {
         app.init_resource::<terrain::Chunks>()
             .init_resource::<sky::TimeOfDay>()
             .init_resource::<weather::Weather>()
-            .add_systems(Startup, (terrain::setup_material, scatter::setup_scatter, weather::spawn_flakes))
+            .add_systems(Startup, (terrain::setup_material, scatter::setup_scatter, weather::spawn_flakes, village::setup))
             .add_systems(
                 Update,
                 (
@@ -25,6 +26,8 @@ impl Plugin for WorldPlugin {
                     weather::animate_flakes,
                     sky::advance_time,
                     sky::update_sky,
+                    village::spawn_village,
+                    village::window_glow,
                 )
                     .run_if(in_state(GameState::Playing)),
             );

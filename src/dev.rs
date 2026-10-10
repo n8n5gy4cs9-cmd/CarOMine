@@ -2,6 +2,7 @@
 //!   CAROMINE_AUTOSTART=1        skip menu
 //!   CAROMINE_SHOT=out.png       screenshot after CAROMINE_SHOT_FRAMES (default 150) frames in Playing, then exit
 //!   CAROMINE_DRIVE=throttle,steer[,hb]  auto-enter car, engine on, lights on, scripted inputs (e.g. 1,0.3)  CAROMINE_WS=0..1 windshield snow  CAROMINE_WIPERS=0..2
+//!   CAROMINE_CMDS="cmd1;cmd2"  run console commands at frame 30 and leave the console open  (CAROMINE_CONSOLE_OPEN=1 to keep it open)
 //!   CAROMINE_HOUR=13.5          start hour       CAROMINE_POS=x,z,yaw_deg,pitch_deg   CAROMINE_SNOW=0..1
 use crate::state::GameState;
 use crate::world::{sky::TimeOfDay, weather::Weather};
@@ -14,7 +15,7 @@ struct DevState { frames: u32, shot_taken_at: Option<u32> }
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup));
+        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds));
     }
 }
 
@@ -73,4 +74,11 @@ fn dev_lineup(
         let p = pt.translation + fwd * 9.0 + right * (i as f32 - 2.0) * 3.2;
         spawn_enemy(&mut commands, &a, &mut mats, *k, Vec2::new(p.x, p.z));
     }
+}
+
+fn dev_cmds(d: Res<DevState>, mut out: MessageWriter<crate::console::ConsoleLine>, mut con: ResMut<crate::console::Console>) {
+    if d.frames != 30 { return; }
+    let Ok(v) = std::env::var("CAROMINE_CMDS") else { return };
+    for c in v.split(';') { out.write(crate::console::ConsoleLine(c.trim().to_string())); con.log.push(format!("> {}", c.trim())); }
+    if std::env::var("CAROMINE_CONSOLE_OPEN").is_ok() { con.open = true; }
 }

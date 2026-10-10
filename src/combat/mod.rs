@@ -14,12 +14,14 @@ pub struct PlayerStats {
     pub money: i32,
     pub dead_timer: f32,
     pub hurt_flash: f32,
+    pub god: bool,
 }
 impl Default for PlayerStats {
-    fn default() -> Self { Self { hp: 100.0, armor: 0.0, money: 120, dead_timer: 0.0, hurt_flash: 0.0 } }
+    fn default() -> Self { Self { hp: 100.0, armor: 0.0, money: 120, dead_timer: 0.0, hurt_flash: 0.0, god: false } }
 }
 impl PlayerStats {
     pub fn damage(&mut self, d: f32) {
+        if self.god { return; }
         let absorbed = (d * 0.5).min(self.armor);
         self.armor -= absorbed;
         self.hp = (self.hp - (d - absorbed)).max(0.0);

@@ -1,14 +1,14 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **26/65 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **28/67 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
 - [ ] **T-041** Snow terrain material + footprints/tire tracks decals
 - [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
-- [ ] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
-- [ ] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
+- [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
+- [~] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
 - [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky
 
 ## P0 Planning (1/1)
@@ -62,8 +62,10 @@
   _note: face-camera + 8-angle selection done (billboard.rs); GPU instancing/batching perf pass still TODO (T-160)_
 - [x] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings  
   _note: world/scatter.rs: deterministic forest/bush/rock scatter with collision obstacles_
-- [ ] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
-- [ ] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
+- [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river  
+  _note: road = vertex-colour packed snow + spur to cabin. TODO: spline meshes, junctions, bridge, markers/poles, river_
+- [~] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna  
+  _note: world/village.rs: cabin, sauna, open garage shed, K-market, 6 houses, glowing night windows, collision. TODO: church w/ steeple, gas station, interiors, far-LOD facade billboards, home furniture_
 - [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky  
   _note: sky.rs: day/night, sun, moon, fog verified. TODO: aurora, stars, bloom_
 - [~] **T-047** Snowfall particles + weather states (clear, snow, blizzard)  
@@ -125,13 +127,17 @@
 - [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
 - [ ] **T-126** Localization (EN default, FI)
 
-## P8 UI + audio integration (0/4)
+## P8 UI + audio integration (2/6)
 
 - [~] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights  
   _note: combat/hud.rs: hp/armor/money/ammo/speed/gear/rpm/fuel/clock/snow%. TODO: proper gauges, needs bars_
 - [ ] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)
 - [ ] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders
 - [ ] **T-143** Inventory + tool wheel UI
+- [x] **T-144** Developer console (backtick or F1): pauses game, command history (up/down), help  
+  _note: src/console.rs_
+- [x] **T-145** Cheat codes + dev commands: god/fly/speed/give/ammo/fuel/spawn/killall/tp/time/snow/ws/car bring|goto|tyres/fov; iddqd idkfa idclip dnstuff  
+  _note: src/console.rs exec_cmds; type help in game_
 
 ## P9 Polish + release (0/4)
 

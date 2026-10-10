@@ -160,14 +160,14 @@
         {
           "id": "T-044",
           "title": "Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "road = vertex-colour packed snow + spur to cabin. TODO: spline meshes, junctions, bridge, markers/poles, river"
         },
         {
           "id": "T-045",
           "title": "Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "world/village.rs: cabin, sauna, open garage shed, K-market, 6 houses, glowing night windows, collision. TODO: church w/ steeple, gas station, interiors, far-LOD facade billboards, home furniture"
         },
         {
           "id": "T-046",
@@ -420,6 +420,18 @@
           "title": "Inventory + tool wheel UI",
           "status": "todo",
           "notes": ""
+        },
+        {
+          "id": "T-144",
+          "title": "Developer console (backtick or F1): pauses game, command history (up/down), help",
+          "status": "done",
+          "notes": "src/console.rs"
+        },
+        {
+          "id": "T-145",
+          "title": "Cheat codes + dev commands: god/fly/speed/give/ammo/fuel/spawn/killall/tp/time/snow/ws/car bring|goto|tyres/fov; iddqd idkfa idclip dnstuff",
+          "status": "done",
+          "notes": "src/console.rs exec_cmds; type help in game"
         }
       ]
     },
