@@ -55,6 +55,14 @@
   "license": "CC0",
   "notes": " size=256x192"
  },
+ "building.house3d": {
+  "path": "models/house.glb",
+  "kind": "model",
+  "use": "Low-poly house for 2D/3D hybrid near LOD",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
  "building.house_lit": {
   "path": "sprites/buildings/house_lit.png",
   "kind": "sprite",
@@ -118,6 +126,22 @@
   "source": "generated (tools/)",
   "license": "CC0",
   "notes": " size=80x56"
+ },
+ "car.body": {
+  "path": "models/car_body.glb",
+  "kind": "model",
+  "use": "Player car body (wagon), paint/glass/trim materials; replace with any glb, origin at wheelbase centre",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "car.wheel": {
+  "path": "models/car_wheel.glb",
+  "kind": "model",
+  "use": "Wheel+tyre, axis X, radius 0.32m",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
  },
  "enemy.goon": {
   "path": "sprites/enemies/goon.png",
@@ -295,6 +319,110 @@
   "license": "CC0",
   "notes": " size=64x64"
  },
+ "music.combat": {
+  "path": "music/combat.wav",
+  "kind": "music",
+  "use": "Combat music (fast)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "25.60s LOOP wav mono 22050Hz"
+ },
+ "music.drive": {
+  "path": "music/drive.wav",
+  "kind": "music",
+  "use": "Driving music (mid-tempo)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "40.00s LOOP wav mono 22050Hz"
+ },
+ "music.menu": {
+  "path": "music/menu.wav",
+  "kind": "music",
+  "use": "Main menu theme (melancholic Finnish minor, slow)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "54.86s LOOP wav mono 22050Hz"
+ },
+ "music.night": {
+  "path": "music/night.wav",
+  "kind": "music",
+  "use": "Night / quiet exploration ambience",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "64.00s LOOP wav mono 22050Hz"
+ },
+ "part.battery": {
+  "path": "models/part_battery.glb",
+  "kind": "model",
+  "use": "Battery placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.bumper": {
+  "path": "models/part_bumper.glb",
+  "kind": "model",
+  "use": "Bumper placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.door": {
+  "path": "models/part_door.glb",
+  "kind": "model",
+  "use": "Door panel placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.engine": {
+  "path": "models/part_engine.glb",
+  "kind": "model",
+  "use": "Engine block placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.fuel_tank": {
+  "path": "models/part_fuel_tank.glb",
+  "kind": "model",
+  "use": "Fuel tank placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.gearbox": {
+  "path": "models/part_gearbox.glb",
+  "kind": "model",
+  "use": "Gearbox placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.hood": {
+  "path": "models/part_hood.glb",
+  "kind": "model",
+  "use": "Hood panel placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.radiator": {
+  "path": "models/part_radiator.glb",
+  "kind": "model",
+  "use": "Radiator placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
+ "part.seat": {
+  "path": "models/part_seat.glb",
+  "kind": "model",
+  "use": "Seat placeholder",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "glb, metres, +Y up, -Z forward"
+ },
  "rock.0": {
   "path": "sprites/nature/rock_0.png",
   "kind": "sprite",
@@ -310,6 +438,230 @@
   "source": "generated (tools/)",
   "license": "CC0",
   "notes": " size=80x56"
+ },
+ "sfx.coffee_pour": {
+  "path": "sfx/coffee_pour.wav",
+  "kind": "sfx",
+  "use": "Pour coffee",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.20s one-shot wav mono 22050Hz"
+ },
+ "sfx.crash": {
+  "path": "sfx/crash.wav",
+  "kind": "sfx",
+  "use": "Car crash",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.20s one-shot wav mono 22050Hz"
+ },
+ "sfx.door": {
+  "path": "sfx/door.wav",
+  "kind": "sfx",
+  "use": "Door/trunk thud",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.15s one-shot wav mono 22050Hz"
+ },
+ "sfx.enemy_die": {
+  "path": "sfx/enemy_die.wav",
+  "kind": "sfx",
+  "use": "Human enemy death grunt",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.60s one-shot wav mono 22050Hz"
+ },
+ "sfx.engine_high": {
+  "path": "sfx/engine_high.wav",
+  "kind": "sfx",
+  "use": "Car engine high-rev loop",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "2.00s LOOP wav mono 22050Hz"
+ },
+ "sfx.engine_idle": {
+  "path": "sfx/engine_idle.wav",
+  "kind": "sfx",
+  "use": "Car engine idle loop (pitch-shifted by RPM in code)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "2.00s LOOP wav mono 22050Hz"
+ },
+ "sfx.engine_stall": {
+  "path": "sfx/engine_stall.wav",
+  "kind": "sfx",
+  "use": "Engine stalls/dies",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.50s one-shot wav mono 22050Hz"
+ },
+ "sfx.engine_start": {
+  "path": "sfx/engine_start.wav",
+  "kind": "sfx",
+  "use": "Engine cranking and catching",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.70s one-shot wav mono 22050Hz"
+ },
+ "sfx.hit": {
+  "path": "sfx/hit_flesh.wav",
+  "kind": "sfx",
+  "use": "Bullet hits enemy",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.20s one-shot wav mono 22050Hz"
+ },
+ "sfx.horn": {
+  "path": "sfx/horn.wav",
+  "kind": "sfx",
+  "use": "Car horn",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.35s one-shot wav mono 22050Hz"
+ },
+ "sfx.moose_call": {
+  "path": "sfx/moose_call.wav",
+  "kind": "sfx",
+  "use": "Moose bellow",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.20s one-shot wav mono 22050Hz"
+ },
+ "sfx.pickup": {
+  "path": "sfx/pickup.wav",
+  "kind": "sfx",
+  "use": "Item pickup chime",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.16s one-shot wav mono 22050Hz"
+ },
+ "sfx.pistol": {
+  "path": "sfx/pistol.wav",
+  "kind": "sfx",
+  "use": "Pistol shot",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.25s one-shot wav mono 22050Hz"
+ },
+ "sfx.ratchet": {
+  "path": "sfx/ratchet.wav",
+  "kind": "sfx",
+  "use": "Ratchet clicks",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.28s one-shot wav mono 22050Hz"
+ },
+ "sfx.reload": {
+  "path": "sfx/reload.wav",
+  "kind": "sfx",
+  "use": "Reload clicks",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.36s one-shot wav mono 22050Hz"
+ },
+ "sfx.rifle": {
+  "path": "sfx/rifle.wav",
+  "kind": "sfx",
+  "use": "Hunting rifle shot",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.70s one-shot wav mono 22050Hz"
+ },
+ "sfx.sauna_hiss": {
+  "path": "sfx/sauna_hiss.wav",
+  "kind": "sfx",
+  "use": "Sauna water on stones",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.50s one-shot wav mono 22050Hz"
+ },
+ "sfx.shotgun": {
+  "path": "sfx/shotgun.wav",
+  "kind": "sfx",
+  "use": "Shotgun blast",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.60s one-shot wav mono 22050Hz"
+ },
+ "sfx.smg": {
+  "path": "sfx/smg.wav",
+  "kind": "sfx",
+  "use": "SMG single shot (repeat for burst)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.12s one-shot wav mono 22050Hz"
+ },
+ "sfx.starter_click": {
+  "path": "sfx/starter_click.wav",
+  "kind": "sfx",
+  "use": "Dead-battery clicking",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.34s one-shot wav mono 22050Hz"
+ },
+ "sfx.step_snow": {
+  "path": "sfx/step_snow.wav",
+  "kind": "sfx",
+  "use": "Footstep in snow",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.12s one-shot wav mono 22050Hz"
+ },
+ "sfx.tire_snow": {
+  "path": "sfx/tire_snow.wav",
+  "kind": "sfx",
+  "use": "Tyres on snow loop (volume by speed)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "2.00s LOOP wav mono 22050Hz"
+ },
+ "sfx.ui_click": {
+  "path": "sfx/ui_click.wav",
+  "kind": "sfx",
+  "use": "UI click",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.05s one-shot wav mono 22050Hz"
+ },
+ "sfx.ui_confirm": {
+  "path": "sfx/ui_confirm.wav",
+  "kind": "sfx",
+  "use": "UI confirm",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.31s one-shot wav mono 22050Hz"
+ },
+ "sfx.wind": {
+  "path": "sfx/wind.wav",
+  "kind": "sfx",
+  "use": "Ambient winter wind loop",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "1.50s LOOP wav mono 22050Hz"
+ },
+ "sfx.wiper": {
+  "path": "sfx/wiper.wav",
+  "kind": "sfx",
+  "use": "Windshield wiper swipe",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.80s one-shot wav mono 22050Hz"
+ },
+ "sfx.wolf_growl": {
+  "path": "sfx/wolf_growl.wav",
+  "kind": "sfx",
+  "use": "Wolf growl",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.80s one-shot wav mono 22050Hz"
+ },
+ "sfx.wrench": {
+  "path": "sfx/wrench.wav",
+  "kind": "sfx",
+  "use": "Wrench tighten (ratchet clicks)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "0.80s one-shot wav mono 22050Hz"
  },
  "snowdrift.0": {
   "path": "sprites/nature/snowdrift_0.png",

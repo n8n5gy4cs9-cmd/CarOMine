@@ -106,26 +106,26 @@
         {
           "id": "T-027",
           "title": "tools/gen_audio.py: placeholder SFX (engine loop, gunshots, steps, wipers, crash, UI) as WAV/OGG",
-          "status": "todo",
+          "status": "done",
           "notes": ""
         },
         {
           "id": "T-028",
           "title": "gen: placeholder music (menu, drive, night, combat) via chiptune synth",
-          "status": "todo",
+          "status": "done",
           "notes": ""
         },
         {
           "id": "T-029",
           "title": "Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk",
-          "status": "todo",
+          "status": "done",
           "notes": ""
         },
         {
           "id": "T-030",
           "title": "Auto-generate assets.md (clean table on top + detailed section) from manifest.json",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "assets.md generated: python3 tools/gen_assets_md.py"
         }
       ]
     },

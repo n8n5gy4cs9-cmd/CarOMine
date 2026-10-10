@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **9/65 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **13/65 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -27,7 +27,7 @@
 - [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
 - [ ] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)
 
-## P2 Asset generation (placeholders) (7/11)
+## P2 Asset generation (placeholders) (11/11)
 
 - [x] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types  
   _note: tools/gen_enemies.py: goon,hunter,neighbour,wolf,moose sheets 10x8 grid; sprites.json_
@@ -43,10 +43,11 @@
   _note: tools/gen_sprites.py_
 - [x] **T-026** gen: HUD/UI sprites, fonts bitmap, crosshair, windshield snow/frost overlay frames  
   _note: tools/gen_sprites.py_
-- [ ] **T-027** tools/gen_audio.py: placeholder SFX (engine loop, gunshots, steps, wipers, crash, UI) as WAV/OGG
-- [ ] **T-028** gen: placeholder music (menu, drive, night, combat) via chiptune synth
-- [ ] **T-029** Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk
-- [ ] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json
+- [x] **T-027** tools/gen_audio.py: placeholder SFX (engine loop, gunshots, steps, wipers, crash, UI) as WAV/OGG
+- [x] **T-028** gen: placeholder music (menu, drive, night, combat) via chiptune synth
+- [x] **T-029** Placeholder 3D models: low-poly car body+wheels+parts (procedural OBJ/glTF), house, tree trunk
+- [x] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json  
+  _note: assets.md generated: python3 tools/gen_assets_md.py_
 
 ## P3 World (0/9)
 
