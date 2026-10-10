@@ -4,6 +4,7 @@ pub mod enemy;
 pub mod flashlight;
 pub mod hud;
 pub mod pickups;
+pub mod statusbar;
 pub mod weapons;
 
 use crate::state::GameState;
@@ -46,7 +47,7 @@ impl Plugin for CombatPlugin {
             .init_resource::<flashlight::Flashlight>()
             .add_message::<HitEvent>()
             .add_systems(Startup, (enemy::load_enemy_assets, pickups::load_pickup_assets, weapons::load_weapon_assets))
-            .add_systems(OnEnter(GameState::Playing), (enemy::spawn_initial, hud::spawn_hud))
+            .add_systems(OnEnter(GameState::Playing), (enemy::spawn_initial, hud::spawn_hud, statusbar::spawn))
             .add_systems(
                 Update,
                 (
@@ -60,6 +61,7 @@ impl Plugin for CombatPlugin {
                     enemy::car_runover,
                     pickups::collect,
                     hud::update_hud,
+                    statusbar::update,
                     hud::update_weapon_sprite,
                     player_death,
                 )

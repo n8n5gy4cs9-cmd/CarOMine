@@ -1,15 +1,15 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **55/91 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **56/91 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
 - [~] **T-032** ART PASS 2 - Player first-person hands + weapons: regenerate fists, pistol, shotgun, SMG, hunting rifle (+flashlight attachment, muzzle flash, shell ejection) as Doom/ROTT-style hand-shaded sprites: gloved/knuckled hands w/ sleeves, metal highlights, wood grain, 4+ frames (idle, fire, recoil, reload), higher res (e.g. 192x144)
 - [~] **T-033** ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)
-- [ ] **T-034** ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique
 - [ ] **T-041** Snow terrain material + footprints/tire tracks decals
 - [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
+- [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
 
 ## P0 Planning (1/1)
 
@@ -31,7 +31,7 @@
 - [x] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)  
   _note: src/manifest.rs, src/settings.rs, .github/workflows/ci.yml_
 
-## P2 Asset generation (placeholders) (13/16)
+## P2 Asset generation (placeholders) (14/16)
 
 - [x] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types  
   _note: tools/gen_enemies.py: goon,hunter,neighbour,wolf,moose sheets 10x8 grid; sprites.json_
@@ -58,7 +58,8 @@
   _note: tools/gen_weapons.py: pistol/shotgun/SMG/rifle/fists with gloved hands, muzzle flash, recoil, reload stages, left/right punches (192x144 x8 frames), wired into HUD. TODO polish: hand detail, flashlight attachment visible, shell ejection, per-weapon tuning_
 - [~] **T-033** ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)  
   _note: tools/gen_world.py: spruce x3, pine x2, birch x2, bare x2, bushes, rocks, drifts, fence, lamp + 16 item icons SDF-rendered with snow-on-top shading. TODO: buildings/facades, textures (still flat generated), vehicle sprites_
-- [ ] **T-034** ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique
+- [x] **T-034** ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique  
+  _note: tools/gen_hud.py + combat/statusbar.rs: Doom-style steel status bar (ammo, health %, arms 1-5, armor %, EUR, need bars) + reactive face portrait (5 damage tiers, look left/right, pain, grin on firing, dead, god mode)_
 - [x] **T-035** Art tooling: tools/pixelkit.py (palette ramps, dither, outline, shading from a 3D-ish light model, sheet packer) so every sprite is built from shaded primitives; keep manifest ids/grids/sprites.json unchanged so replacement is drop-in  
   _note: tooling is sdfrender.py (SDF ray-marcher: ramp shading, ordered dither, AO, depth edge outlines) + rigs; replaces the planned pixelkit_
 

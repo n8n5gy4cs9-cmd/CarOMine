@@ -4,7 +4,7 @@
 > **Quick replace:** overwrite the file at *Path* (same name, same grid/size/format) **or** edit its `path` in `assets/manifest.json`. No code changes needed.
 > All current assets are **generated placeholders** (CC0) made by `tools/gen_*.py`. Regenerate everything: `sh tools/gen_all.sh`.
 
-## 1. Simple list (139 assets)
+## 1. Simple list (142 assets)
 
 | Use | Name (id) | Path (under `assets/`) | Source |
 |---|---|---|---|
@@ -73,7 +73,10 @@
 | Dashboard dial face 'dash_tacho' | `ui.dash_tacho` | `sprites/ui/dash_tacho.png` | generated (tools/gen_dash.py) |
 | Dashboard dial face 'dash_temp' | `ui.dash_temp` | `sprites/ui/dash_temp.png` | generated (tools/gen_dash.py) |
 | Dashboard dial face 'dash_volt' | `ui.dash_volt` | `sprites/ui/dash_volt.png` | generated (tools/gen_dash.py) |
+| Red status-bar digits: 12 glyphs 14x16 in one row: 0-9 % - | `ui.digits` | `sprites/ui/digits.png` | generated (tools/gen_hud.py) |
+| Player face portrait atlas 36x44 cells, 5 cols | `ui.faces` | `sprites/ui/faces.png` | generated (tools/gen_hud.py, SDF-rendered) |
 | Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells | `ui.font` | `sprites/ui/font_atlas.png` | generated (tools/) |
+| Doom-style status bar plate 480x48 | `ui.statusbar` | `sprites/ui/statusbar.png` | generated (tools/gen_hud.py) |
 | Windshield frost overlay | `ui.windshield_frost` | `sprites/ui/windshield_frost.png` | generated (tools/) |
 | Windshield snow overlay level 1/5 | `ui.windshield_snow_1` | `sprites/ui/windshield_snow_1.png` | generated (tools/) |
 | Windshield snow overlay level 2/5 | `ui.windshield_snow_2` | `sprites/ui/windshield_snow_2.png` | generated (tools/) |
@@ -150,7 +153,7 @@
 
 ## 2. Detailed notes
 
-### sprite (78)
+### sprite (81)
 
 **Format:** PNG RGBA, transparent bg, nearest-neighbour friendly. Enemy sheets = grid described in `assets/data/sprites.json` (frame size, cols, rows, anims). Billboards are bottom-anchored. Keep same cell size when replacing, or update sprites.json.
 
@@ -219,7 +222,10 @@
 - `ui.dash_tacho` - Dashboard dial face 'dash_tacho' (128px; game shows it scaled up, nearest). Path `sprites/ui/dash_tacho.png`. License: CC0.
 - `ui.dash_temp` - Dashboard dial face 'dash_temp' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_temp.png`. License: CC0.
 - `ui.dash_volt` - Dashboard dial face 'dash_volt' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_volt.png`. License: CC0.
+- `ui.digits` - Red status-bar digits: 12 glyphs 14x16 in one row: 0-9 % -. Path `sprites/ui/digits.png`. License: CC0.
+- `ui.faces` - Player face portrait atlas 36x44 cells, 5 cols (centre, left, right, pain, grin) x 6 rows (health tiers 100..0%, then dead/god/bloody grin). Path `sprites/ui/faces.png`. License: CC0.
 - `ui.font` - Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells (fallback; real TTF can replace). Path `sprites/ui/font_atlas.png`. License: CC0.  size=192x108
+- `ui.statusbar` - Doom-style status bar plate 480x48 (panels: AMMO, HEALTH, ARMS, FACE, ARMOR, EUR, NEEDS - positions in tools/gen_hud.py PANELS and src/combat/statusbar.rs); game scales it x2 nearest. Path `sprites/ui/statusbar.png`. License: CC0.
 - `ui.windshield_frost` - Windshield frost overlay (edges frosted), cleared by defrost. Path `sprites/ui/windshield_frost.png`. License: CC0.  size=512x256
 - `ui.windshield_snow_1` - Windshield snow overlay level 1/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style. Path `sprites/ui/windshield_snow_1.png`. License: CC0.  size=512x256
 - `ui.windshield_snow_2` - Windshield snow overlay level 2/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style. Path `sprites/ui/windshield_snow_2.png`. License: CC0.  size=512x256

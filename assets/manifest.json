@@ -1007,6 +1007,22 @@
   "license": "CC0",
   "notes": ""
  },
+ "ui.digits": {
+  "path": "sprites/ui/digits.png",
+  "kind": "sprite",
+  "use": "Red status-bar digits: 12 glyphs 14x16 in one row: 0-9 % -",
+  "source": "generated (tools/gen_hud.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.faces": {
+  "path": "sprites/ui/faces.png",
+  "kind": "sprite",
+  "use": "Player face portrait atlas 36x44 cells, 5 cols (centre, left, right, pain, grin) x 6 rows (health tiers 100..0%, then dead/god/bloody grin)",
+  "source": "generated (tools/gen_hud.py, SDF-rendered)",
+  "license": "CC0",
+  "notes": ""
+ },
  "ui.font": {
   "path": "sprites/ui/font_atlas.png",
   "kind": "sprite",
@@ -1014,6 +1030,14 @@
   "source": "generated (tools/)",
   "license": "CC0",
   "notes": " size=192x108"
+ },
+ "ui.statusbar": {
+  "path": "sprites/ui/statusbar.png",
+  "kind": "sprite",
+  "use": "Doom-style status bar plate 480x48 (panels: AMMO, HEALTH, ARMS, FACE, ARMOR, EUR, NEEDS - positions in tools/gen_hud.py PANELS and src/combat/statusbar.rs); game scales it x2 nearest",
+  "source": "generated (tools/gen_hud.py)",
+  "license": "CC0",
+  "notes": ""
  },
  "ui.windshield_frost": {
   "path": "sprites/ui/windshield_frost.png",

@@ -148,8 +148,8 @@
         {
           "id": "T-034",
           "title": "ART PASS 4 - UI/HUD in Doom-style: status bar frame, face/portrait that reacts to damage (Doom marine face idea), bitmap font, weapon/ammo icons, windshield overlays re-done by hand-shaded technique",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_hud.py + combat/statusbar.rs: Doom-style steel status bar (ammo, health %, arms 1-5, armor %, EUR, need bars) + reactive face portrait (5 damage tiers, look left/right, pain, grin on firing, dead, god mode)"
         },
         {
           "id": "T-035",
