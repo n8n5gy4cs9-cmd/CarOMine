@@ -19,5 +19,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install pillow numpy
+      - run: pip install pillow numpy scikit-image
       - run: sh tools/gen_all.sh && git diff --stat

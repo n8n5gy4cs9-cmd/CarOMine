@@ -45,3 +45,8 @@ Multiplayer, mod editor UI, full soft-body physics (Rigs of Rods) - we *import* 
 
 ## 9. Definition of done (v1.0)
 Player can build the starter car from parts, drive it on snowy roads with working wipers/snow-on-glass, get crash-damaged and repair it, fight at least 5 enemy types, survive needs, save/load, pass katsastus and finish the final mission, on macOS arm64 with a .app bundle.
+
+## 10. Status (see task.md / PRD.json for the live list)
+Playable vertical slice complete on Linux (verified by headless rendering); macOS Apple Silicon build is expected to work (same wgpu/Metal path) but **has not been run on a real Mac or GPU yet** - first thing to do on the target machine: `cargo run --release`, check frame rate, lighting (bloom/volumetrics were tuned in software rendering) and audio (no audio device existed in the dev sandbox).
+Implemented: world (terrain, forest, farms, village, weather, day/night, aurora), FPS (5 weapons, 6 enemy types + boss, flashlight), car (physics, faults, workshop, dash, grime), life sim (needs, sauna, shops, gigs), story loop with ending, save/load, menus, EN/FI strings, console + cheats, Doom/ROTT-style pixel art rendered from 3D rigs.
+Open: perf pass, gamepad + rebinding, RoR importer, inventory/tool wheel, mailbox/TV/interiors, quit-to-menu, remaining localisation, art polish passes.
