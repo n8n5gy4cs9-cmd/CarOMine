@@ -39,14 +39,23 @@ pub struct Car {
     pub ground_y: f32,
     pub wheel_spin: f32,
     pub slip: f32, // 0..1 how much the tyres are sliding (for sound/particles/HUD)
+    // derived by build::sim from installed parts / faults
+    pub torque_mult: f32,
+    pub brake_mult: f32,
+    pub grip_mult: f32,
+    pub electrics: bool,
+    pub headlight_power: f32,
+    pub wiper_power: f32,
+    pub warn_temp: bool,
+    pub warn_batt: bool,
 }
 impl Car {
     pub fn new(yaw: f32) -> Self {
         let spec = CarSpec::default();
-        let fuel = spec.fuel_cap * 0.6;
+        let fuel = 6.0;
         Self { spec, tyres: TyreType::Summer, v_long: 0.0, v_lat: 0.0, yaw, yaw_rate: 0.0, steer_in: 0.0, throttle: 0.0, brake: 0.0,
             handbrake: false, steer: 0.0, gear: 1, rpm: 0.0, running: false, fuel, lights: false, wipers: 0, pitch: 0.0, roll: 0.0, ground_y: 0.0,
-            wheel_spin: 0.0, slip: 0.0 }
+            wheel_spin: 0.0, slip: 0.0, torque_mult: 1.0, brake_mult: 1.0, grip_mult: 1.0, electrics: true, headlight_power: 1.0, wiper_power: 1.0, warn_temp: false, warn_batt: false }
     }
     pub fn speed_kmh(&self) -> f32 { self.v_long.abs() * 3.6 }
 }
@@ -66,7 +75,7 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
     let body = server.load(bevy::gltf::GltfAssetLabel::Scene(0).from_asset(man.path("car.body")));
     let wheel_scene = || server.load(bevy::gltf::GltfAssetLabel::Scene(0).from_asset(man.path("car.wheel")));
     let car = commands
-        .spawn((Car::new(yaw), Transform::from_xyz(pos.x, height_at(pos.x, pos.y), pos.y).with_rotation(Quat::from_rotation_y(yaw)), Visibility::default()))
+        .spawn((Car::new(yaw), crate::build::CarParts::starter_shell(), Transform::from_xyz(pos.x, height_at(pos.x, pos.y), pos.y).with_rotation(Quat::from_rotation_y(yaw)), Visibility::default()))
         .with_children(|c| {
             c.spawn((WorldAssetRoot(body), Transform::default()));
             for (front, fz) in [(true, -1.35f32), (false, 1.35)] {

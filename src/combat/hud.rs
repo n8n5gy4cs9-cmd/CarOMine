@@ -52,7 +52,7 @@ pub fn update_hud(
         t.0 = match cars.single() {
             Ok(c) => format!("{:02}:{:02}\n{:3.0} km/h  gear {}\n{:4.0} rpm  fuel {:.0}L\n{} {}{}{}\nsnow on glass {:.0}%",
                 h, m, c.speed_kmh(), match c.gear { -1 => "R".into(), g => g.to_string() }, c.rpm, c.fuel,
-                c.tyres.name(), if c.running { "ENGINE " } else { "engine off(I) " }, if c.lights { "LIGHTS " } else { "" }, if c.wipers > 0 { "WIPERS" } else { "" }, ws.snow * 100.0),
+                c.tyres.name(), if c.running { "ENGINE " } else { "engine off(I) " }, if c.lights { "LIGHTS " } else { "" }, if c.wipers > 0 { "WIPERS" } else { "" }, ws.snow * 100.0) + &format!("{}{}{}", if c.warn_temp { "\n!! ENGINE HOT !!" } else { "" }, if c.warn_batt { "\n!! BATTERY !!" } else { "" }, if !c.electrics { "\n!! NO POWER !!" } else { "" }),
             Err(_) => format!("{:02}:{:02}", h, m),
         };
     }

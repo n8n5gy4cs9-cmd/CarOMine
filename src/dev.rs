@@ -15,7 +15,7 @@ struct DevState { frames: u32, shot_taken_at: Option<u32> }
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds));
+        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds, dev_workshop, dev_ignite));
     }
 }
 
@@ -26,7 +26,7 @@ fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>) {
 
 fn drive(mut commands: Commands, mut d: ResMut<DevState>, state: Res<State<GameState>>, mut next: ResMut<NextState<GameState>>, mut exit: MessageWriter<AppExit>) {
     if std::env::var("CAROMINE_AUTOSTART").is_ok() && *state.get() == GameState::MainMenu { next.set(GameState::Playing); }
-    if *state.get() != GameState::Playing { return; }
+    if matches!(*state.get(), GameState::Boot | GameState::MainMenu) { return; }
     d.frames += 1;
     let Ok(path) = std::env::var("CAROMINE_SHOT") else { return };
     let at: u32 = std::env::var("CAROMINE_SHOT_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(150);
@@ -41,15 +41,19 @@ fn dev_car(
     mut commands: Commands,
     d: Res<DevState>,
     mut ws: ResMut<crate::vehicle::windshield::Windshield>,
-    mut cars: Query<(Entity, &mut crate::vehicle::Car)>,
+    mut cars: Query<(Entity, &mut crate::vehicle::Car, &mut crate::build::CarParts)>,
     cam: Query<Entity, With<crate::player::PlayerCamera>>,
     mut pv: Query<&mut Visibility, With<crate::player::Player>>,
 ) {
     let Ok(v) = std::env::var("CAROMINE_DRIVE") else { return };
     if d.frames != 20 { return; }
     let n: Vec<f32> = v.split(',').filter_map(|s| s.trim().parse().ok()).collect();
-    let Ok((ce, mut car)) = cars.single_mut() else { return };
-    car.running = true; car.lights = true; car.rpm = 900.0;
+    let Ok((ce, mut car, mut parts)) = cars.single_mut() else { return };
+    if std::env::var("CAROMINE_RAW").is_err() {
+        // default for dev driving: a fully built, running car. CAROMINE_RAW=1 keeps the real starting state.
+        *parts = crate::build::CarParts::fully_built();
+        car.running = true; car.lights = true; car.rpm = 900.0; car.fuel = 40.0;
+    }
     if let Ok(w) = std::env::var("CAROMINE_WIPERS") { car.wipers = w.parse().unwrap_or(0); }
     if let Ok(s) = std::env::var("CAROMINE_WS") { ws.snow = s.parse().unwrap_or(0.0); }
     commands.entity(ce).insert(crate::vehicle::Driven);
@@ -81,4 +85,15 @@ fn dev_cmds(d: Res<DevState>, mut out: MessageWriter<crate::console::ConsoleLine
     let Ok(v) = std::env::var("CAROMINE_CMDS") else { return };
     for c in v.split(';') { out.write(crate::console::ConsoleLine(c.trim().to_string())); con.log.push(format!("> {}", c.trim())); }
     if std::env::var("CAROMINE_CONSOLE_OPEN").is_ok() { con.open = true; }
+}
+
+/// CAROMINE_WORKSHOP=1: open the workshop menu at frame 25 (car + player must be adjacent: use CAROMINE_POS near car).
+pub fn dev_workshop(d: Res<DevState>, mut next: ResMut<NextState<GameState>>) {
+    if std::env::var("CAROMINE_WORKSHOP").is_ok() && d.frames == 25 { next.set(GameState::Garage); }
+}
+
+/// CAROMINE_IGNITE=60,90,...  press the ignition at these frames (needs CAROMINE_DRIVE to sit in the car).
+fn dev_ignite(d: Res<DevState>, mut w: MessageWriter<crate::build::Ignition>) {
+    let Ok(v) = std::env::var("CAROMINE_IGNITE") else { return };
+    if v.split(',').filter_map(|s| s.trim().parse::<u32>().ok()).any(|f| f == d.frames) { w.write(crate::build::Ignition); }
 }

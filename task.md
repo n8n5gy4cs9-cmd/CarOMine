@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **28/67 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **33/69 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -89,17 +89,18 @@
   _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
 - [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
 
-## P5 Vehicle simulation (2/9)
+## P5 Vehicle simulation (3/9)
 
 - [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
   _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
 - [x] **T-081** Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag  
   _note: friction circle; spec.rs mu(surface,tyre): summer/winter/studded x snow/packed/ice/gravel_
-- [~] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke  
-  _note: rpm/torque curve/fuel/ignition (I key) in physics.rs. TODO: temp, oil, battery, starter, choke_
+- [x] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke  
+  _note: engine temp, battery, fuel, starter attempts, torque curve, belt, alternator (build/sim.rs)_
 - [~] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake  
   _note: enter/exit with E + driver cam done. TODO: chase/exterior cam, mirrors, steering wheel model_
-- [ ] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop
+- [~] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop  
+  _note: part damage on crash done. TODO: visible body deformation/mesh swap, smoke, broken parts drop_
 - [~] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  
   _note: windshield.rs: snow accumulation, wipers 2 speeds, frost, night tint verified. TODO: swept-arc partial clearing, washer fluid, defrost key_
 - [~] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain  
@@ -107,15 +108,24 @@
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
 
-## P6 Car building + repair (0/7)
+## P6 Car building + repair (4/9)
 
-- [ ] **T-100** Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats
-- [ ] **T-101** Garage mode: lift car, remove/install parts, bolt tightening (simplified), tool wheel (wrench, jack)
-- [ ] **T-102** Malfunction system: realistic faults (dead battery, fouled plugs, flat tire, clogged fuel filter, blown fuse, leaking coolant, worn brakes, frozen fuel line)
-- [ ] **T-103** Diagnosis hints: symptoms -> cause (sounds, smoke, dashboard lights), in-game manual 'Korjaamo-opas'
-- [ ] **T-104** Easy-repair flow after crash (simple repair minigames, cheaper than MSC)
-- [ ] **T-105** Starting project car: old Finnish-style winter wreck delivered in boxes; goal = build + pass inspection (katsastus)
-- [ ] **T-106** Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning
+- [~] **T-100** Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats  
+  _note: src/build/mod.rs: 18 slots w/ condition, inventory, stock parts. TODO: move data to assets/data/parts.json (data-driven), more parts (exhaust, suspension, steering)_
+- [~] **T-101** Garage mode: lift car, remove/install parts, bolt tightening (simplified), tool wheel (wrench, jack)  
+  _note: src/build/workshop.rs: T near car -> Parts/Fluids/Manual menu: install/remove/fix/buy; heavy parts need garage zone. TODO: 3D lift/jack, tool wheel, visual part models in engine bay_
+- [x] **T-102** Malfunction system: realistic faults (dead battery, fouled plugs, flat tire, clogged fuel filter, blown fuse, leaking coolant, worn brakes, frozen fuel line)  
+  _note: build/sim.rs: dead battery, weak battery, fouled plugs, clogged filter, frozen fuel line, overheating+coolant leak, snapped belt, bad alternator, blown fuse, flat tyre, worn brakes/wipers/tyres; verified via scripted headless runs_
+- [x] **T-103** Diagnosis hints: symptoms -> cause (sounds, smoke, dashboard lights), in-game manual 'Korjaamo-opas'  
+  _note: start-up symptom toasts + in-game Korjaamo-opas manual page_
+- [x] **T-104** Easy-repair flow after crash (simple repair minigames, cheaper than MSC)  
+  _note: crash -> per-part damage (hood/bumper/radiator/engine/doors/glass/fuse/tyre), fixes: [F] hammer/patch, replace, change wheel_
+- [x] **T-105** Starting project car: old Finnish-style winter wreck delivered in boxes; goal = build + pass inspection (katsastus)  
+  _note: starter shell + boxes inventory (engine, gearbox, battery, plugs, filter, radiator, alternator, belt); goal: install, fill fluids, start_
+- [~] **T-106** Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning  
+  _note: buy winter(180)/studded(260) tyres done. TODO: block heater, chains, lights upgrade, engine tuning_
+- [ ] **T-107** Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop
+- [ ] **T-108** Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions
 
 ## P7 Game loop + life sim (0/7)
 

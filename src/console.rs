@@ -145,7 +145,7 @@ struct Res0<'w> {
 
 const HELP: &str = "commands: help clear pos | tp <x z|cabin|village|garage|lake|shop> | time <hour> | timespeed <x> | snow <0..1> | ws <0..1> windshield snow
  god fly speed <x> heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
- car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
+ build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
 
 fn exec_cmds(
     mut lines: MessageReader<ConsoleLine>,
@@ -156,6 +156,8 @@ fn exec_cmds(
     mut mats: ResMut<Assets<StandardMaterial>>,
     mut player: Query<(&mut Transform, &mut Player), Without<Car>>,
     mut cars: Query<(&mut Transform, &mut Car), Without<Player>>,
+    mut bparts: Query<&mut crate::build::CarParts>,
+    mut inv: ResMut<crate::build::Inventory>,
     enemies: Query<Entity, With<Enemy>>,
     mut cam: Query<&mut Projection, With<PlayerCamera>>,
     mut exit: MessageWriter<AppExit>,
@@ -225,6 +227,21 @@ fn exec_cmds(
                 "start" => { if let Ok((_, mut c)) = cars.single_mut() { c.running = true; c.fuel = c.fuel.max(5.0); out.push("engine started".into()); } }
                 _ => out.push("usage: car bring|goto|tyres <summer|winter|studded>|lights|start".into()),
             },
+            "build" => { if let Ok(mut p) = bparts.single_mut() { match a(1) {
+                "all" => { *p = crate::build::CarParts::fully_built(); out.push("car fully built (all parts 100%, coolant+battery full)".into()); }
+                "shell" => { *p = crate::build::CarParts::starter_shell(); *inv = crate::build::Inventory::default(); out.push("car reset to the shell + boxes (new game state)".into()); }
+                _ => out.push("usage: build all|shell".into()) } } }
+            "repair" => { if let Ok(mut p) = bparts.single_mut() { for s in crate::build::ALL { let st = p.get(s); if st.installed { p.set(s, true, 1.0); } } p.flat = false; p.belt_snapped = false; p.frozen_line = false; p.coolant = 1.0; p.battery = 1.0; out.push("all installed parts repaired, fluids full".into()); } }
+            "fault" => { if let Ok(mut p) = bparts.single_mut() {
+                use crate::build::Slot;
+                match a(1) {
+                    "freeze" => p.frozen_line = true, "flat" => p.flat = true, "plugs" => p.set(Slot::SparkPlugs, true, 0.05), "filter" => p.set(Slot::FuelFilter, true, 0.03),
+                    "battery" => p.battery = 0.0, "coolant" => p.coolant = 0.0, "belt" => { p.set(Slot::Belt, true, 0.0); p.belt_snapped = true; }
+                    "fuse" => p.set(Slot::Fuse, true, 0.0), "alternator" => p.set(Slot::Alternator, true, 0.0), "radiator" => p.set(Slot::Radiator, true, 0.2),
+                    "brakes" => p.set(Slot::Brakes, true, 0.05), "engine" => p.set(Slot::Engine, true, 0.04), "overheat" => p.temp = 112.0,
+                    _ => { out.push("usage: fault freeze|flat|plugs|filter|battery|coolant|belt|fuse|alternator|radiator|brakes|engine|overheat".into()); }
+                } if !a(1).is_empty() { out.push(format!("fault injected: {}", a(1))); } } }
+            "parts" => { if let Ok(p) = bparts.single() { for s in crate::build::ALL { let st = p.get(s); out.push(format!("{:<16} {}", s.info().name, if st.installed { format!("{:.0}%", st.cond * 100.0) } else { "missing".into() })); } out.push(format!("coolant {:.0}% battery {:.0}% temp {:.0}C frozen {} flat {}", p.coolant * 100.0, p.battery * 100.0, p.temp, p.frozen_line, p.flat)); } }
             "quit" | "exit" => { exit.write(AppExit::Success); }
             "" => {}
             other => out.push(format!("unknown command '{other}' (try 'help')")),

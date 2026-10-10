@@ -256,8 +256,8 @@
         {
           "id": "T-082",
           "title": "Engine model: torque curve, temperature, oil, fuel, battery, starter, choke",
-          "status": "wip",
-          "notes": "rpm/torque curve/fuel/ignition (I key) in physics.rs. TODO: temp, oil, battery, starter, choke"
+          "status": "done",
+          "notes": "engine temp, battery, fuel, starter attempts, torque curve, belt, alternator (build/sim.rs)"
         },
         {
           "id": "T-083",
@@ -268,8 +268,8 @@
         {
           "id": "T-084",
           "title": "Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "part damage on crash done. TODO: visible body deformation/mesh swap, smoke, broken parts drop"
         },
         {
           "id": "T-085",
@@ -304,42 +304,54 @@
         {
           "id": "T-100",
           "title": "Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "src/build/mod.rs: 18 slots w/ condition, inventory, stock parts. TODO: move data to assets/data/parts.json (data-driven), more parts (exhaust, suspension, steering)"
         },
         {
           "id": "T-101",
           "title": "Garage mode: lift car, remove/install parts, bolt tightening (simplified), tool wheel (wrench, jack)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "src/build/workshop.rs: T near car -> Parts/Fluids/Manual menu: install/remove/fix/buy; heavy parts need garage zone. TODO: 3D lift/jack, tool wheel, visual part models in engine bay"
         },
         {
           "id": "T-102",
           "title": "Malfunction system: realistic faults (dead battery, fouled plugs, flat tire, clogged fuel filter, blown fuse, leaking coolant, worn brakes, frozen fuel line)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "build/sim.rs: dead battery, weak battery, fouled plugs, clogged filter, frozen fuel line, overheating+coolant leak, snapped belt, bad alternator, blown fuse, flat tyre, worn brakes/wipers/tyres; verified via scripted headless runs"
         },
         {
           "id": "T-103",
           "title": "Diagnosis hints: symptoms -> cause (sounds, smoke, dashboard lights), in-game manual 'Korjaamo-opas'",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "start-up symptom toasts + in-game Korjaamo-opas manual page"
         },
         {
           "id": "T-104",
           "title": "Easy-repair flow after crash (simple repair minigames, cheaper than MSC)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "crash -> per-part damage (hood/bumper/radiator/engine/doors/glass/fuse/tyre), fixes: [F] hammer/patch, replace, change wheel"
         },
         {
           "id": "T-105",
           "title": "Starting project car: old Finnish-style winter wreck delivered in boxes; goal = build + pass inspection (katsastus)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "starter shell + boxes inventory (engine, gearbox, battery, plugs, filter, radiator, alternator, belt); goal: install, fill fluids, start"
         },
         {
           "id": "T-106",
           "title": "Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning",
+          "status": "wip",
+          "notes": "buy winter(180)/studded(260) tyres done. TODO: block heater, chains, lights upgrade, engine tuning"
+        },
+        {
+          "id": "T-107",
+          "title": "Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-108",
+          "title": "Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions",
           "status": "todo",
           "notes": ""
         }

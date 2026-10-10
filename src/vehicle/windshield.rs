@@ -54,7 +54,7 @@ pub fn update(time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky
             ws.wiper_dir = if wipers > 0 { 1.0 } else { 0.0 };
         }
         // wiper moving clears snow
-        if wipers > 0 { ws.snow -= dt * (0.35 + 0.25 * wipers as f32); }
+        if wipers > 0 { ws.snow -= dt * (0.35 + 0.25 * wipers as f32) * driven.map(|c| c.wiper_power).unwrap_or(1.0); }
     }
     ws.snow = ws.snow.clamp(0.0, 1.0);
     // frost: forms at night when engine is off, melts with engine (heater)

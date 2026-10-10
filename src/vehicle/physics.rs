@@ -7,7 +7,7 @@ const G: f32 = 9.81;
 #[derive(Resource, Default)]
 pub struct DevDrive { pub throttle: f32, pub steer: f32, pub handbrake: bool }
 
-pub fn read_input(dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
+pub fn read_input(mut ign: MessageWriter<crate::build::Ignition>, dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
     let Ok(mut car) = q.single_mut() else { return };
     let dt = time.delta_secs();
     let steer = (keys.pressed(kb.left) as i32 - keys.pressed(kb.right) as i32) as f32;
@@ -29,9 +29,7 @@ pub fn read_input(dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, k
     }
     car.handbrake = keys.pressed(kb.handbrake);
     if let Some(d) = dev { if d.throttle != 0.0 { car.throttle = d.throttle; car.brake = 0.0; car.gear = 1; } if d.steer != 0.0 { car.steer_in = d.steer; } if d.handbrake { car.handbrake = true; } }
-    if keys.just_pressed(kb.ignition) {
-        if car.running { car.running = false; } else if car.fuel > 0.0 { car.running = true; car.rpm = car.spec.idle_rpm; }
-    }
+    if keys.just_pressed(kb.ignition) { ign.write(crate::build::Ignition); }
     if keys.just_pressed(kb.lights) { car.lights = !car.lights; }
     if keys.just_pressed(kb.wipers) { car.wipers = (car.wipers + 1) % 3; }
 }
@@ -63,7 +61,7 @@ fn step(car: &mut Car, t: &mut Transform, dt: f32, driven: bool, entity: Entity,
     let (a, b) = (s.cg_front, s.wheelbase - s.cg_front);
     let pos = t.translation;
     let surf = surface_at(pos.x, pos.z);
-    let mu = mu(surf, car.tyres);
+    let mu = mu(surf, car.tyres) * car.grip_mult;
     let m = s.mass;
     let fz_f = m * G * b / s.wheelbase;
     let fz_r = m * G * a / s.wheelbase;
@@ -86,7 +84,7 @@ fn step(car: &mut Car, t: &mut Transform, dt: f32, driven: bool, entity: Entity,
     let can_drive = car.running && car.fuel > 0.0;
     let mut drive_f = 0.0;
     if can_drive && car.throttle > 0.0 && car.rpm < s.redline {
-        let tq = s.torque_curve(car.rpm) * car.throttle;
+        let tq = s.torque_curve(car.rpm) * car.throttle * car.torque_mult;
         drive_f = tq * ratio * 0.85 / s.wheel_r;
         if car.gear < 0 { drive_f = -drive_f; }
         car.fuel = (car.fuel - s.fuel_burn * car.throttle * dt).max(0.0);
@@ -100,7 +98,7 @@ fn step(car: &mut Car, t: &mut Transform, dt: f32, driven: bool, entity: Entity,
 
     // --- brakes (60/40), handbrake locks rear
     let sgn = if car.v_long.abs() < 0.05 { 0.0 } else { car.v_long.signum() };
-    let brake_total = car.brake * s.brake_force;
+    let brake_total = car.brake * s.brake_force * car.brake_mult;
     let mut fx_f = -sgn * brake_total * 0.6;
     let mut fx_r = drive_f - sgn * brake_total * 0.4;
     let hb = car.handbrake;
@@ -203,6 +201,6 @@ pub fn visuals(
         }
     }
     for (mut l, p) in &mut lights {
-        if let Ok(c) = cars.get(p.parent()) { l.intensity = if c.lights { 3_000_000.0 } else { 0.0 }; }
+        if let Ok(c) = cars.get(p.parent()) { l.intensity = if c.lights && c.electrics { 3_000_000.0 * c.headlight_power } else { 0.0 }; }
     }
 }
