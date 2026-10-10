@@ -139,6 +139,7 @@ fn step(car: &mut Car, t: &mut Transform, dt: f32, driven: bool, entity: Entity,
         car.yaw_rate *= 1.0 - (6.0 * dt).min(1.0);
     }
     car.yaw += car.yaw_rate * dt;
+    car.odo_m += car.v_long.abs() * dt;
 
     // world integration (x forward, y LEFT)
     let (sy, cy) = car.yaw.sin_cos();
@@ -191,10 +192,14 @@ fn step(car: &mut Car, t: &mut Transform, dt: f32, driven: bool, entity: Entity,
 }
 
 pub fn visuals(
+    mut steer: Query<(&mut Transform, &ChildOf), (With<SteeringWheel>, Without<WheelVisual>)>,
     mut wheels: Query<(&WheelVisual, &mut Transform, &ChildOf), Without<Car>>,
     cars: Query<&Car>,
     mut lights: Query<(&mut SpotLight, &ChildOf), With<Headlight>>,
 ) {
+    for (mut tr, p) in &mut steer {
+        if let Ok(c) = cars.get(p.parent()) { tr.rotation = Quat::from_rotation_x(STEER_TILT) * Quat::from_rotation_z(c.steer * 7.0); }
+    }
     for (w, mut tr, p) in &mut wheels {
         if let Ok(c) = cars.get(p.parent()) {
             let steer = if w.front { c.steer } else { 0.0 };

@@ -4,8 +4,14 @@ import numpy as np
 
 class Mesh:
     def __init__(self): self.groups = {}   # material name -> (color, tris list)
-    def mat(self, name, color): self.groups.setdefault(name, [color, []]); return name
-    def tri(self, m, a, b, c): self.groups[m][1].append((a, b, c))
+    def mat(self, name, color):
+        if name not in self.groups: self.groups[name] = [color, [], [], []]
+        return name
+    def tri(self, m, a, b, c, na=None, nb=None, nc=None, ca=None, cb=None, cc=None):
+        g = self.groups[m]; g[1].append((a, b, c)); g[2].append(None if na is None else (na, nb, nc)); g[3].append(None if ca is None else (ca, cb, cc))
+    def mesh(self, m, verts, faces, normals):
+        """Add an indexed mesh with smooth per-vertex normals to material m."""
+        for f in faces: self.tri(m, verts[f[0]], verts[f[1]], verts[f[2]], normals[f[0]], normals[f[1]], normals[f[2]])
     def quad(self, m, a, b, c, d): self.tri(m, a, b, c); self.tri(m, a, c, d)
     def box(self, m, cx, cy, cz, sx, sy, sz):
         x0, x1, y0, y1, z0, z1 = cx - sx / 2, cx + sx / 2, cy - sy / 2, cy + sy / 2, cz - sz / 2, cz + sz / 2
@@ -32,12 +38,25 @@ class Mesh:
 
     def write(self, path):
         bin_ = bytearray(); views, accs, prims, mats = [], [], [], []
-        for name, (color, tris) in self.groups.items():
+        for name, grp in self.groups.items():
+            color, tris = grp[0], grp[1]
+            norms = grp[2] if len(grp) > 2 else [None] * len(tris)
+            cols = grp[3] if len(grp) > 3 else [None] * len(tris)
+            has_col = len(cols) == len(tris) and all(x is not None for x in cols) and len(cols) > 0
             if not tris: continue
             pos = np.array(tris, np.float32).reshape(-1, 3)
             tr = pos.reshape(-1, 3, 3); n = np.cross(tr[:, 1] - tr[:, 0], tr[:, 2] - tr[:, 0]); n /= (np.linalg.norm(n, axis=1, keepdims=True) + 1e-9)
             nor = np.repeat(n, 3, axis=0).astype(np.float32)
+            if all(x is not None for x in norms) and len(norms) == len(tris): nor = np.array(norms, np.float32).reshape(-1, 3)
             idx = np.arange(len(pos), dtype=np.uint32)
+            if all(x is not None for x in norms) and len(norms) == len(tris):
+                # smooth mesh: weld identical (position, normal) vertices -> indexed geometry (much smaller files)
+                vc = np.array(cols, np.float32).reshape(-1, 4) if has_col else np.zeros((len(pos), 0), np.float32)
+                key = np.round(np.concatenate([pos, nor, vc], 1) * 2000).astype(np.int64)
+                _, first, inv = np.unique(key, axis=0, return_index=True, return_inverse=True)
+                pos, nor, idx = pos[first], nor[first], inv.reshape(-1).astype(np.uint32)
+                if has_col: vc = vc[first]
+            else: has_col = False
             def add(arr, target, typ, ctype, cnt, mn=None, mx=None):
                 while len(bin_) % 4: bin_.append(0)
                 off = len(bin_); bin_.extend(arr.tobytes())
@@ -47,8 +66,16 @@ class Mesh:
                 accs.append(a); return len(accs) - 1
             ap = add(pos, 34962, "VEC3", 5126, len(pos), pos.min(0).tolist(), pos.max(0).tolist())
             an = add(nor, 34962, "VEC3", 5126, len(nor)); ai = add(idx, 34963, "SCALAR", 5125, len(idx))
-            mats.append({"name": name, "pbrMetallicRoughness": {"baseColorFactor": [c / 255 for c in color[:3]] + [color[3] / 255 if len(color) > 3 else 1.0], "metallicFactor": 0.1, "roughnessFactor": 0.8}})
-            prims.append({"attributes": {"POSITION": ap, "NORMAL": an}, "indices": ai, "material": len(mats) - 1})
+            attrs = {"POSITION": ap, "NORMAL": an}
+            if has_col:
+                cb = np.clip(np.round(vc * 255), 0, 255).astype(np.uint8)
+                ci = add(cb, 34962, "VEC4", 5121, len(cb)); accs[ci]["normalized"] = True; attrs["COLOR_0"] = ci
+            alpha = color[3] / 255 if len(color) > 3 else 1.0
+            md = {"name": name, "pbrMetallicRoughness": {"baseColorFactor": [c / 255 for c in color[:3]] + [alpha], "metallicFactor": 0.1, "roughnessFactor": 0.8}}
+            if alpha < 1.0: md["alphaMode"] = "BLEND"
+            if name in ("lamp", "tail") : md["emissiveFactor"] = [c / 255 * 0.8 for c in color[:3]]
+            mats.append(md)
+            prims.append({"attributes": attrs, "indices": ai, "material": len(mats) - 1})
         g = {"asset": {"version": "2.0", "generator": "CarOMine tools/glb.py"}, "scene": 0, "scenes": [{"nodes": [0]}], "nodes": [{"mesh": 0}],
              "meshes": [{"primitives": prims}], "materials": mats, "buffers": [{"byteLength": len(bin_)}], "bufferViews": views, "accessors": accs}
         js = json.dumps(g).encode(); js += b" " * (-len(js) % 4)

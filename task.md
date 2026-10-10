@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **51/86 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **55/91 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -113,7 +113,7 @@
 - [x] **T-067** Enemy population director (combat/director.rs): spawns by area/time/weather near player, culls far  
   _note: combat/director.rs_
 
-## P5 Vehicle simulation (5/9)
+## P5 Vehicle simulation (9/14)
 
 - [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
   _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
@@ -131,6 +131,11 @@
   _note: headlights toggle L. TODO: brake lights, interior light, battery drain_
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
+- [x] **T-089** Car model: smooth SDF-meshed sedan (marching cubes) with hollow cabin, interior (dashboard, seats), glass, bumpers, lamps, wheel arches
+- [x] **T-090** Baked grime: per-vertex mud/slush up the lower body + arches, rust at sills, stone chips, scratches, sun-faded roof, dirty glass; muddy tyres/rims
+- [x] **T-091** Working steering wheel: separate glTF, spins with steering input (7x ratio, tilted column)
+- [x] **T-092** Instrument cluster (vehicle/dash.rs): analog tacho, speedo, fuel, coolant temp, oil, volts with inertia; 9 warning lights (battery, oil, check-engine, brake, temp, fuel, lights, ICE warning, wipers); clock, outside temp, gear, odometer
+- [ ] **T-093** Dash polish: backlight at night, turn signals + indicator ticks, fuel gauge calibration, odometer persistence, dynamic dirt accumulation, windshield dirt/wiper smear, 3D gauge cluster on the dash mesh
 
 ## P6 Car building + repair (6/9)
 

@@ -1,5 +1,6 @@
 //! Vehicle: bicycle-model dynamics with friction circle (slippery winter!), terrain following,
 //! enter/exit, crash events, lights, wipers + windshield snow.
+pub mod dash;
 pub mod physics;
 pub mod spec;
 pub mod windshield;
@@ -48,6 +49,8 @@ pub struct Car {
     pub wiper_power: f32,
     pub warn_temp: bool,
     pub warn_batt: bool,
+    pub oil: f32,
+    pub odo_m: f32,
 }
 impl Car {
     pub fn new(yaw: f32) -> Self {
@@ -55,7 +58,7 @@ impl Car {
         let fuel = 6.0;
         Self { spec, tyres: TyreType::Summer, v_long: 0.0, v_lat: 0.0, yaw, yaw_rate: 0.0, steer_in: 0.0, throttle: 0.0, brake: 0.0,
             handbrake: false, steer: 0.0, gear: 1, rpm: 0.0, running: false, fuel, lights: false, wipers: 0, pitch: 0.0, roll: 0.0, ground_y: 0.0,
-            wheel_spin: 0.0, slip: 0.0, torque_mult: 1.0, brake_mult: 1.0, grip_mult: 1.0, electrics: true, headlight_power: 1.0, wiper_power: 1.0, warn_temp: false, warn_batt: false }
+            wheel_spin: 0.0, slip: 0.0, torque_mult: 1.0, brake_mult: 1.0, grip_mult: 1.0, electrics: true, headlight_power: 1.0, wiper_power: 1.0, warn_temp: false, warn_batt: false, oil: 0.0, odo_m: 187_342_000.0 }
     }
     pub fn speed_kmh(&self) -> f32 { self.v_long.abs() * 3.6 }
 }
@@ -70,6 +73,11 @@ pub struct Driven;
 
 #[derive(Component)]
 pub struct WheelVisual { pub front: bool, pub side: f32 }
+
+/// The 3D steering wheel in the cabin; spun by the steering input.
+#[derive(Component)]
+pub struct SteeringWheel;
+pub const STEER_TILT: f32 = -0.45;
 
 /// Fired on collision. `speed` = closing speed m/s. Damage system (T-084) listens.
 #[derive(Message, Clone, Debug)]
@@ -87,6 +95,8 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
                     c.spawn((WorldAssetRoot(wheel_scene()), Transform::from_xyz(side * 0.78, 0.32, fz), WheelVisual { front, side }));
                 }
             }
+            // steering wheel (driver side, left-hand drive)
+            c.spawn((WorldAssetRoot(server.load(bevy::gltf::GltfAssetLabel::Scene(0).from_asset(man.path("car.steering")))), Transform::from_xyz(-0.38, 1.0, -0.47).with_rotation(Quat::from_rotation_x(STEER_TILT)), SteeringWheel));
             // headlights
             for sx in [-0.6f32, 0.6] {
                 c.spawn((
@@ -195,7 +205,7 @@ impl Plugin for VehiclePlugin {
     fn build(&self, app: &mut App) {
         app.add_message::<Crash>().init_resource::<ChaseCam>()
             .init_resource::<windshield::Windshield>()
-            .add_systems(OnEnter(GameState::Playing), (spawn_start_car, windshield::spawn_overlay))
+            .add_systems(OnEnter(GameState::Playing), (spawn_start_car, windshield::spawn_overlay, dash::spawn))
             .add_systems(
                 Update,
                 (
@@ -205,6 +215,7 @@ impl Plugin for VehiclePlugin {
                     physics::visuals,
                     driver_look,
                     body_damage,
+                    dash::update,
                     windshield::update,
                     windshield::show,
                 )

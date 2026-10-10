@@ -4,7 +4,7 @@
 > **Quick replace:** overwrite the file at *Path* (same name, same grid/size/format) **or** edit its `path` in `assets/manifest.json`. No code changes needed.
 > All current assets are **generated placeholders** (CC0) made by `tools/gen_*.py`. Regenerate everything: `sh tools/gen_all.sh`.
 
-## 1. Simple list (129 assets)
+## 1. Simple list (139 assets)
 
 | Use | Name (id) | Path (under `assets/`) | Source |
 |---|---|---|---|
@@ -64,6 +64,15 @@
 | Static billboard: tree.spruce variant 2 | `tree.spruce.2` | `sprites/nature/tree_spruce_2.png` | generated (tools/gen_world.py, SDF-rendered) |
 | HUD bar frame 256x24 | `ui.bar_frame` | `sprites/ui/bar_frame.png` | generated (tools/) |
 | Crosshair 32x32 | `ui.crosshair` | `sprites/ui/crosshair.png` | generated (tools/) |
+| Dashboard dial face 'dash_fuel' | `ui.dash_fuel` | `sprites/ui/dash_fuel.png` | generated (tools/gen_dash.py) |
+| Warning-light icon strip: 9 white 32x32 silhouettes | `ui.dash_icons` | `sprites/ui/dash_icons.png` | generated (tools/gen_dash.py) |
+| Dial needle 128px: points UP, rotated about the image centre by the game | `ui.dash_needle` | `sprites/ui/dash_needle.png` | generated (tools/gen_dash.py) |
+| Dial needle 80px: points UP, rotated about the image centre by the game | `ui.dash_needle_small` | `sprites/ui/dash_needle_small.png` | generated (tools/gen_dash.py) |
+| Dashboard dial face 'dash_oil' | `ui.dash_oil` | `sprites/ui/dash_oil.png` | generated (tools/gen_dash.py) |
+| Dashboard dial face 'dash_speedo' | `ui.dash_speedo` | `sprites/ui/dash_speedo.png` | generated (tools/gen_dash.py) |
+| Dashboard dial face 'dash_tacho' | `ui.dash_tacho` | `sprites/ui/dash_tacho.png` | generated (tools/gen_dash.py) |
+| Dashboard dial face 'dash_temp' | `ui.dash_temp` | `sprites/ui/dash_temp.png` | generated (tools/gen_dash.py) |
+| Dashboard dial face 'dash_volt' | `ui.dash_volt` | `sprites/ui/dash_volt.png` | generated (tools/gen_dash.py) |
 | Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells | `ui.font` | `sprites/ui/font_atlas.png` | generated (tools/) |
 | Windshield frost overlay | `ui.windshield_frost` | `sprites/ui/windshield_frost.png` | generated (tools/) |
 | Windshield snow overlay level 1/5 | `ui.windshield_snow_1` | `sprites/ui/windshield_snow_1.png` | generated (tools/) |
@@ -92,8 +101,9 @@
 | Tileable 128x128 texture: wood | `tex.wood` | `textures/wood.png` | generated (tools/) |
 | Tileable 128x128 texture: wood_red | `tex.wood_red` | `textures/wood_red.png` | generated (tools/) |
 | Low-poly house for 2D/3D hybrid near LOD | `building.house3d` | `models/house.glb` | generated (tools/) |
-| Player car body | `car.body` | `models/car_body.glb` | generated (tools/) |
-| Wheel+tyre, axis X, radius 0.32m | `car.wheel` | `models/car_wheel.glb` | generated (tools/) |
+| Player car body | `car.body` | `models/car_body.glb` | generated (tools/gen_car.py, marching cubes) |
+| Steering wheel | `car.steering` | `models/car_steering.glb` | generated (tools/gen_car.py, marching cubes) |
+| Wheel + tyre with tread and 6-hole rim | `car.wheel` | `models/car_wheel.glb` | generated (tools/gen_car.py, marching cubes) |
 | Battery placeholder | `part.battery` | `models/part_battery.glb` | generated (tools/) |
 | Bumper placeholder | `part.bumper` | `models/part_bumper.glb` | generated (tools/) |
 | Door panel placeholder | `part.door` | `models/part_door.glb` | generated (tools/) |
@@ -140,7 +150,7 @@
 
 ## 2. Detailed notes
 
-### sprite (69)
+### sprite (78)
 
 **Format:** PNG RGBA, transparent bg, nearest-neighbour friendly. Enemy sheets = grid described in `assets/data/sprites.json` (frame size, cols, rows, anims). Billboards are bottom-anchored. Keep same cell size when replacing, or update sprites.json.
 
@@ -200,6 +210,15 @@
 - `tree.spruce.2` - Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_spruce_2.png`. License: CC0. size=96x168; keep aspect when replacing
 - `ui.bar_frame` - HUD bar frame 256x24 (health/needs/fuel). Path `sprites/ui/bar_frame.png`. License: CC0.  size=256x24
 - `ui.crosshair` - Crosshair 32x32. Path `sprites/ui/crosshair.png`. License: CC0.  size=32x32
+- `ui.dash_fuel` - Dashboard dial face 'dash_fuel' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_fuel.png`. License: CC0.
+- `ui.dash_icons` - Warning-light icon strip: 9 white 32x32 silhouettes (battery, oil, engine, brake, temp, fuel, lights, ice, wipers); tinted by the game. Path `sprites/ui/dash_icons.png`. License: CC0. order: 0 battery,1 oil,2 check engine,3 brake,4 coolant temp,5 fuel,6 lights,7 ice,8 wipers
+- `ui.dash_needle` - Dial needle 128px: points UP, rotated about the image centre by the game. Path `sprites/ui/dash_needle.png`. License: CC0.
+- `ui.dash_needle_small` - Dial needle 80px: points UP, rotated about the image centre by the game. Path `sprites/ui/dash_needle_small.png`. License: CC0.
+- `ui.dash_oil` - Dashboard dial face 'dash_oil' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_oil.png`. License: CC0.
+- `ui.dash_speedo` - Dashboard dial face 'dash_speedo' (128px; game shows it scaled up, nearest). Path `sprites/ui/dash_speedo.png`. License: CC0.
+- `ui.dash_tacho` - Dashboard dial face 'dash_tacho' (128px; game shows it scaled up, nearest). Path `sprites/ui/dash_tacho.png`. License: CC0.
+- `ui.dash_temp` - Dashboard dial face 'dash_temp' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_temp.png`. License: CC0.
+- `ui.dash_volt` - Dashboard dial face 'dash_volt' (80px; game shows it scaled up, nearest). Path `sprites/ui/dash_volt.png`. License: CC0.
 - `ui.font` - Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells (fallback; real TTF can replace). Path `sprites/ui/font_atlas.png`. License: CC0.  size=192x108
 - `ui.windshield_frost` - Windshield frost overlay (edges frosted), cleared by defrost. Path `sprites/ui/windshield_frost.png`. License: CC0.  size=512x256
 - `ui.windshield_snow_1` - Windshield snow overlay level 1/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style. Path `sprites/ui/windshield_snow_1.png`. License: CC0.  size=512x256
@@ -233,13 +252,14 @@
 - `tex.wood` - Tileable 128x128 texture: wood. Path `textures/wood.png`. License: CC0. seamless; keep tileable size=128x128
 - `tex.wood_red` - Tileable 128x128 texture: wood_red. Path `textures/wood_red.png`. License: CC0. seamless; keep tileable size=128x128
 
-### model (12)
+### model (13)
 
 **Format:** glTF binary (.glb), metres, +Y up, -Z forward. Cars: origin at wheelbase centre on ground; wheels are separate `car.wheel` (axis X). Car parts are swappable per `assets/data/parts.json` (planned).
 
 - `building.house3d` - Low-poly house for 2D/3D hybrid near LOD. Path `models/house.glb`. License: CC0. glb, metres, +Y up, -Z forward
-- `car.body` - Player car body (wagon), paint/glass/trim materials; replace with any glb, origin at wheelbase centre. Path `models/car_body.glb`. License: CC0. glb, metres, +Y up, -Z forward
-- `car.wheel` - Wheel+tyre, axis X, radius 0.32m. Path `models/car_wheel.glb`. License: CC0. glb, metres, +Y up, -Z forward
+- `car.body` - Player car body (smooth SDF mesh: paint, glass, trim, chrome, lamps, interior with dashboard/wheel/seats). Path `models/car_body.glb`. License: CC0. origin mid-wheelbase on ground, -Z forward, wheels separate; replace with any glb (keep driver eye ~(-0.38,1.12,-0.15))
+- `car.steering` - Steering wheel (disc in the XY plane, hub at origin; game spins it about its Z axis with the steering input). Path `models/car_steering.glb`. License: CC0.
+- `car.wheel` - Wheel + tyre with tread and 6-hole rim (axis X, radius 0.32 m). Path `models/car_wheel.glb`. License: CC0.
 - `part.battery` - Battery placeholder. Path `models/part_battery.glb`. License: CC0. glb, metres, +Y up, -Z forward
 - `part.bumper` - Bumper placeholder. Path `models/part_bumper.glb`. License: CC0. glb, metres, +Y up, -Z forward
 - `part.door` - Door panel placeholder. Path `models/part_door.glb`. License: CC0. glb, metres, +Y up, -Z forward

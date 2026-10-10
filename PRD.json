@@ -366,6 +366,36 @@
           "title": "RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)",
           "status": "todo",
           "notes": ""
+        },
+        {
+          "id": "T-089",
+          "title": "Car model: smooth SDF-meshed sedan (marching cubes) with hollow cabin, interior (dashboard, seats), glass, bumpers, lamps, wheel arches",
+          "status": "done",
+          "notes": ""
+        },
+        {
+          "id": "T-090",
+          "title": "Baked grime: per-vertex mud/slush up the lower body + arches, rust at sills, stone chips, scratches, sun-faded roof, dirty glass; muddy tyres/rims",
+          "status": "done",
+          "notes": ""
+        },
+        {
+          "id": "T-091",
+          "title": "Working steering wheel: separate glTF, spins with steering input (7x ratio, tilted column)",
+          "status": "done",
+          "notes": ""
+        },
+        {
+          "id": "T-092",
+          "title": "Instrument cluster (vehicle/dash.rs): analog tacho, speedo, fuel, coolant temp, oil, volts with inertia; 9 warning lights (battery, oil, check-engine, brake, temp, fuel, lights, ICE warning, wipers); clock, outside temp, gear, odometer",
+          "status": "done",
+          "notes": ""
+        },
+        {
+          "id": "T-093",
+          "title": "Dash polish: backlight at night, turn signals + indicator ticks, fuel gauge calibration, odometer persistence, dynamic dirt accumulation, windshield dirt/wiper smear, 3D gauge cluster on the dash mesh",
+          "status": "todo",
+          "notes": ""
         }
       ]
     },

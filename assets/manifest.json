@@ -130,18 +130,26 @@
  "car.body": {
   "path": "models/car_body.glb",
   "kind": "model",
-  "use": "Player car body (wagon), paint/glass/trim materials; replace with any glb, origin at wheelbase centre",
-  "source": "generated (tools/)",
+  "use": "Player car body (smooth SDF mesh: paint, glass, trim, chrome, lamps, interior with dashboard/wheel/seats)",
+  "source": "generated (tools/gen_car.py, marching cubes)",
   "license": "CC0",
-  "notes": "glb, metres, +Y up, -Z forward"
+  "notes": "origin mid-wheelbase on ground, -Z forward, wheels separate; replace with any glb (keep driver eye ~(-0.38,1.12,-0.15))"
+ },
+ "car.steering": {
+  "path": "models/car_steering.glb",
+  "kind": "model",
+  "use": "Steering wheel (disc in the XY plane, hub at origin; game spins it about its Z axis with the steering input)",
+  "source": "generated (tools/gen_car.py, marching cubes)",
+  "license": "CC0",
+  "notes": ""
  },
  "car.wheel": {
   "path": "models/car_wheel.glb",
   "kind": "model",
-  "use": "Wheel+tyre, axis X, radius 0.32m",
-  "source": "generated (tools/)",
+  "use": "Wheel + tyre with tread and 6-hole rim (axis X, radius 0.32 m)",
+  "source": "generated (tools/gen_car.py, marching cubes)",
   "license": "CC0",
-  "notes": "glb, metres, +Y up, -Z forward"
+  "notes": ""
  },
  "data.strings_en": {
   "path": "data/strings_en.json",
@@ -926,6 +934,78 @@
   "source": "generated (tools/)",
   "license": "CC0",
   "notes": " size=32x32"
+ },
+ "ui.dash_fuel": {
+  "path": "sprites/ui/dash_fuel.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_fuel' (80px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_icons": {
+  "path": "sprites/ui/dash_icons.png",
+  "kind": "sprite",
+  "use": "Warning-light icon strip: 9 white 32x32 silhouettes (battery, oil, engine, brake, temp, fuel, lights, ice, wipers); tinted by the game",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": "order: 0 battery,1 oil,2 check engine,3 brake,4 coolant temp,5 fuel,6 lights,7 ice,8 wipers"
+ },
+ "ui.dash_needle": {
+  "path": "sprites/ui/dash_needle.png",
+  "kind": "sprite",
+  "use": "Dial needle 128px: points UP, rotated about the image centre by the game",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_needle_small": {
+  "path": "sprites/ui/dash_needle_small.png",
+  "kind": "sprite",
+  "use": "Dial needle 80px: points UP, rotated about the image centre by the game",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_oil": {
+  "path": "sprites/ui/dash_oil.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_oil' (80px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_speedo": {
+  "path": "sprites/ui/dash_speedo.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_speedo' (128px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_tacho": {
+  "path": "sprites/ui/dash_tacho.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_tacho' (128px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_temp": {
+  "path": "sprites/ui/dash_temp.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_temp' (80px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
+ },
+ "ui.dash_volt": {
+  "path": "sprites/ui/dash_volt.png",
+  "kind": "sprite",
+  "use": "Dashboard dial face 'dash_volt' (80px; game shows it scaled up, nearest)",
+  "source": "generated (tools/gen_dash.py)",
+  "license": "CC0",
+  "notes": ""
  },
  "ui.font": {
   "path": "sprites/ui/font_atlas.png",

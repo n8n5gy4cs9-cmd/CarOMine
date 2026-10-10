@@ -29,6 +29,8 @@ pub fn sim(
     let ignitions = ign.read().count();
     for (mut car, mut p, driven) in &mut q {
         let speed = car.v_long.abs();
+        p.ambient = amb;
+        { let target = if car.running { ((0.35 + 0.65 * car.rpm / car.spec.redline) * (0.35 + 0.65 * p.get(Slot::Engine).cond)).clamp(0.0, 1.0) } else { 0.0 }; car.oil += (target - car.oil) * (2.0 * dt).min(1.0); }
         // ---------- ignition
         for _ in 0..ignitions {
             if driven.is_none() { continue; }

@@ -71,6 +71,7 @@ pub struct CarParts {
     pub belt_snapped: bool,
     pub stall_t: f32,
     pub crank_t: f32,      // >0 while starter cranking (for sound/anim later)
+    pub ambient: f32,      // outside temperature, C (set by the sim)
 }
 impl CarParts {
     pub fn get(&self, s: Slot) -> PartState { self.st[s.idx()] }
@@ -78,7 +79,7 @@ impl CarParts {
     pub fn set(&mut self, s: Slot, installed: bool, cond: f32) { self.st[s.idx()] = PartState { installed, cond }; }
     /// The "pile of boxes" starting state: body only.
     pub fn starter_shell() -> Self {
-        let mut p = Self { st: [PartState { installed: false, cond: 0.0 }; N], tyre: TyreType::Summer, flat: false, coolant: 0.0, battery: 0.0, temp: -12.0, frozen_line: false, dry_gas_t: 0.0, belt_snapped: false, stall_t: 0.0, crank_t: 0.0 };
+        let mut p = Self { st: [PartState { installed: false, cond: 0.0 }; N], tyre: TyreType::Summer, flat: false, coolant: 0.0, battery: 0.0, temp: -12.0, frozen_line: false, dry_gas_t: 0.0, belt_snapped: false, stall_t: 0.0, crank_t: 0.0, ambient: -10.0 };
         for (s, c) in [(Slot::Tyres, 0.5), (Slot::Brakes, 0.45), (Slot::Headlights, 0.8), (Slot::Fuse, 1.0), (Slot::Hood, 0.7), (Slot::DoorL, 0.8), (Slot::DoorR, 0.6), (Slot::Bumper, 0.75), (Slot::Windshield, 0.9)] { p.set(s, true, c); }
         p
     }
