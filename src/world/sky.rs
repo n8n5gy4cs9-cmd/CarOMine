@@ -14,6 +14,8 @@ impl Default for TimeOfDay {
 
 #[derive(Component)]
 pub struct Sun;
+#[derive(Component)]
+pub struct Moon;
 
 /// Sun elevation factor in -1..1 (winter: day is ~8..16h, low sun).
 pub fn sun_height(hour: f32) -> f32 {
@@ -33,18 +35,18 @@ pub fn sky_state(hour: f32) -> SkyState {
     let h = sun_height(hour);
     let day = smoothstep(-0.15, 0.25, h);
     let dusk = (1.0 - (h / 0.25).abs().min(1.0)).max(0.0) * smoothstep(-0.4, 0.0, h); // peak at horizon
-    let night = Vec3::new(0.015, 0.025, 0.07);
+    let night = Vec3::new(0.025, 0.04, 0.11);
     let dayc = Vec3::new(0.62, 0.72, 0.86);
     let dusk_c = Vec3::new(0.85, 0.50, 0.42);
     let twilight = Vec3::new(0.18, 0.24, 0.45);
     let mut sky = lerp3(night, lerp3(twilight, dayc, smoothstep(0.0, 0.5, h)), smoothstep(-0.25, 0.05, h));
     sky = lerp3(sky, dusk_c, dusk * 0.55);
-    let amb = lerp3(Vec3::new(0.25, 0.30, 0.55), Vec3::new(0.75, 0.82, 0.95), day);
+    let amb = lerp3(Vec3::new(0.30, 0.42, 0.85), Vec3::new(0.75, 0.82, 0.95), day);
     SkyState {
         day,
         sky: Color::srgb(sky.x, sky.y, sky.z),
         ambient: Color::srgb(amb.x, amb.y, amb.z),
-        ambient_brightness: 40.0 + 260.0 * day,
+        ambient_brightness: 170.0 + 190.0 * day,
         sun_lux: 14_000.0 * smoothstep(-0.05, 0.4, h),
         sun_color: Color::srgb(1.0, 0.88 - 0.2 * dusk, 0.75 - 0.3 * dusk),
     }
@@ -55,6 +57,7 @@ pub fn update_sky(
     mut clear: ResMut<ClearColor>,
     mut ambient: ResMut<GlobalAmbientLight>,
     mut sun: Query<(&mut Transform, &mut DirectionalLight), With<Sun>>,
+    mut moon: Query<&mut DirectionalLight, (With<Moon>, Without<Sun>)>,
     mut fog: Query<&mut DistanceFog>,
 ) {
     let st = sky_state(tod.hour);
@@ -70,6 +73,7 @@ pub fn update_sky(
         l.illuminance = st.sun_lux;
         l.color = st.sun_color;
     }
+    if let Ok(mut m) = moon.single_mut() { m.illuminance = 1500.0 * (1.0 - st.day); }
     for mut f in &mut fog {
         f.color = st.sky;
         f.falloff = FogFalloff::Linear { start: 120.0, end: 520.0 };

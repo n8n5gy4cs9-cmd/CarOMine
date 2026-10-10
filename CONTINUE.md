@@ -14,12 +14,14 @@
 - Author credit: Crowelian 2026 + Sonnet.
 
 ## STATE (update me!)
-- Last completed: P1 + P2 (T-010..T-030, T-014). All assets generated (see assets.md).
-- **WIP, UNVERIFIED (committed uncompiled!)**: src/world/*, src/player.rs, src/vehicle/*, src/dev.rs. Next exact step: `cargo build` and fix compile errors (Bevy 0.20 API drift: check ~/.cargo/registry/src/*/bevy_*-0.20*), then run headless screenshot:
-  `CAROMINE_AUTOSTART=1 CAROMINE_SHOT=/tmp/s.png CAROMINE_HOUR=11 CAROMINE_POS=40,20,200,-5 xvfb-run -a env WGPU_BACKEND=vulkan ./target/debug/caromine` (needs `apt-get install mesa-vulkan-drivers xvfb`; first debug build ~10+ min).
-  After it works: mark T-040,T-042,T-043,T-046,T-047,T-060,T-080,T-081,T-083,T-085,T-086 as done/partial in PRD.json via tools/tasks.py.
-- Environment notes: Linux cloud sandbox; lavapipe gives software Vulkan for screenshots. Python3 + Pillow + numpy for asset generators.
+- Done: P1, P2 (assets), world core, player walk, vehicle sim + windshield (all verified by headless screenshots).
+- Next: P4 weapons/enemies (T-061..T-065), then P6 parts/faults (T-100..), T-044 roads visuals/T-045 village buildings, T-141 menus, audio wiring (needs bevy `wav` feature, T-142).
+- Run game: `cargo run --release` (use `--release`; debug build is slow). Controls: WASD, Shift run, Ctrl crouch, Space jump, E enter/exit car, I ignition, W/S gas/brake-reverse, A/D steer, Space handbrake, L lights, V wipers.
+- Headless screenshot (needs `apt-get install mesa-vulkan-drivers xvfb libxkbcommon-x11-0`):
+  `CAROMINE_AUTOSTART=1 CAROMINE_SHOT=/tmp/s.png CAROMINE_SHOT_FRAMES=150 CAROMINE_HOUR=11 CAROMINE_POS=55,28,135,-8 xvfb-run -a -s "-screen 0 1280x720x24" env WGPU_BACKEND=vulkan ./target/debug/caromine`
+  Also CAROMINE_DRIVE=throttle,steer  CAROMINE_WS=0..1  CAROMINE_WIPERS=0..2  CAROMINE_SNOW=0..1 (see src/dev.rs).
+- Bevy 0.20 renames learned: SceneRoot->WorldAssetRoot, Events->Messages (MessageWriter, add_message), CursorOptions component, FontSize::Px, load_builder().with_settings().load(), DirectionalLight.shadow_maps_enabled, GlobalAmbientLight.
+- Known: car placeholder interior is crude (roof/hood slabs); enemies not spawned yet; no audio playback yet.
 - Toolchain: Bevy **0.20** needs rustc >= 1.97.1 (`rustup update stable`). Linux build deps: libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev. First cargo check ~3 min.
 - Bevy 0.20 API gotchas learned: `DirectionalLight.shadow_maps_enabled` (not shadows_enabled). Check `~/.cargo/registry/src/*/bevy_*-0.20*/` source when an API differs from older docs.
 - Helper: `tools/commit.sh T-xxx "msg"` commits + pushes to main.
-- Known issues: none yet.

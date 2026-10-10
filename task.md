@@ -1,15 +1,15 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **18/65 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **23/65 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
-- [ ] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km
 - [ ] **T-041** Snow terrain material + footprints/tire tracks decals
-- [ ] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
-- [ ] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings
+- [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
 - [ ] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
+- [ ] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
+- [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky
 
 ## P0 Planning (1/1)
 
@@ -53,21 +53,28 @@
 - [x] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json  
   _note: assets.md generated: python3 tools/gen_assets_md.py_
 
-## P3 World (0/9)
+## P3 World (2/9)
 
-- [ ] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km
+- [x] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km  
+  _note: world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot_
 - [ ] **T-041** Snow terrain material + footprints/tire tracks decals
-- [ ] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
-- [ ] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings
+- [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)  
+  _note: face-camera + 8-angle selection done (billboard.rs); GPU instancing/batching perf pass still TODO (T-160)_
+- [x] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings  
+  _note: world/scatter.rs: deterministic forest/bush/rock scatter with collision obstacles_
 - [ ] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
 - [ ] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
-- [ ] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky
-- [ ] **T-047** Snowfall particles + weather states (clear, snow, blizzard)
-- [ ] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)
+- [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky  
+  _note: sky.rs: day/night, sun, moon, fog verified. TODO: aurora, stars, bloom_
+- [~] **T-047** Snowfall particles + weather states (clear, snow, blizzard)  
+  _note: weather.rs: 2500-flake snowfall. TODO: weather states (blizzard etc.)_
+- [~] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)  
+  _note: headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom_
 
-## P4 Player + FPS (0/7)
+## P4 Player + FPS (1/7)
 
-- [ ] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings
+- [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
+  _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
 - [ ] **T-061** Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons
 - [ ] **T-062** Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling
 - [ ] **T-063** Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour
@@ -75,15 +82,21 @@
 - [ ] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops
 - [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
 
-## P5 Vehicle simulation (0/9)
+## P5 Vehicle simulation (2/9)
 
-- [ ] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox
-- [ ] **T-081** Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag
-- [ ] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke
-- [ ] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake
+- [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
+  _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
+- [x] **T-081** Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag  
+  _note: friction circle; spec.rs mu(surface,tyre): summer/winter/studded x snow/packed/ice/gravel_
+- [~] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke  
+  _note: rpm/torque curve/fuel/ignition (I key) in physics.rs. TODO: temp, oil, battery, starter, choke_
+- [~] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake  
+  _note: enter/exit with E + driver cam done. TODO: chase/exterior cam, mirrors, steering wheel model_
 - [ ] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop
-- [ ] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid
-- [ ] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain
+- [~] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  
+  _note: windshield.rs: snow accumulation, wipers 2 speeds, frost, night tint verified. TODO: swept-arc partial clearing, washer fluid, defrost key_
+- [~] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain  
+  _note: headlights toggle L. TODO: brake lights, interior light, battery drain_
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
 

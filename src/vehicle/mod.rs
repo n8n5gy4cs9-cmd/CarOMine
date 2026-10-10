@@ -68,10 +68,10 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
     let car = commands
         .spawn((Car::new(yaw), Transform::from_xyz(pos.x, height_at(pos.x, pos.y), pos.y).with_rotation(Quat::from_rotation_y(yaw)), Visibility::default()))
         .with_children(|c| {
-            c.spawn((SceneRoot(body), Transform::default()));
+            c.spawn((WorldAssetRoot(body), Transform::default()));
             for (front, fz) in [(true, -1.35f32), (false, 1.35)] {
                 for side in [-1.0f32, 1.0] {
-                    c.spawn((SceneRoot(wheel_scene()), Transform::from_xyz(side * 0.78, 0.32, fz), WheelVisual { front, side }));
+                    c.spawn((WorldAssetRoot(wheel_scene()), Transform::from_xyz(side * 0.78, 0.32, fz), WheelVisual { front, side }));
                 }
             }
             // headlights

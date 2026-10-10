@@ -3,7 +3,11 @@ use crate::world::scatter::Obstacle;
 
 const G: f32 = 9.81;
 
-pub fn read_input(keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
+/// Dev/test: scripted inputs (see dev.rs).
+#[derive(Resource, Default)]
+pub struct DevDrive { pub throttle: f32, pub steer: f32, pub handbrake: bool }
+
+pub fn read_input(dev: Option<Res<DevDrive>>, keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Query<&mut Car, With<Driven>>, time: Res<Time>) {
     let Ok(mut car) = q.single_mut() else { return };
     let dt = time.delta_secs();
     let steer = (keys.pressed(kb.left) as i32 - keys.pressed(kb.right) as i32) as f32;
@@ -24,6 +28,7 @@ pub fn read_input(keys: Res<ButtonInput<KeyCode>>, kb: Res<Keybinds>, mut q: Que
         if fwd { if car.v_long < -0.6 { car.brake = 1.0; } else { car.gear = 1; } }
     }
     car.handbrake = keys.pressed(kb.handbrake);
+    if let Some(d) = dev { if d.throttle != 0.0 { car.throttle = d.throttle; car.brake = 0.0; car.gear = 1; } if d.steer != 0.0 { car.steer_in = d.steer; } if d.handbrake { car.handbrake = true; } }
     if keys.just_pressed(kb.ignition) {
         if car.running { car.running = false; } else if car.fuel > 0.0 { car.running = true; car.rpm = car.spec.idle_rpm; }
     }

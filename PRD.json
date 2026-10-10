@@ -136,8 +136,8 @@
         {
           "id": "T-040",
           "title": "Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot"
         },
         {
           "id": "T-041",
@@ -148,14 +148,14 @@
         {
           "id": "T-042",
           "title": "Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "face-camera + 8-angle selection done (billboard.rs); GPU instancing/batching perf pass still TODO (T-160)"
         },
         {
           "id": "T-043",
           "title": "Forest/bush scatter (spruce/pine/birch), density map, fields, clearings",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "world/scatter.rs: deterministic forest/bush/rock scatter with collision obstacles"
         },
         {
           "id": "T-044",
@@ -172,20 +172,20 @@
         {
           "id": "T-046",
           "title": "Day/night cycle, sun/moon, aurora borealis at night, fog, sky",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "sky.rs: day/night, sun, moon, fog verified. TODO: aurora, stars, bloom"
         },
         {
           "id": "T-047",
           "title": "Snowfall particles + weather states (clear, snow, blizzard)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "weather.rs: 2500-flake snowfall. TODO: weather states (blizzard etc.)"
         },
         {
           "id": "T-048",
           "title": "Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom"
         }
       ]
     },
@@ -196,8 +196,8 @@
         {
           "id": "T-060",
           "title": "First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)"
         },
         {
           "id": "T-061",
@@ -244,26 +244,26 @@
         {
           "id": "T-080",
           "title": "Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message"
         },
         {
           "id": "T-081",
           "title": "Tire/snow friction model: surface-dependent grip, summer/winter/studded tires, slide, ice, snowbank drag",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "friction circle; spec.rs mu(surface,tyre): summer/winter/studded x snow/packed/ice/gravel"
         },
         {
           "id": "T-082",
           "title": "Engine model: torque curve, temperature, oil, fuel, battery, starter, choke",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "rpm/torque curve/fuel/ignition (I key) in physics.rs. TODO: temp, oil, battery, starter, choke"
         },
         {
           "id": "T-083",
           "title": "Enter/exit car, steering wheel view, interior cam, mirrors, handbrake",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "enter/exit with E + driver cam done. TODO: chase/exterior cam, mirrors, steering wheel model"
         },
         {
           "id": "T-084",
@@ -274,14 +274,14 @@
         {
           "id": "T-085",
           "title": "Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "windshield.rs: snow accumulation, wipers 2 speeds, frost, night tint verified. TODO: swept-arc partial clearing, washer fluid, defrost key"
         },
         {
           "id": "T-086",
           "title": "Lights: headlights/high-beam/fog, brake lights, interior light; battery drain",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "headlights toggle L. TODO: brake lights, interior light, battery drain"
         },
         {
           "id": "T-087",

@@ -29,8 +29,8 @@ pub fn spawn_overlay(mut commands: Commands, server: Res<AssetServer>, man: Res<
     commands
         .spawn((WsRoot, Node { position_type: PositionType::Absolute, width: Val::Percent(100.0), height: Val::Percent(78.0), ..default() }, Visibility::Hidden, GlobalZIndex(5)))
         .with_children(|c| {
-            c.spawn((WsFrost, ImageNode::new(frost), Node { position_type: PositionType::Absolute, width: Val::Percent(100.0), height: Val::Percent(100.0), ..default() }));
-            c.spawn((WsSnow, ImageNode::new(snow[0].clone()), Node { position_type: PositionType::Absolute, width: Val::Percent(100.0), height: Val::Percent(100.0), ..default() }));
+            c.spawn((WsFrost, ImageNode::new(frost).with_mode(NodeImageMode::Stretch), Node { position_type: PositionType::Absolute, width: Val::Percent(100.0), height: Val::Percent(100.0), ..default() }));
+            c.spawn((WsSnow, ImageNode::new(snow[0].clone()).with_mode(NodeImageMode::Stretch), Node { position_type: PositionType::Absolute, width: Val::Percent(100.0), height: Val::Percent(100.0), ..default() }));
             c.spawn((WsWiper, ImageNode::new(wiper), Node { position_type: PositionType::Absolute, width: Val::Px(520.0), height: Val::Px(10.0), left: Val::Px(0.0), top: Val::Px(0.0), ..default() }));
         });
 }
@@ -65,6 +65,7 @@ pub fn update(time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky
 }
 
 pub fn show(
+    tod: Res<crate::world::sky::TimeOfDay>,
     ws: Res<Windshield>,
     imgs: Option<Res<WindshieldImages>>,
     driven: Query<(), With<Driven>>,
@@ -77,11 +78,13 @@ pub fn show(
     let Some(imgs) = imgs else { return };
     let in_car = !driven.is_empty();
     if let Ok(mut v) = root.single_mut() { *v = if in_car { Visibility::Inherited } else { Visibility::Hidden }; }
+    // glass is lit by the world: dark at night (headlights / street light keep a floor)
+    let lit = 0.35 + 0.65 * crate::world::sky::sky_state(tod.hour).day;
     if let Ok(mut s) = snow.single_mut() {
         let lvl = (ws.snow * 5.0).ceil() as usize;
-        if lvl == 0 { s.color = Color::srgba(1.0, 1.0, 1.0, 0.0); } else { s.image = imgs.snow[(lvl - 1).min(4)].clone(); s.color = Color::WHITE; }
+        if lvl == 0 { s.color = Color::srgba(1.0, 1.0, 1.0, 0.0); } else { s.image = imgs.snow[(lvl - 1).min(4)].clone(); s.color = Color::srgb(lit, lit, lit * 1.05); }
     }
-    if let Ok(mut f) = frost.single_mut() { f.color = Color::srgba(1.0, 1.0, 1.0, ws.frost); }
+    if let Ok(mut f) = frost.single_mut() { f.color = Color::srgba(lit, lit, lit, ws.frost); }
     if let (Ok(w), Ok((mut node, mut ui, mut vis))) = (window.single(), wiper.single_mut()) {
         let active = ws.wiper_t > 0.0 || ws.wiper_dir != 0.0;
         *vis = if active { Visibility::Inherited } else { Visibility::Hidden };

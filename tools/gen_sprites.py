@@ -215,7 +215,7 @@ def gen_ui():
     S = 256
     for lvl in range(1, 6):
         rng = np.random.default_rng(lvl)
-        cov = lvl / 5.0
+        cov = lvl / 5.0 * 0.7
         n = tile_noise(S, 5, 40 + lvl)
         n2 = np.array(Image.fromarray((n * 255).astype(np.uint8)).resize((512, 256), Image.BILINEAR)) / 255.0
         # snow clumps stronger at the bottom
@@ -224,7 +224,7 @@ def gen_ui():
         a = np.clip((n2 - thresh) * 8, 0, 1)
         flakes = (rng.random((256, 512)) < cov * 0.04)
         a = np.maximum(a, flakes * 0.9)
-        rgbaarr = np.zeros((256, 512, 4), np.uint8); rgbaarr[..., :3] = [238, 244, 255]; rgbaarr[..., 3] = (a * 235).astype(np.uint8)
+        rgbaarr = np.zeros((256, 512, 4), np.uint8); rgbaarr[..., :3] = [238, 244, 255]; rgbaarr[..., 3] = (a * 215).astype(np.uint8)
         save_img(Image.fromarray(rgbaarr, "RGBA"), f"sprites/ui/windshield_snow_{lvl}.png", f"ui.windshield_snow_{lvl}", f"Windshield snow overlay level {lvl}/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style")
     # frost overlay
     n = tile_noise(256, 6, 55); n2 = np.array(Image.fromarray((n * 255).astype(np.uint8)).resize((512, 256), Image.BILINEAR)) / 255.0
