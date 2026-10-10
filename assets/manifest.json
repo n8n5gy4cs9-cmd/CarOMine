@@ -1,0 +1,42 @@
+{
+ "enemy.goon": {
+  "path": "sprites/enemies/goon.png",
+  "kind": "sprite",
+  "use": "Enemy 'goon' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ },
+ "enemy.hunter": {
+  "path": "sprites/enemies/hunter.png",
+  "kind": "sprite",
+  "use": "Enemy 'hunter' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ },
+ "enemy.moose": {
+  "path": "sprites/enemies/moose.png",
+  "kind": "sprite",
+  "use": "Enemy 'moose' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ },
+ "enemy.neighbour": {
+  "path": "sprites/enemies/neighbour.png",
+  "kind": "sprite",
+  "use": "Enemy 'neighbour' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ },
+ "enemy.wolf": {
+  "path": "sprites/enemies/wolf.png",
+  "kind": "sprite",
+  "use": "Enemy 'wolf' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ }
+}

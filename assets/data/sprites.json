@@ -1,0 +1,152 @@
+{
+ "enemy.goon": {
+  "frame": [
+   48,
+   64
+  ],
+  "cols": 10,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "die": [
+    7,
+    8,
+    9
+   ]
+  },
+  "anchor": "bottom"
+ },
+ "enemy.hunter": {
+  "frame": [
+   48,
+   64
+  ],
+  "cols": 10,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "die": [
+    7,
+    8,
+    9
+   ]
+  },
+  "anchor": "bottom"
+ },
+ "enemy.neighbour": {
+  "frame": [
+   48,
+   64
+  ],
+  "cols": 10,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "die": [
+    7,
+    8,
+    9
+   ]
+  },
+  "anchor": "bottom"
+ },
+ "enemy.wolf": {
+  "frame": [
+   48,
+   64
+  ],
+  "cols": 10,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "die": [
+    7,
+    8,
+    9
+   ]
+  },
+  "anchor": "bottom"
+ },
+ "enemy.moose": {
+  "frame": [
+   48,
+   64
+  ],
+  "cols": 10,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "die": [
+    7,
+    8,
+    9
+   ]
+  },
+  "anchor": "bottom"
+ }
+}

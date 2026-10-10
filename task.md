@@ -1,33 +1,36 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **2/64 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **3/65 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
-- [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
+- [~] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
 - [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
-- [ ] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types
+- [ ] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)
 
 ## P0 Planning (1/1)
 
 - [x] **T-001** Write PRD.md, PRD.json, PLAN.md, ARCHITECTURE.md, task.md, assets.md, CONTINUE.md  
   _note: Planning docs written_
 
-## P1 Foundation (Rust + Bevy) (1/5)
+## P1 Foundation (Rust + Bevy) (1/6)
 
 - [x] **T-010** Cargo project, Bevy app skeleton, game states (Boot/Menu/Playing/Paused), window + Metal on M1  
   _note: Bevy 0.20 window, GameState, placeholder scene; cargo check OK_
-- [ ] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)
+- [~] **T-011** Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)  
+  _note: Generator side done (assetlib.reg); Rust loader = T-011b_
 - [ ] **T-012** Config + keybinds (RON/JSON), settings menu stub
 - [ ] **T-013** GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux
 - [ ] **T-014** Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md
+- [ ] **T-011b** Rust side: load assets/manifest.json into AssetManifest resource (id->path)
 
-## P2 Asset generation (placeholders) (0/11)
+## P2 Asset generation (placeholders) (1/11)
 
-- [ ] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types
+- [x] **T-020** tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types  
+  _note: tools/gen_enemies.py: goon,hunter,neighbour,wolf,moose sheets 10x8 grid; sprites.json_
 - [ ] **T-021** gen: trees (spruce/pine/birch/bare), bushes, rocks, snow drifts, fences
 - [ ] **T-022** gen: items/pickups (ammo, medkit, coffee, sausage, bolts, parts icons, money)
 - [ ] **T-023** gen: weapon first-person sprites (fists, pistol, shotgun, SMG, hunting rifle) + muzzle flash

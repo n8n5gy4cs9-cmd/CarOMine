@@ -28,8 +28,8 @@
         {
           "id": "T-011",
           "title": "Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "Generator side done (assetlib.reg); Rust loader = T-011b"
         },
         {
           "id": "T-012",
@@ -48,6 +48,12 @@
           "title": "Try cloning reference repos (RoR, eduke32, NBlood, shadow-warrior) into ref/ (gitignored) and write docs/REFERENCE_NOTES.md",
           "status": "todo",
           "notes": ""
+        },
+        {
+          "id": "T-011b",
+          "title": "Rust side: load assets/manifest.json into AssetManifest resource (id->path)",
+          "status": "todo",
+          "notes": ""
         }
       ]
     },
@@ -58,8 +64,8 @@
         {
           "id": "T-020",
           "title": "tools/gen_sprites.py: enemies (8-angle billboards, walk/attack/die), 5 enemy types",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_enemies.py: goon,hunter,neighbour,wolf,moose sheets 10x8 grid; sprites.json"
         },
         {
           "id": "T-021",
