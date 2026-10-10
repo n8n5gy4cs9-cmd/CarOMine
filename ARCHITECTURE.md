@@ -1,43 +1,39 @@
-# CarOMine - Architecture
+# CarOMine - Architecture (as built)
 
-Rust + Bevy ECS. One crate (split into a workspace only if compile times demand it).
+Rust + Bevy 0.20 ECS, one crate. Plugins are registered in `src/main.rs`.
 
 ## Module map (`src/`)
 | Module | Responsibility |
 |---|---|
-| `main.rs` | App setup, plugin registration |
-| `state.rs` | `GameState`: Boot, MainMenu, Playing, Paused, Garage |
-| `assets_manifest.rs` | Loads `assets/manifest.json`; `AssetId -> path`; hot-reload friendly |
-| `config.rs` | settings/keybinds |
-| `world/terrain.rs` | heightmap chunks, noise, streaming, collision height query `height_at(x,z)` |
-| `world/billboards.rs` | sprite quad material + 8-angle select + instancing |
-| `world/scatter.rs` | trees/bushes/rocks from density map |
-| `world/village.rs` | buildings (2D/3D hybrid), roads, lake |
-| `world/sky.rs` | day/night, sun, aurora, fog |
-| `world/weather.rs` | snowfall particles, wind, weather state |
-| `player/` | controller, interaction, inventory, needs |
-| `combat/` | weapons, hitscan, projectiles, damage events |
-| `enemy/` | defs (JSON), AI state machine, spawning |
-| `vehicle/` | chassis, wheels (raycast), drivetrain, engine, tyres, damage, lights, windshield |
-| `build/` | part DB, garage, faults, diagnosis |
-| `ui/` | HUD, menus, tool wheel |
-| `audio.rs` | spatial sfx, music state machine |
-| `save.rs` | JSON save slots |
+| `main.rs` | app + plugin registration, asset dir resolution (`./assets`), lights |
+| `state.rs` | `GameState`: Boot, MainMenu, Playing, Paused, Garage (workshop), Dialog (doors/shops) - gameplay systems only run in `Playing` |
+| `manifest.rs` | loads `assets/manifest.json`; `AssetManifest::path(id)` - code never hardcodes asset paths |
+| `settings.rs` | `Settings` (persisted settings.json), `Keybinds` |
+| `menu.rs` / `save.rs` | main/pause/load/settings menus; JSON saves (`saves/`), autosave, `PendingLoad` |
+| `console.rs` | developer console (` / F1) + cheat codes; `exec_cmds` is the command table |
+| `audio.rs` | `Sfx` messages, music state machine, engine/tyre/wind loops |
+| `dev.rs` | headless test harness driven by `CAROMINE_*` env vars (screenshots, scripted drive/ignite/commands) |
+| `world/` | `layout` (terrain fn, roads, lake, landmarks, farm sites), `terrain` (streamed 64 m chunks), `scatter` (billboard forest), `billboard` (Y-axis + 8-angle sprites), `village` (houses, farms), `sky` (day/night), `weather` (snowfall), `atmosphere` (bloom, volumetric fog, stars, aurora, particle puffs) |
+| `player.rs` | FPS controller (ice inertia, tree collision, noclip via cheats) |
+| `combat/` | `weapons` (5 guns, hitscan), `enemy` (5 types, AI), `director` (population), `pickups`, `flashlight`, `hud` |
+| `vehicle/` | `spec` (CarSpec, tyre/surface friction), `physics` (bicycle model + friction circle), `windshield` (snow strips + wipers), enter/exit, chase cam, body damage |
+| `build/` | `mod` (18 part slots, inventory), `sim` (fault simulation, crash damage), `workshop` (menu UI) |
+| `life/` | `needs`, `dialog` (cabin/sauna/shops/inspection), `missions` (gigs), interact zones |
+| `story.rs` | objectives, intro/ending, katsastus checks, HQ + boss |
 
-## Key data contracts
-- `assets/manifest.json`: `{ "id": {"path": "...", "kind": "sprite|texture|model|sfx|music|font|data", "source": "generated|...", "license": "CC0"}}`. Code asks for ids only.
-- Sprite sheets: `assets/sprites/<name>.png`, grid of `cols x rows`, described in `assets/data/sprites.json` (frame size, angles=8, animations{name:[frames]}).
-- Parts: `assets/data/parts.json` - `{id, name, slot, model, mass, condition, stats{}, fault_modes[]}`.
-- Enemies: `assets/data/enemies.json`. Weapons: `assets/data/weapons.json`.
+## Key decisions
+- **Custom vehicle physics, no physics crate.** Bicycle model (body-frame vx, vy, yaw rate) with a friction circle per axle; mu = surface x tyre x damage. Terrain-follow by sampling 4 wheel points. Chosen because it is stable on ice, tunable, and cheap. (Rigs of Rods soft-body was rejected as too heavy; RoR ground_models friction values were used as the baseline.)
+- **Heightmap terrain is a pure function** `height_at(x,z)` (noise + road/yard/farm/lake blends) - chunks, player, enemies and cars all sample it; no collision meshes.
+- **Billboards**: one shared quad mesh + shared material per sprite variant (Bevy auto-batches); enemies use per-entity materials and `uv_transform` to pick the (angle, frame) cell of their sheet.
+- **UI is plain Bevy UI text** (monospace-ish) - fast to author; replace with proper skinned UI later.
+- **State machine gating**: `Playing` runs the sim; `Paused/Garage/Dialog` freeze it (menus read input directly).
+- **Test strategy**: no GPU in CI; `dev.rs` + xvfb + lavapipe renders screenshots and prints `TOAST:`/`CONSOLE:`/`CAR` log lines for scripted checks.
 
-## Vehicle model (summary)
-Rigid body chassis; each wheel: ray down -> suspension spring/damper force; longitudinal force from drivetrain torque / brake; lateral force from slip angle with friction circle limited by `mu = surface_mu * tyre_mu(type, temp) * (1 - wear)`. Engine: torque(rpm) curve * throttle * health; gearbox ratios; clutch simplified (auto-clutch option). Faults modify specific factors (e.g. fouled plugs -> torque x0.5 + misfire sound).
+## Data contracts
+- `assets/manifest.json`: `{id: {path, kind, use, source, license, notes}}` (generated by `tools/assetlib.reg`, rendered into `assets.md`).
+- `assets/data/sprites.json`: sheet grids (frame size, cols, rows, anims) for enemies/weapons.
+- Parts/enemies/weapons are Rust tables today (`build::SlotInfo`, `combat::enemy::def`, `combat::weapons::WEAPONS`); moving them to JSON is task T-100.
+- Saves: `save::SaveData` (serde, `#[serde(default)]` for forward compat).
 
-## Billboard rendering
-Custom Bevy mesh quad per sprite instance (or instanced material). Each frame: face camera around Y; pick frame = `((angle_to_cam - entity_yaw) / 45deg).round() % 8`. Alpha-masked (no sort needed) to stay cheap with huge forests.
-
-## Threading / perf notes
-Terrain chunk mesh generation on `AsyncComputeTaskPool`. Scatter placement computed per chunk, deterministic from `(seed, chunk_xy)`.
-
-## Platform notes
-macOS: Metal backend default. Don't use dynamic linking (`bevy/dynamic_linking`) in release. Build: `cargo run --release`.
+## Bevy 0.20 notes
+`SceneRoot -> WorldAssetRoot`; `Events -> Messages` (`MessageWriter`, `add_message`); `CursorOptions` component; `FontSize::Px`; `load_builder().with_settings(..).load(..)`; `DirectionalLight.shadow_maps_enabled`; `GlobalAmbientLight`; system param limit 16 (use `#[derive(SystemParam)]` groups).
