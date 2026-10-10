@@ -144,7 +144,7 @@ struct Res0<'w> {
 }
 
 const HELP: &str = "commands: help clear pos | tp <x z|cabin|village|garage|lake|shop> | time <hour> | timespeed <x> | snow <0..1> | ws <0..1> windshield snow
- god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
+ save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
  build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
 
 fn exec_cmds(
@@ -159,6 +159,8 @@ fn exec_cmds(
     mut bparts: Query<&mut crate::build::CarParts>,
     mut inv: ResMut<crate::build::Inventory>,
     mut flash: ResMut<crate::combat::flashlight::Flashlight>,
+    mut save_req: MessageWriter<crate::save::SaveRequest>,
+    mut pending: ResMut<crate::save::PendingLoad>,
     enemies: Query<Entity, With<Enemy>>,
     mut cam: Query<&mut Projection, With<PlayerCamera>>,
     mut exit: MessageWriter<AppExit>,
@@ -178,6 +180,8 @@ fn exec_cmds(
             "fly" | "noclip" | "idclip" => out.push(format!("fly/noclip {} (look direction + WASD, Space up, Ctrl down)", tog(&mut cheats.fly))),
             "speed" => { cheats.speed_mult = num(1).unwrap_or(1.0).clamp(0.1, 20.0); out.push(format!("walk speed x{}", cheats.speed_mult)); }
             "batteries" | "flashlight" => { flash.battery = 1.0; if a(0) == "flashlight" { flash.on = !flash.on; } out.push(format!("flashlight battery 100%, light {}", if flash.on { "ON" } else { "off" })); }
+            "save" => { let slot = if a(1).is_empty() { "slot1".to_string() } else if a(1).len() == 1 { format!("slot{}", a(1)) } else { a(1).to_string() }; save_req.write(crate::save::SaveRequest(slot.clone())); out.push(format!("saving to {slot}")); }
+            "load" => { let slot = if a(1).is_empty() { "slot1".to_string() } else if a(1).len() == 1 { format!("slot{}", a(1)) } else { a(1).to_string() }; match crate::save::read(&slot) { Some(d) => { pending.0 = Some(d); out.push(format!("loading {slot}")); } None => out.push(format!("no save in {slot}")) } }
             "heal" => { stats.hp = 100.0; out.push("healed".into()); }
             "armor" => { stats.armor = 100.0; out.push("armor 100".into()); }
             "money" => { stats.money += num(1).unwrap_or(1000.0) as i32; out.push(format!("money {}", stats.money)); }

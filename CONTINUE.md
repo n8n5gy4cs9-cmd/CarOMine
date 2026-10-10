@@ -15,7 +15,7 @@
 
 ## STATE (update me!)
 - Done: P1, P2 (assets), world core, player walk, vehicle sim + windshield (all verified by headless screenshots).
-- Next: T-045 village+cabin buildings, T-044 road visuals, T-066 missions/spawn director, P6 parts/faults (T-100..), T-141 menus, audio wiring (bevy `wav` feature, T-142). Weapons: keys 1-5, LMB fire, R reload. Dev: CAROMINE_LINEUP=1 spawns all enemies in front of player.
+- Next: T-120 needs+sauna, T-121 money/jobs, T-123 story/intro, T-066 mission/spawn director, lighting/fog/atmosphere T-049..051, T-108 katsastus, T-107 shops, T-088 RoR importer, P9 perf+packaging. Saves: console save/load [slot]; menu: Esc pause.
 - CONSOLE: press backtick or F1 in game (pauses). `help` lists commands; cheats iddqd idkfa idclip dnstuff; also god/fly/give/spawn/tp/time/snow/car bring. Add new dev commands in src/console.rs exec_cmds + HELP text. Dev env: CAROMINE_CMDS="a;b" CAROMINE_CONSOLE_OPEN=1.
 - BUILD/REPAIR: src/build/{mod,sim,workshop}.rs. T near the car opens workshop (Tab pages). Start state = shell + boxes. Console: `build all|shell`, `parts`, `repair`, `fault <name>`. Dev: CAROMINE_RAW=1 CAROMINE_DRIVE=0,0 CAROMINE_IGNITE=60,100 CAROMINE_CMDS=... prints TOAST lines to log = scripted fault tests.
 - Run game: `cargo run --release` (use `--release`; debug build is slow). Controls: WASD, Shift run, Ctrl crouch, Space jump, E enter/exit car, I ignition, W/S gas/brake-reverse, A/D steer, Space handbrake, L lights, V wipers.

@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "stamp": "t+19h02m",
+  "player": [
+    100.28473,
+    3.1329024,
+    50.06496
+  ],
+  "yaw": 0.0,
+  "pitch": 0.0,
+  "hp": 100.0,
+  "armor": 0.0,
+  "money": 897,
+  "owned": [
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "mag": [
+    0,
+    12,
+    6,
+    30,
+    5
+  ],
+  "reserve": [
+    0,
+    24,
+    48,
+    90,
+    15
+  ],
+  "current": 0,
+  "flash_battery": 1.0,
+  "hour": 14.504167,
+  "snow": 0.6,
+  "car_pos": [
+    46.0,
+    3.5465875,
+    36.0
+  ],
+  "car_yaw": 0.3,
+  "car_fuel": 6.0,
+  "parts_installed": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "parts_cond": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.45,
+    0.5,
+    0.0,
+    0.8,
+    1.0,
+    0.7,
+    0.8,
+    0.6,
+    0.75,
+    0.9
+  ],
+  "tyre": 0,
+  "flat": false,
+  "coolant": 0.0,
+  "battery": 0.0,
+  "temp": -11.979646,
+  "frozen": false,
+  "inv_parts": [
+    [
+      0,
+      0.7,
+      0
+    ],
+    [
+      1,
+      0.8,
+      0
+    ],
+    [
+      2,
+      0.9,
+      0
+    ],
+    [
+      3,
+      0.3,
+      0
+    ],
+    [
+      4,
+      0.5,
+      0
+    ],
+    [
+      5,
+      0.8,
+      0
+    ],
+    [
+      6,
+      0.6,
+      0
+    ],
+    [
+      7,
+      0.7,
+      0
+    ]
+  ],
+  "dry_gas": 0,
+  "coolant_cans": 0
+}

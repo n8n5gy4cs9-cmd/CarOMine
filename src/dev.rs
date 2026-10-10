@@ -10,7 +10,7 @@ use bevy::prelude::*;
 use bevy::render::view::screenshot::{save_to_disk, Screenshot};
 
 #[derive(Resource, Default)]
-struct DevState { frames: u32, shot_taken_at: Option<u32> }
+struct DevState { menu_frames: u32, frames: u32, shot_taken_at: Option<u32> }
 
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
@@ -27,7 +27,17 @@ fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>, mut fl: ResMut<
 
 fn drive(mut commands: Commands, mut d: ResMut<DevState>, state: Res<State<GameState>>, mut next: ResMut<NextState<GameState>>, mut exit: MessageWriter<AppExit>) {
     if std::env::var("CAROMINE_AUTOSTART").is_ok() && *state.get() == GameState::MainMenu { next.set(GameState::Playing); }
-    if matches!(*state.get(), GameState::Boot | GameState::MainMenu) { return; }
+    if matches!(*state.get(), GameState::Boot | GameState::MainMenu) {
+        // CAROMINE_SHOT_MENU=1: screenshot the main menu itself
+        if std::env::var("CAROMINE_SHOT_MENU").is_ok() && *state.get() == GameState::MainMenu {
+            d.menu_frames += 1;
+            if let Ok(path) = std::env::var("CAROMINE_SHOT") {
+                if d.menu_frames == 60 { commands.spawn(Screenshot::primary_window()).observe(save_to_disk(path)); }
+                if d.menu_frames == 90 { exit.write(AppExit::Success); }
+            }
+        }
+        return;
+    }
     d.frames += 1;
     let Ok(path) = std::env::var("CAROMINE_SHOT") else { return };
     let at: u32 = std::env::var("CAROMINE_SHOT_FRAMES").ok().and_then(|v| v.parse().ok()).unwrap_or(150);

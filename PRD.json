@@ -418,8 +418,8 @@
         {
           "id": "T-124",
           "title": "Save/load system (JSON), autosave, multiple slots",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/save.rs: JSON saves in ./saves (autosave every 3 min + slot1-3), player/car/parts/inventory/time/weather; console save/load; verified round trip"
         },
         {
           "id": "T-125",
@@ -448,8 +448,8 @@
         {
           "id": "T-141",
           "title": "Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/menu.rs: main menu (new/continue/load/settings/quit), pause menu (resume/save slots/load/settings/quit), settings sliders persisted to settings.json, credits line"
         },
         {
           "id": "T-142",
@@ -474,6 +474,18 @@
           "title": "Cheat codes + dev commands: god/fly/speed/give/ammo/fuel/spawn/killall/tp/time/snow/ws/car bring|goto|tyres/fov; iddqd idkfa idclip dnstuff",
           "status": "done",
           "notes": "src/console.rs exec_cmds; type help in game"
+        },
+        {
+          "id": "T-146",
+          "title": "Pause menu: 'Quit to main menu' (needs world teardown/reset), new-game reset",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-147",
+          "title": "Key rebinding UI + gamepad support",
+          "status": "todo",
+          "notes": ""
         }
       ]
     },

@@ -64,3 +64,8 @@ impl CarSpec {
         self.peak_torque * c.clamp(0.25, 1.0)
     }
 }
+
+impl TyreType {
+    pub fn to_u8(self) -> u8 { match self { Self::Summer => 0, Self::Winter => 1, Self::Studded => 2 } }
+    pub fn from_u8(v: u8) -> Self { match v { 1 => Self::Winter, 2 => Self::Studded, _ => Self::Summer } }
+}

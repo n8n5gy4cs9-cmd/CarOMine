@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **36/74 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **38/76 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -134,21 +134,23 @@
 - [ ] **T-107** Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop
 - [ ] **T-108** Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions
 
-## P7 Game loop + life sim (0/7)
+## P7 Game loop + life sim (1/7)
 
 - [ ] **T-120** Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving
 - [ ] **T-121** Economy: unemployment benefit, odd jobs, agency gigs, shops (K-market, auto parts, gas)
 - [ ] **T-122** Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone
 - [ ] **T-123** Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)
-- [ ] **T-124** Save/load system (JSON), autosave, multiple slots
+- [x] **T-124** Save/load system (JSON), autosave, multiple slots  
+  _note: src/save.rs: JSON saves in ./saves (autosave every 3 min + slot1-3), player/car/parts/inventory/time/weather; console save/load; verified round trip_
 - [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
 - [ ] **T-126** Localization (EN default, FI)
 
-## P8 UI + audio integration (3/6)
+## P8 UI + audio integration (4/8)
 
 - [~] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights  
   _note: combat/hud.rs: hp/armor/money/ammo/speed/gear/rpm/fuel/clock/snow%. TODO: proper gauges, needs bars_
-- [ ] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)
+- [x] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)  
+  _note: src/menu.rs: main menu (new/continue/load/settings/quit), pause menu (resume/save slots/load/settings/quit), settings sliders persisted to settings.json, credits line_
 - [x] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders  
   _note: src/audio.rs: Sfx messages, music state machine (menu/drive/night/combat), engine/tyre/wind loops, spatial listener; hooks in weapons/enemy/pickups/vehicle/build/player. (cannot hear in sandbox: no audio device)_
 - [ ] **T-143** Inventory + tool wheel UI
@@ -156,6 +158,8 @@
   _note: src/console.rs_
 - [x] **T-145** Cheat codes + dev commands: god/fly/speed/give/ammo/fuel/spawn/killall/tp/time/snow/ws/car bring|goto|tyres/fov; iddqd idkfa idclip dnstuff  
   _note: src/console.rs exec_cmds; type help in game_
+- [ ] **T-146** Pause menu: 'Quit to main menu' (needs world teardown/reset), new-game reset
+- [ ] **T-147** Key rebinding UI + gamepad support
 
 ## P9 Polish + release (0/4)
 
