@@ -244,3 +244,20 @@ def gen_ui():
 
 if __name__ == "__main__":
     gen_nature(); gen_items(); gen_weapons(); gen_textures(); gen_buildings(); gen_ui(); print("sprites ok")
+
+def gen_fx():
+    """Soft puff sprite for smoke / breath / snow spray."""
+    S = 64
+    y, x = np.mgrid[0:S, 0:S]; r = np.hypot(x - S / 2 + .5, y - S / 2 + .5) / (S / 2)
+    n = tile_noise(S, 4, 77)
+    a = np.clip(1 - r, 0, 1) ** 1.6 * (0.7 + 0.5 * n)
+    arr = np.zeros((S, S, 4), np.uint8); arr[..., :3] = 255; arr[..., 3] = (np.clip(a, 0, 1) * 255).astype(np.uint8)
+    save_img(Image.fromarray(arr, "RGBA"), "sprites/fx/puff.png", "fx.puff", "Soft puff 64x64 (breath vapour, exhaust, steam, snow spray, chimney smoke)")
+    # soft disc for sun / moon
+    S = 128; y, x = np.mgrid[0:S, 0:S]; r = np.hypot(x - S / 2 + .5, y - S / 2 + .5) / (S / 2)
+    a = np.clip((1 - r) * 6, 0, 1); glow = np.clip(1 - r, 0, 1) ** 2 * 0.5
+    arr = np.zeros((S, S, 4), np.uint8); arr[..., :3] = 255; arr[..., 3] = (np.clip(a + glow, 0, 1) * 255).astype(np.uint8)
+    save_img(Image.fromarray(arr, "RGBA"), "sprites/fx/disc.png", "fx.disc", "Sun/moon disc with glow 128x128")
+
+if __name__ == "__main__":
+    gen_fx()

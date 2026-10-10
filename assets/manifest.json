@@ -191,6 +191,22 @@
   "license": "CC0",
   "notes": " size=96x64"
  },
+ "fx.disc": {
+  "path": "sprites/fx/disc.png",
+  "kind": "sprite",
+  "use": "Sun/moon disc with glow 128x128",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x128"
+ },
+ "fx.puff": {
+  "path": "sprites/fx/puff.png",
+  "kind": "sprite",
+  "use": "Soft puff 64x64 (breath vapour, exhaust, steam, snow spray, chimney smoke)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
  "item.ammo_pistol": {
   "path": "sprites/items/ammo_pistol.png",
   "kind": "sprite",

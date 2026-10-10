@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **38/76 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **39/76 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -53,7 +53,7 @@
 - [x] **T-030** Auto-generate assets.md (clean table on top + detailed section) from manifest.json  
   _note: assets.md generated: python3 tools/gen_assets_md.py_
 
-## P3 World (2/12)
+## P3 World (3/12)
 
 - [x] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km  
   _note: world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot_
@@ -72,9 +72,12 @@
   _note: weather.rs: 2500-flake snowfall. TODO: weather states (blizzard etc.)_
 - [~] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)  
   _note: headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom_
-- [ ] **T-049** Proper lighting pass: bloom, tonemapping + exposure per time of day, SSAO, colour grading (cold blue night / warm low sun), light shafts, soft shadows tuned
-- [ ] **T-050** Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky
-- [ ] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke
+- [~] **T-049** Proper lighting pass: bloom, tonemapping + exposure per time of day, SSAO, colour grading (cold blue night / warm low sun), light shafts, soft shadows tuned  
+  _note: world/atmosphere.rs: HDR bloom, TonyMcMapface tonemapping, volumetric light shafts + FogVolume, moon+ambient. TODO: SSAO, colour grading per time of day, tune on real GPU (M1)_
+- [x] **T-050** Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky  
+  _note: weather-driven linear fog (blizzard whiteout), morning/evening mist, fog colour tied to sky, volumetric density from weather+mist_
+- [~] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke  
+  _note: stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog_
 
 ## P4 Player + FPS (6/9)
 

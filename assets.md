@@ -4,7 +4,7 @@
 > **Quick replace:** overwrite the file at *Path* (same name, same grid/size/format) **or** edit its `path` in `assets/manifest.json`. No code changes needed.
 > All current assets are **generated placeholders** (CC0) made by `tools/gen_*.py`. Regenerate everything: `sh tools/gen_all.sh`.
 
-## 1. Simple list (124 assets)
+## 1. Simple list (126 assets)
 
 | Use | Name (id) | Path (under `assets/`) | Source |
 |---|---|---|---|
@@ -29,6 +29,8 @@
 | Enemy 'neighbour' billboard sheet | `enemy.neighbour` | `sprites/enemies/neighbour.png` | generated (tools/) |
 | Enemy 'wolf' billboard sheet | `enemy.wolf` | `sprites/enemies/wolf.png` | generated (tools/) |
 | Static billboard: fence variant 0 | `fence.0` | `sprites/nature/fence_0.png` | generated (tools/) |
+| Sun/moon disc with glow 128x128 | `fx.disc` | `sprites/fx/disc.png` | generated (tools/) |
+| Soft puff 64x64 | `fx.puff` | `sprites/fx/puff.png` | generated (tools/) |
 | Pickup/inventory icon: item.ammo_pistol | `item.ammo_pistol` | `sprites/items/ammo_pistol.png` | generated (tools/) |
 | Pickup/inventory icon: item.ammo_rifle | `item.ammo_rifle` | `sprites/items/ammo_rifle.png` | generated (tools/) |
 | Pickup/inventory icon: item.ammo_shells | `item.ammo_shells` | `sprites/items/ammo_shells.png` | generated (tools/) |
@@ -135,7 +137,7 @@
 
 ## 2. Detailed notes
 
-### sprite (66)
+### sprite (68)
 
 **Format:** PNG RGBA, transparent bg, nearest-neighbour friendly. Enemy sheets = grid described in `assets/data/sprites.json` (frame size, cols, rows, anims). Billboards are bottom-anchored. Keep same cell size when replacing, or update sprites.json.
 
@@ -160,6 +162,8 @@
 - `enemy.neighbour` - Enemy 'neighbour' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/neighbour.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
 - `enemy.wolf` - Enemy 'wolf' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/wolf.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
 - `fence.0` - Static billboard: fence variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/fence_0.png`. License: CC0.  size=96x64
+- `fx.disc` - Sun/moon disc with glow 128x128. Path `sprites/fx/disc.png`. License: CC0.  size=128x128
+- `fx.puff` - Soft puff 64x64 (breath vapour, exhaust, steam, snow spray, chimney smoke). Path `sprites/fx/puff.png`. License: CC0.  size=64x64
 - `item.ammo_pistol` - Pickup/inventory icon: item.ammo_pistol (32x32 x2). Path `sprites/items/ammo_pistol.png`. License: CC0.  size=64x64
 - `item.ammo_rifle` - Pickup/inventory icon: item.ammo_rifle (32x32 x2). Path `sprites/items/ammo_rifle.png`. License: CC0.  size=64x64
 - `item.ammo_shells` - Pickup/inventory icon: item.ammo_shells (32x32 x2). Path `sprites/items/ammo_shells.png`. License: CC0.  size=64x64

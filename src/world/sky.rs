@@ -58,7 +58,6 @@ pub fn update_sky(
     mut ambient: ResMut<GlobalAmbientLight>,
     mut sun: Query<(&mut Transform, &mut DirectionalLight), With<Sun>>,
     mut moon: Query<&mut DirectionalLight, (With<Moon>, Without<Sun>)>,
-    mut fog: Query<&mut DistanceFog>,
 ) {
     let st = sky_state(tod.hour);
     clear.0 = st.sky;
@@ -74,8 +73,4 @@ pub fn update_sky(
         l.color = st.sun_color;
     }
     if let Ok(mut m) = moon.single_mut() { m.illuminance = 1500.0 * (1.0 - st.day); }
-    for mut f in &mut fog {
-        f.color = st.sky;
-        f.falloff = FogFalloff::Linear { start: 120.0, end: 520.0 };
-    }
 }

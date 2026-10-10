@@ -190,20 +190,20 @@
         {
           "id": "T-049",
           "title": "Proper lighting pass: bloom, tonemapping + exposure per time of day, SSAO, colour grading (cold blue night / warm low sun), light shafts, soft shadows tuned",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "world/atmosphere.rs: HDR bloom, TonyMcMapface tonemapping, volumetric light shafts + FogVolume, moon+ambient. TODO: SSAO, colour grading per time of day, tune on real GPU (M1)"
         },
         {
           "id": "T-050",
           "title": "Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "weather-driven linear fog (blizzard whiteout), morning/evening mist, fog colour tied to sky, volumetric density from weather+mist"
         },
         {
           "id": "T-051",
           "title": "Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog"
         }
       ]
     },
