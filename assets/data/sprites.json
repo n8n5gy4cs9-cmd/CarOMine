@@ -148,5 +148,90 @@
    ]
   },
   "anchor": "bottom"
+ },
+ "weapon.fists": {
+  "frame": [
+   160,
+   128
+  ],
+  "cols": 3,
+  "rows": 1,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "fire": [
+    1,
+    2
+   ]
+  }
+ },
+ "weapon.pistol": {
+  "frame": [
+   160,
+   128
+  ],
+  "cols": 3,
+  "rows": 1,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "fire": [
+    1,
+    2
+   ]
+  }
+ },
+ "weapon.shotgun": {
+  "frame": [
+   160,
+   128
+  ],
+  "cols": 3,
+  "rows": 1,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "fire": [
+    1,
+    2
+   ]
+  }
+ },
+ "weapon.smg": {
+  "frame": [
+   160,
+   128
+  ],
+  "cols": 3,
+  "rows": 1,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "fire": [
+    1,
+    2
+   ]
+  }
+ },
+ "weapon.rifle": {
+  "frame": [
+   160,
+   128
+  ],
+  "cols": 3,
+  "rows": 1,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "fire": [
+    1,
+    2
+   ]
+  }
  }
 }

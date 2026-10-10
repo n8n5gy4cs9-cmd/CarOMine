@@ -70,38 +70,38 @@
         {
           "id": "T-021",
           "title": "gen: trees (spruce/pine/birch/bare), bushes, rocks, snow drifts, fences",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-022",
           "title": "gen: items/pickups (ammo, medkit, coffee, sausage, bolts, parts icons, money)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-023",
           "title": "gen: weapon first-person sprites (fists, pistol, shotgun, SMG, hunting rifle) + muzzle flash",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-024",
           "title": "gen: tileable textures (snow, packed snow, ice, road, gravel, wood, brick, metal, glass, rust)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-025",
           "title": "gen: house/building facade sprites + 2D/3D hybrid billboards (cabin, red barn, sauna, shop)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-026",
           "title": "gen: HUD/UI sprites, fonts bitmap, crosshair, windshield snow/frost overlay frames",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "tools/gen_sprites.py"
         },
         {
           "id": "T-027",

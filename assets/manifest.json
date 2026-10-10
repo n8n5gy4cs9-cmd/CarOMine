@@ -1,4 +1,124 @@
 {
+ "building.barn": {
+  "path": "sprites/buildings/barn.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'barn' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.barn_lit": {
+  "path": "sprites/buildings/barn_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'barn' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.cabin": {
+  "path": "sprites/buildings/cabin.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'cabin' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.cabin_lit": {
+  "path": "sprites/buildings/cabin_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'cabin' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.church": {
+  "path": "sprites/buildings/church.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'church' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.church_lit": {
+  "path": "sprites/buildings/church_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'church' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.house": {
+  "path": "sprites/buildings/house.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'house' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.house_lit": {
+  "path": "sprites/buildings/house_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'house' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.sauna": {
+  "path": "sprites/buildings/sauna.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'sauna' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.sauna_lit": {
+  "path": "sprites/buildings/sauna_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'sauna' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.shop": {
+  "path": "sprites/buildings/shop.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'shop' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "building.shop_lit": {
+  "path": "sprites/buildings/shop_lit.png",
+  "kind": "sprite",
+  "use": "Building facade billboard 'shop' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x192"
+ },
+ "bush.0": {
+  "path": "sprites/nature/bush_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: bush variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=80x56"
+ },
+ "bush.1": {
+  "path": "sprites/nature/bush_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: bush variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=80x56"
+ },
+ "bush.2": {
+  "path": "sprites/nature/bush_2.png",
+  "kind": "sprite",
+  "use": "Static billboard: bush variant 2 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=80x56"
+ },
  "enemy.goon": {
   "path": "sprites/enemies/goon.png",
   "kind": "sprite",
@@ -38,5 +158,485 @@
   "source": "generated (tools/)",
   "license": "CC0",
   "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+ },
+ "fence.0": {
+  "path": "sprites/nature/fence_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: fence variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=96x64"
+ },
+ "item.ammo_pistol": {
+  "path": "sprites/items/ammo_pistol.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.ammo_pistol (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.ammo_rifle": {
+  "path": "sprites/items/ammo_rifle.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.ammo_rifle (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.ammo_shells": {
+  "path": "sprites/items/ammo_shells.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.ammo_shells (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.battery": {
+  "path": "sprites/items/battery.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.battery (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.bolts": {
+  "path": "sprites/items/bolts.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.bolts (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.coffee": {
+  "path": "sprites/items/coffee.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.coffee (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.dry_gas": {
+  "path": "sprites/items/dry_gas.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.dry_gas (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.fuel_can": {
+  "path": "sprites/items/fuel_can.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.fuel_can (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.key": {
+  "path": "sprites/items/key.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.key (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.medkit": {
+  "path": "sprites/items/medkit.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.medkit (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.money": {
+  "path": "sprites/items/money.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.money (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.sausage": {
+  "path": "sprites/items/sausage.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.sausage (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.snow_brush": {
+  "path": "sprites/items/snow_brush.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.snow_brush (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.sparkplug": {
+  "path": "sprites/items/sparkplug.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.sparkplug (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.tire": {
+  "path": "sprites/items/tire.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.tire (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "item.wrench": {
+  "path": "sprites/items/wrench.png",
+  "kind": "sprite",
+  "use": "Pickup/inventory icon: item.wrench (32x32 x2)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=64x64"
+ },
+ "rock.0": {
+  "path": "sprites/nature/rock_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: rock variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=80x56"
+ },
+ "rock.1": {
+  "path": "sprites/nature/rock_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: rock variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=80x56"
+ },
+ "snowdrift.0": {
+  "path": "sprites/nature/snowdrift_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x40"
+ },
+ "snowdrift.1": {
+  "path": "sprites/nature/snowdrift_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: snowdrift variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x40"
+ },
+ "streetlamp.0": {
+  "path": "sprites/nature/streetlamp_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: streetlamp variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=48x160"
+ },
+ "tex.asphalt": {
+  "path": "textures/asphalt.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: asphalt",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.brick": {
+  "path": "textures/brick.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: brick",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.dirt_frozen": {
+  "path": "textures/dirt_frozen.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: dirt_frozen",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.floor_wood": {
+  "path": "textures/floor_wood.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: floor_wood",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.glass": {
+  "path": "textures/glass.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: glass",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.gravel": {
+  "path": "textures/gravel.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: gravel",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.ice": {
+  "path": "textures/ice.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: ice",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.metal": {
+  "path": "textures/metal.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: metal",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.roof_dark": {
+  "path": "textures/roof_dark.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: roof_dark",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.rust": {
+  "path": "textures/rust.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: rust",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.snow": {
+  "path": "textures/snow.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: snow",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.snow_packed": {
+  "path": "textures/snow_packed.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: snow_packed",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.wood": {
+  "path": "textures/wood.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: wood",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tex.wood_red": {
+  "path": "textures/wood_red.png",
+  "kind": "texture",
+  "use": "Tileable 128x128 texture: wood_red",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": "seamless; keep tileable size=128x128"
+ },
+ "tree.bare.0": {
+  "path": "sprites/nature/tree_bare_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.bare variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x192"
+ },
+ "tree.bare.1": {
+  "path": "sprites/nature/tree_bare_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.bare variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x192"
+ },
+ "tree.birch.0": {
+  "path": "sprites/nature/tree_birch_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.birch variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.birch.1": {
+  "path": "sprites/nature/tree_birch_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.birch variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.pine.0": {
+  "path": "sprites/nature/tree_pine_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.pine variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.pine.1": {
+  "path": "sprites/nature/tree_pine_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.pine variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.spruce.0": {
+  "path": "sprites/nature/tree_spruce_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.spruce variant 0 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.spruce.1": {
+  "path": "sprites/nature/tree_spruce_1.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.spruce variant 1 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "tree.spruce.2": {
+  "path": "sprites/nature/tree_spruce_2.png",
+  "kind": "sprite",
+  "use": "Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x224"
+ },
+ "ui.bar_frame": {
+  "path": "sprites/ui/bar_frame.png",
+  "kind": "sprite",
+  "use": "HUD bar frame 256x24 (health/needs/fuel)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=256x24"
+ },
+ "ui.crosshair": {
+  "path": "sprites/ui/crosshair.png",
+  "kind": "sprite",
+  "use": "Crosshair 32x32",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=32x32"
+ },
+ "ui.font": {
+  "path": "sprites/ui/font_atlas.png",
+  "kind": "sprite",
+  "use": "Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells (fallback; real TTF can replace)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=192x108"
+ },
+ "ui.windshield_frost": {
+  "path": "sprites/ui/windshield_frost.png",
+  "kind": "sprite",
+  "use": "Windshield frost overlay (edges frosted), cleared by defrost",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.windshield_snow_1": {
+  "path": "sprites/ui/windshield_snow_1.png",
+  "kind": "sprite",
+  "use": "Windshield snow overlay level 1/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.windshield_snow_2": {
+  "path": "sprites/ui/windshield_snow_2.png",
+  "kind": "sprite",
+  "use": "Windshield snow overlay level 2/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.windshield_snow_3": {
+  "path": "sprites/ui/windshield_snow_3.png",
+  "kind": "sprite",
+  "use": "Windshield snow overlay level 3/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.windshield_snow_4": {
+  "path": "sprites/ui/windshield_snow_4.png",
+  "kind": "sprite",
+  "use": "Windshield snow overlay level 4/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.windshield_snow_5": {
+  "path": "sprites/ui/windshield_snow_5.png",
+  "kind": "sprite",
+  "use": "Windshield snow overlay level 5/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=512x256"
+ },
+ "ui.wiper": {
+  "path": "sprites/ui/wiper.png",
+  "kind": "sprite",
+  "use": "Wiper blade 128x8",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=128x8"
+ },
+ "weapon.fists": {
+  "path": "sprites/weapons/fists.png",
+  "kind": "sprite",
+  "use": "First-person weapon sheet 'fists': 3 frames 160x128 (idle, fire, recoil)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=480x128"
+ },
+ "weapon.pistol": {
+  "path": "sprites/weapons/pistol.png",
+  "kind": "sprite",
+  "use": "First-person weapon sheet 'pistol': 3 frames 160x128 (idle, fire, recoil)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=480x128"
+ },
+ "weapon.rifle": {
+  "path": "sprites/weapons/rifle.png",
+  "kind": "sprite",
+  "use": "First-person weapon sheet 'rifle': 3 frames 160x128 (idle, fire, recoil)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=480x128"
+ },
+ "weapon.shotgun": {
+  "path": "sprites/weapons/shotgun.png",
+  "kind": "sprite",
+  "use": "First-person weapon sheet 'shotgun': 3 frames 160x128 (idle, fire, recoil)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=480x128"
+ },
+ "weapon.smg": {
+  "path": "sprites/weapons/smg.png",
+  "kind": "sprite",
+  "use": "First-person weapon sheet 'smg': 3 frames 160x128 (idle, fire, recoil)",
+  "source": "generated (tools/)",
+  "license": "CC0",
+  "notes": " size=480x128"
  }
 }
