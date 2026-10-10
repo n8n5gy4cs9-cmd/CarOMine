@@ -42,6 +42,7 @@ pub fn collect(
     mut stats: ResMut<PlayerStats>,
     mut lo: ResMut<Loadout>,
     mut fl: ResMut<super::flashlight::Flashlight>,
+    mut needs: ResMut<crate::life::needs::Needs>,
     player: Query<&Transform, With<crate::player::Player>>,
     q: Query<(Entity, &Transform, &Pickup)>,
     mut started: Local<bool>,
@@ -87,7 +88,8 @@ pub fn collect(
             PickupKind::AmmoRifle => { lo.reserve[4] += 5; true }
             PickupKind::Money => { stats.money += 20; true }
             PickupKind::Batteries => { fl.battery = 1.0; true }
-            PickupKind::Coffee | PickupKind::Sausage => { stats.hp = (stats.hp + 10.0).min(100.0); true }
+            PickupKind::Coffee => { needs.energy = (needs.energy + 0.2).min(1.0); needs.warmth = (needs.warmth + 0.1).min(1.0); true }
+            PickupKind::Sausage => { needs.hunger = (needs.hunger + 0.3).min(1.0); stats.hp = (stats.hp + 5.0).min(100.0); true }
         };
         if used { commands.entity(e).despawn(); sfx.write(crate::audio::Sfx::new("sfx.pickup")); }
     }

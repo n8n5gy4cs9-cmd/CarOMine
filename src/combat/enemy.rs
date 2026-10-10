@@ -24,8 +24,8 @@ pub struct Def {
 }
 pub fn def(k: Kind) -> Def {
     match k {
-        Kind::Goon => Def { name: "ex-agency goon", sprite: "enemy.goon", hp: 60.0, speed: 3.2, w: 1.5, h: 2.0, sight: 55.0, ranged: true, range: 35.0, damage: 9.0, rate: 1.1, accuracy: 0.65 },
-        Kind::Hunter => Def { name: "rogue hunter", sprite: "enemy.hunter", hp: 80.0, speed: 2.8, w: 1.5, h: 2.0, sight: 90.0, ranged: true, range: 70.0, damage: 20.0, rate: 2.2, accuracy: 0.7 },
+        Kind::Goon => Def { name: "ex-agency goon", sprite: "enemy.goon", hp: 60.0, speed: 3.2, w: 1.5, h: 2.0, sight: 55.0, ranged: true, range: 35.0, damage: 7.0, rate: 1.3, accuracy: 0.5 },
+        Kind::Hunter => Def { name: "rogue hunter", sprite: "enemy.hunter", hp: 80.0, speed: 2.8, w: 1.5, h: 2.0, sight: 90.0, ranged: true, range: 60.0, damage: 14.0, rate: 2.6, accuracy: 0.5 },
         Kind::Neighbour => Def { name: "drunk neighbour", sprite: "enemy.neighbour", hp: 40.0, speed: 2.2, w: 1.5, h: 2.0, sight: 30.0, ranged: false, range: 1.8, damage: 8.0, rate: 0.9, accuracy: 1.0 },
         Kind::Wolf => Def { name: "wolf", sprite: "enemy.wolf", hp: 35.0, speed: 7.0, w: 1.4, h: 1.0, sight: 45.0, ranged: false, range: 1.6, damage: 10.0, rate: 0.7, accuracy: 1.0 },
         Kind::Moose => Def { name: "moose", sprite: "enemy.moose", hp: 220.0, speed: 6.0, w: 3.2, h: 2.4, sight: 35.0, ranged: false, range: 2.6, damage: 28.0, rate: 1.6, accuracy: 1.0 },
@@ -66,7 +66,7 @@ pub fn load_enemy_assets(mut commands: Commands, server: Res<AssetServer>, man: 
     commands.insert_resource(a);
 }
 
-pub fn spawn_enemy(commands: &mut Commands, a: &EnemyAssets, mats: &mut Assets<StandardMaterial>, k: Kind, pos: Vec2) {
+pub fn spawn_enemy(commands: &mut Commands, a: &EnemyAssets, mats: &mut Assets<StandardMaterial>, k: Kind, pos: Vec2) -> Entity {
     let d = def(k);
     let mut m = sprite_material(a.tex[&key(k)].clone());
     m.unlit = false;
@@ -79,7 +79,7 @@ pub fn spawn_enemy(commands: &mut Commands, a: &EnemyAssets, mats: &mut Assets<S
         AngleSprite { cols: 10, rows: 8, col: 0, facing: 0.0 },
         Hittable { radius: d.w * 0.32, height: d.h },
         Enemy { kind: k, hp: d.hp, state: State::Idle, yaw: 0.0, cooldown: 1.0, attack_anim: 0.0, walk_t: 0.0, dead_t: 0.0, wander: pos, wander_t: 0.0, flash: 0.0, alerted: false },
-    ));
+    )).id()
 }
 
 pub fn spawn_initial(mut commands: Commands, a: Option<Res<EnemyAssets>>, mut mats: ResMut<Assets<StandardMaterial>>, existing: Query<(), With<Enemy>>) {
@@ -129,7 +129,7 @@ pub fn ai(
         let alive_player = stats.hp > 0.0;
         // sight (cheap): distance, plus alerted memory
         if alive_player && (dist < d.sight * if e.alerted { 1.6 } else { 1.0 }) {
-            if e.state == State::Idle { e.state = State::Chase; e.alerted = true; }
+            if e.state == State::Idle { e.state = State::Chase; e.alerted = true; e.cooldown = e.cooldown.max(1.4); }
         } else if !alive_player || dist > d.sight * 2.5 { e.state = State::Idle; e.alerted = false; }
         let mut dir = Vec2::ZERO;
         match e.state {

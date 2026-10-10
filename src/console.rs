@@ -141,10 +141,16 @@ struct Res0<'w> {
     weather: ResMut<'w, Weather>,
     settings: ResMut<'w, Settings>,
     ws: ResMut<'w, crate::vehicle::windshield::Windshield>,
+    flash: ResMut<'w, crate::combat::flashlight::Flashlight>,
+    missions: ResMut<'w, crate::life::missions::Missions>,
+    needs: ResMut<'w, crate::life::needs::Needs>,
+    save_req: MessageWriter<'w, crate::save::SaveRequest>,
+    pending: ResMut<'w, crate::save::PendingLoad>,
+    inv: ResMut<'w, crate::build::Inventory>,
 }
 
 const HELP: &str = "commands: help clear pos | tp <x z|cabin|village|garage|lake|shop> | time <hour> | timespeed <x> | snow <0..1> | ws <0..1> windshield snow
- save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
+ gig [n|tp|done|abandon] need food|energy|warm <0..1> | save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
  build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
 
 fn exec_cmds(
@@ -157,15 +163,11 @@ fn exec_cmds(
     mut player: Query<(&mut Transform, &mut Player), Without<Car>>,
     mut cars: Query<(&mut Transform, &mut Car), Without<Player>>,
     mut bparts: Query<&mut crate::build::CarParts>,
-    mut inv: ResMut<crate::build::Inventory>,
-    mut flash: ResMut<crate::combat::flashlight::Flashlight>,
-    mut save_req: MessageWriter<crate::save::SaveRequest>,
-    mut pending: ResMut<crate::save::PendingLoad>,
     enemies: Query<Entity, With<Enemy>>,
     mut cam: Query<&mut Projection, With<PlayerCamera>>,
     mut exit: MessageWriter<AppExit>,
 ) {
-    let Res0 { mut cheats, mut stats, mut lo, mut tod, mut weather, mut settings, mut ws } = r;
+    let Res0 { mut cheats, mut stats, mut lo, mut tod, mut weather, mut settings, mut ws, mut flash, mut missions, mut needs, mut save_req, mut pending, mut inv } = r;
     for ConsoleLine(line) in lines.read() {
         let w: Vec<&str> = line.split_whitespace().collect();
         let a = |i: usize| w.get(i).copied().unwrap_or("");
@@ -182,6 +184,17 @@ fn exec_cmds(
             "batteries" | "flashlight" => { flash.battery = 1.0; if a(0) == "flashlight" { flash.on = !flash.on; } out.push(format!("flashlight battery 100%, light {}", if flash.on { "ON" } else { "off" })); }
             "save" => { let slot = if a(1).is_empty() { "slot1".to_string() } else if a(1).len() == 1 { format!("slot{}", a(1)) } else { a(1).to_string() }; save_req.write(crate::save::SaveRequest(slot.clone())); out.push(format!("saving to {slot}")); }
             "load" => { let slot = if a(1).is_empty() { "slot1".to_string() } else if a(1).len() == 1 { format!("slot{}", a(1)) } else { a(1).to_string() }; match crate::save::read(&slot) { Some(d) => { pending.0 = Some(d); out.push(format!("loading {slot}")); } None => out.push(format!("no save in {slot}")) } }
+            "gig" => {
+                missions.ensure_board();
+                match a(1) {
+                    "" => { for (i, m) in missions.board.iter().enumerate() { out.push(format!("{i}: {} [{} EUR] at {:.0},{:.0}", m.title, m.reward, m.center.x, m.center.y)); } if let Some(m) = &missions.active { out.push(format!("ACTIVE: {} at {:.0},{:.0}", m.title, m.center.x, m.center.y)); } }
+                    "tp" => { if let (Some(m), Ok((mut t, _))) = (missions.active.clone(), player.single_mut()) { let d = m.target() + Vec2::new(0.0, 25.0); t.translation = Vec3::new(d.x, height_at(d.x, d.y) + 0.5, d.y); out.push("teleported near objective".into()); } else { out.push("no active gig".into()); } }
+                    "done" => { if let Some(m) = missions.active.take() { stats.money += m.reward; out.push(format!("gig completed (cheat): +{} EUR", m.reward)); } }
+                    "abandon" => { missions.active = None; out.push("abandoned".into()); }
+                    n => { if let Ok(i) = n.parse::<usize>() { if i < missions.board.len() && missions.active.is_none() { let m = missions.board.remove(i); out.push(format!("accepted: {}", m.title)); missions.active = Some(m); } else { out.push("bad index or gig already active".into()); } } }
+                }
+            }
+            "need" | "needs" => { let v = num(2).unwrap_or(1.0).clamp(0.0, 1.0); match a(1) { "food" | "hunger" => needs.hunger = v, "energy" => needs.energy = v, "warm" | "warmth" => needs.warmth = v, _ => { out.push(format!("hunger {:.0}% energy {:.0}% warmth {:.0}%   usage: need food|energy|warm <0..1>", needs.hunger * 100.0, needs.energy * 100.0, needs.warmth * 100.0)); } } }
             "heal" => { stats.hp = 100.0; out.push("healed".into()); }
             "armor" => { stats.armor = 100.0; out.push("armor 100".into()); }
             "money" => { stats.money += num(1).unwrap_or(1000.0) as i32; out.push(format!("money {}", stats.money)); }

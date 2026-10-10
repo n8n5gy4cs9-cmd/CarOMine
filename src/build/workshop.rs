@@ -126,9 +126,13 @@ pub fn input(
                 if inv.coolant_cans == 0 { if stats.money >= 8 { stats.money -= 8; inv.coolant_cans += 1; } else { ws.msg = "No coolant and no money (8 EUR).".into(); return; } }
                 inv.coolant_cans -= 1; p.coolant = 1.0; ws.msg = "Radiator topped up with coolant (-8 EUR if bought).".into();
             }
+            if keys.just_pressed(KeyCode::Digit2) && inv.fuel_cans > 0 {
+                inv.fuel_cans -= 1; car.fuel = (car.fuel + 10.0).min(car.spec.fuel_cap); ws.msg = format!("Poured a fuel can. Tank: {:.0} L", car.fuel); return;
+            }
             if keys.just_pressed(KeyCode::Digit2) {
                 if stats.money >= 15 { stats.money -= 15; car.fuel = (car.fuel + 10.0).min(car.spec.fuel_cap); ws.msg = format!("+10 L fuel (15 EUR). Tank: {:.0} L", car.fuel); } else { ws.msg = "15 EUR needed.".into(); }
             }
+            if keys.just_pressed(KeyCode::Digit3) && inv.dry_gas > 0 { inv.dry_gas -= 1; p.dry_gas_t = 900.0; p.frozen_line = false; ws.msg = "Dry gas added: fuel line won't freeze for ~15 min.".into(); return; }
             if keys.just_pressed(KeyCode::Digit3) {
                 if stats.money >= 4 { stats.money -= 4; p.dry_gas_t = 900.0; p.frozen_line = false; ws.msg = "Dry gas added: fuel line won't freeze for ~15 min.".into(); } else { ws.msg = "4 EUR needed.".into(); }
             }

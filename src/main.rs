@@ -5,6 +5,7 @@ mod build;
 mod combat;
 mod console;
 mod dev;
+mod life;
 mod manifest;
 mod menu;
 mod player;
@@ -30,7 +31,7 @@ fn main() {
                 })
                 .set(AssetPlugin { file_path: asset_dir(), ..default() }),
         )
-        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin, world::WorldPlugin, player::PlayerPlugin, vehicle::VehiclePlugin, combat::CombatPlugin, console::ConsolePlugin, build::BuildPlugin, audio::GameAudioPlugin, menu::MenuPlugin, save::SavePlugin, dev::DevPlugin))
+        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin, world::WorldPlugin, player::PlayerPlugin, vehicle::VehiclePlugin, combat::CombatPlugin, console::ConsolePlugin, build::BuildPlugin, audio::GameAudioPlugin, menu::MenuPlugin, life::LifePlugin, save::SavePlugin, dev::DevPlugin))
         .insert_resource(ClearColor(Color::srgb(0.55, 0.65, 0.78)))
         .add_systems(Startup, setup_lights)
         .run();

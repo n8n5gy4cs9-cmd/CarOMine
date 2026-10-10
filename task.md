@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **39/76 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **43/77 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -79,7 +79,7 @@
 - [~] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke  
   _note: stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog_
 
-## P4 Player + FPS (6/9)
+## P4 Player + FPS (7/9)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
@@ -93,7 +93,8 @@
   _note: pickups.rs: medkit/ammo/money/coffee/sausage auto-collect + enemy drops. TODO: E-interact items, armor, inventory_
 - [~] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
   _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
-- [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
+- [x] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside  
+  _note: life/missions.rs: gig board (phone) with Hunt/Deliver/Recover gigs, waypoint beacon, compass HUD, rewards; console gig cmds_
 - [x] **T-052** Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway  
   _note: combat/flashlight.rs: F toggle, battery drain 7min, flicker <15%, sway, batteries pickup, HUD %; shadows on_
 - [x] **T-053** Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'  
@@ -118,7 +119,7 @@
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
 
-## P6 Car building + repair (4/9)
+## P6 Car building + repair (5/9)
 
 - [~] **T-100** Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats  
   _note: src/build/mod.rs: 18 slots w/ condition, inventory, stock parts. TODO: move data to assets/data/parts.json (data-driven), more parts (exhaust, suspension, steering)_
@@ -134,19 +135,24 @@
   _note: starter shell + boxes inventory (engine, gearbox, battery, plugs, filter, radiator, alternator, belt); goal: install, fill fluids, start_
 - [~] **T-106** Upgrades: winter tires, studs, block heater (moottorinlampo), better lights, snow chains, engine tuning  
   _note: buy winter(180)/studded(260) tyres done. TODO: block heater, chains, lights upgrade, engine tuning_
-- [ ] **T-107** Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop
+- [x] **T-107** Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop  
+  _note: K-market + Auto parts shop dialogs at village doors (lit lamps mark entrances). Mailbox delivery still TODO_
 - [ ] **T-108** Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions
 
-## P7 Game loop + life sim (1/7)
+## P7 Game loop + life sim (3/8)
 
-- [ ] **T-120** Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving
-- [ ] **T-121** Economy: unemployment benefit, odd jobs, agency gigs, shops (K-market, auto parts, gas)
-- [ ] **T-122** Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone
+- [x] **T-120** Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving  
+  _note: life/needs.rs: hunger/energy/warmth, freezing/starving damage, car heater, pass-out, HUD_
+- [x] **T-121** Economy: unemployment benefit, odd jobs, agency gigs, shops (K-market, auto parts, gas)  
+  _note: Kela benefit +35 EUR each 08:00, gigs for money, K-market + auto parts shops, enemy loot_
+- [~] **T-122** Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone  
+  _note: life/dialog.rs: cabin door dialog (sleep w/ autosave, fridge, coffee, firewood, phone), sauna (stove w/ logs, bathe). No walkable interiors yet; TV/mailbox TODO_
 - [ ] **T-123** Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)
 - [x] **T-124** Save/load system (JSON), autosave, multiple slots  
   _note: src/save.rs: JSON saves in ./saves (autosave every 3 min + slot1-3), player/car/parts/inventory/time/weather; console save/load; verified round trip_
 - [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
 - [ ] **T-126** Localization (EN default, FI)
+- [ ] **T-127** Mailbox: parts ordered by phone arrive next day (MSC Teemo style); TV with Finnish channels; cabin interior (walkable)
 
 ## P8 UI + audio integration (4/8)
 

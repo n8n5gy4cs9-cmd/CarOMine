@@ -15,7 +15,7 @@ struct DevState { menu_frames: u32, frames: u32, shot_taken_at: Option<u32> }
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds, dev_workshop, dev_ignite));
+        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds, dev_workshop, dev_ignite, dev_dialog));
     }
 }
 
@@ -107,4 +107,14 @@ pub fn dev_workshop(d: Res<DevState>, mut next: ResMut<NextState<GameState>>) {
 fn dev_ignite(d: Res<DevState>, mut w: MessageWriter<crate::build::Ignition>) {
     let Ok(v) = std::env::var("CAROMINE_IGNITE") else { return };
     if v.split(',').filter_map(|s| s.trim().parse::<u32>().ok()).any(|f| f == d.frames) { w.write(crate::build::Ignition); }
+}
+
+/// CAROMINE_DIALOG=home|phone|sauna|market|parts: open that dialog at frame 25.
+fn dev_dialog(d: Res<DevState>, mut next: ResMut<NextState<GameState>>, mut dlg: ResMut<crate::life::dialog::Dialog>, mut missions: ResMut<crate::life::missions::Missions>) {
+    use crate::life::dialog::Screen;
+    let Ok(v) = std::env::var("CAROMINE_DIALOG") else { return };
+    if d.frames != 25 { return; }
+    dlg.screen = match v.as_str() { "phone" => Screen::Phone, "sauna" => Screen::Sauna, "market" => Screen::Market, "parts" => Screen::Parts, _ => Screen::Home };
+    dlg.sel = 0; missions.ensure_board();
+    next.set(GameState::Dialog);
 }

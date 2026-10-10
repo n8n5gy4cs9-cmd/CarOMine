@@ -10,6 +10,8 @@ pub enum GameState {
     Paused,
     #[allow(dead_code)]
     Garage,
+    /// Talking to a door (home / sauna / shop): list dialog, game paused.
+    Dialog,
 }
 
 pub struct StatePlugin;
