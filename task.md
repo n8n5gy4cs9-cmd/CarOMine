@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **23/65 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **26/65 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -71,15 +71,20 @@
 - [~] **T-048** Lighting: headlights, streetlamps, window lights, fire/sauna glow, good-looking night (bloom, tonemapping)  
   _note: headlight spotlights + moon + ambient done. TODO: streetlamps, window glow, bloom_
 
-## P4 Player + FPS (1/7)
+## P4 Player + FPS (4/7)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
-- [ ] **T-061** Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons
-- [ ] **T-062** Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling
-- [ ] **T-063** Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour
-- [ ] **T-064** Pickups, health, armor, items, interaction raycast (E key)
-- [ ] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops
+- [x] **T-061** Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons  
+  _note: combat/weapons.rs: 5 weapons (fists/pistol/shotgun/SMG/rifle), hitscan+pellets, reload, headshots, trees block shots; keys 1-5, LMB, R_
+- [x] **T-062** Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling  
+  _note: combat/enemy.rs: billboard 8-angle sprites, Idle/Chase/Attack/Dead AI, melee+ranged_
+- [x] **T-063** Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour  
+  _note: 5 enemy defs: goon, hunter, neighbour, wolf, moose (placed at fixed spots; wider spawning in T-066)_
+- [~] **T-064** Pickups, health, armor, items, interaction raycast (E key)  
+  _note: pickups.rs: medkit/ammo/money/coffee/sausage auto-collect + enemy drops. TODO: E-interact items, armor, inventory_
+- [~] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
+  _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
 - [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
 
 ## P5 Vehicle simulation (2/9)
@@ -122,7 +127,8 @@
 
 ## P8 UI + audio integration (0/4)
 
-- [ ] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights
+- [~] **T-140** HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights  
+  _note: combat/hud.rs: hp/armor/money/ammo/speed/gear/rpm/fuel/clock/snow%. TODO: proper gauges, needs bars_
 - [ ] **T-141** Main menu, pause, settings, credits (by Crowelian 2026 + Sonnet)
 - [ ] **T-142** Audio engine integration: spatial SFX, music state machine, volume sliders
 - [ ] **T-143** Inventory + tool wheel UI

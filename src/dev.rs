@@ -14,7 +14,7 @@ struct DevState { frames: u32, shot_taken_at: Option<u32> }
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car));
+        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup));
     }
 }
 
@@ -55,4 +55,22 @@ fn dev_car(
     if let Ok(c) = cam.single() { commands.entity(c).insert(ChildOf(ce)).insert(Transform::from_xyz(-0.38, 1.12, -0.15)); }
     for mut v in &mut pv { *v = Visibility::Hidden; }
     commands.insert_resource(crate::vehicle::physics::DevDrive { throttle: n.first().copied().unwrap_or(0.0), steer: n.get(1).copied().unwrap_or(0.0), handbrake: n.get(2).copied().unwrap_or(0.0) > 0.5 });
+}
+
+/// CAROMINE_LINEUP=1: spawn one of every enemy in a row in front of the player (AI frozen by giving them no sight: they are Dead-free but idle until alerted).
+fn dev_lineup(
+    mut commands: Commands,
+    d: Res<DevState>,
+    a: Option<Res<crate::combat::enemy::EnemyAssets>>,
+    mut mats: ResMut<Assets<StandardMaterial>>,
+    player: Query<&Transform, With<crate::player::Player>>,
+) {
+    if std::env::var("CAROMINE_LINEUP").is_err() || d.frames != 5 { return; }
+    let (Some(a), Ok(pt)) = (a, player.single()) else { return };
+    use crate::combat::enemy::*;
+    let fwd = pt.rotation * Vec3::NEG_Z; let right = pt.rotation * Vec3::X;
+    for (i, k) in [Kind::Goon, Kind::Hunter, Kind::Neighbour, Kind::Wolf, Kind::Moose].iter().enumerate() {
+        let p = pt.translation + fwd * 9.0 + right * (i as f32 - 2.0) * 3.2;
+        spawn_enemy(&mut commands, &a, &mut mats, *k, Vec2::new(p.x, p.z));
+    }
 }

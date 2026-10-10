@@ -202,32 +202,32 @@
         {
           "id": "T-061",
           "title": "Weapon system: hitscan + projectile, ammo, reload, recoil, 5 weapons",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "combat/weapons.rs: 5 weapons (fists/pistol/shotgun/SMG/rifle), hitscan+pellets, reload, headshots, trees block shots; keys 1-5, LMB, R"
         },
         {
           "id": "T-062",
           "title": "Enemy AI: billboard sprites, states (idle/patrol/chase/attack/flee/dead), line of sight, door/obstacle handling",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "combat/enemy.rs: billboard 8-angle sprites, Idle/Chase/Attack/Dead AI, melee+ranged"
         },
         {
           "id": "T-063",
           "title": "Enemy roster: ex-agency goons, rogue hunters, wolves, angry moose, drunk neighbour",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "5 enemy defs: goon, hunter, neighbour, wolf, moose (placed at fixed spots; wider spawning in T-066)"
         },
         {
           "id": "T-064",
           "title": "Pickups, health, armor, items, interaction raycast (E key)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "pickups.rs: medkit/ammo/money/coffee/sausage auto-collect + enemy drops. TODO: E-interact items, armor, inventory"
         },
         {
           "id": "T-065",
           "title": "Damage/hit feedback, gibs/blood (snow-red), enemy drops",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs"
         },
         {
           "id": "T-066",
@@ -400,8 +400,8 @@
         {
           "id": "T-140",
           "title": "HUD: health, ammo, needs, speed, tacho, fuel, temp, dash lights",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "combat/hud.rs: hp/armor/money/ammo/speed/gear/rpm/fuel/clock/snow%. TODO: proper gauges, needs bars"
         },
         {
           "id": "T-141",

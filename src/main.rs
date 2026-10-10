@@ -1,5 +1,6 @@
 //! CarOMine - by Crowelian 2026 + Sonnet.
 #![allow(dead_code)] // scaffolding; modules get wired in as phases land
+mod combat;
 mod dev;
 mod manifest;
 mod player;
@@ -24,7 +25,7 @@ fn main() {
                 })
                 .set(AssetPlugin { file_path: asset_dir(), ..default() }),
         )
-        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin, world::WorldPlugin, player::PlayerPlugin, vehicle::VehiclePlugin, dev::DevPlugin))
+        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin, world::WorldPlugin, player::PlayerPlugin, vehicle::VehiclePlugin, combat::CombatPlugin, dev::DevPlugin))
         .insert_resource(ClearColor(Color::srgb(0.55, 0.65, 0.78)))
         .add_systems(Startup, setup_lights)
         .add_systems(OnEnter(GameState::MainMenu), spawn_menu)
