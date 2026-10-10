@@ -1,5 +1,5 @@
 //! Population director: keeps a few wanderers near the player (more at night / in storms), culls far idle ones.
-use super::enemy::*;
+use super::enemy::{spawn_enemy, Enemy, EnemyAssets, Kind, State as EState};
 use crate::life::missions::MissionTarget;
 use crate::story::Boss;
 use crate::world::layout::*;
@@ -26,13 +26,13 @@ pub fn run(
     for (e, en, t, mt, boss) in &enemies {
         if mt.is_some() || boss.is_some() { continue; }
         let far = Vec2::new(t.translation.x, t.translation.z).distance(pp) > 380.0;
-        if far && (en.state == State::Idle || en.state == State::Dead) { commands.entity(e).despawn(); }
+        if far && (en.state == EState::Idle || en.state == EState::Dead) { commands.entity(e).despawn(); }
     }
     if *acc < 7.0 { return; }
     *acc = 0.0;
     let night = 1.0 - sky_state(tod.hour).day;
     let cap = (5.0 + 5.0 * night + 3.0 * weather.intensity) as usize;
-    let alive = enemies.iter().filter(|(_, e, t, _, _)| e.state != State::Dead && Vec2::new(t.translation.x, t.translation.z).distance(pp) < 380.0).count();
+    let alive = enemies.iter().filter(|(_, e, t, _, _)| e.state != EState::Dead && Vec2::new(t.translation.x, t.translation.z).distance(pp) < 380.0).count();
     if alive >= cap { return; }
     // pick a spawn spot 90..170 m away that is on land, off-road and not in a settlement
     let seed = (time.elapsed_secs() * 100.0) as i32;
