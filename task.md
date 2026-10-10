@@ -204,6 +204,7 @@
   _note: packaging/macos_bundle.sh (.app, universal option) written; untested (needs a Mac)_
 - [~] **T-162** Windows + Linux builds, CI release artifacts  
   _note: packaging/linux_windows.md instructions; CI release artifacts TODO_
-- [ ] **T-163** Playtest balance pass, bug list, README screenshots
+- [~] **T-163** Playtest balance pass, bug list, README screenshots  
+  _note: README screenshot gallery added. TODO: full playtest/balance pass, bug list_
 - [x] **T-165** Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling  
   _note: paths.rs: saves/settings in OS data dir (CAROMINE_DATA_DIR to override); odometer saved_

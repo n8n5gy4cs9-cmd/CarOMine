@@ -33,6 +33,20 @@ macOS app bundle: `sh packaging/macos_bundle.sh` (see `packaging/`).
 4. Live: hunger, energy, warmth. Sleep, coffee, makkara, firewood, **sauna**, Kela benefit every morning, agency gigs by phone, K-market and auto parts shop.
 5. Pass the katsastus → drive south to Helsinki → The Director.
 
+
+## Screenshots
+(Rendered headlessly with lavapipe - software Vulkan - so colours/lighting look flatter than on a real GPU.)
+
+| | |
+|---|---|
+| ![forest](docs/screenshots/forest.jpg) Billboard forest, gloved hands | ![car](docs/screenshots/car_exterior.jpg) The grimy project car |
+| ![dash](docs/screenshots/dashboard.jpg) Driver view: spinning wheel, gauges, warning lights | ![bar](docs/screenshots/statusbar.jpg) Doom-style status bar with reactive face |
+| ![dusk](docs/screenshots/dusk_tracks.jpg) Dusk: brake lights, tyre tracks, village windows | ![blizzard](docs/screenshots/blizzard.jpg) Blizzard whiteout |
+| ![aurora](docs/screenshots/aurora.jpg) Aurora borealis | ![wipers](docs/screenshots/wipers.jpg) Wipers clearing a fan-shaped arc |
+| ![farm](docs/screenshots/farmstead.jpg) Farmstead | ![hq](docs/screenshots/hq_boss.jpg) Agency HQ and the Director |
+
+Sprite sheets (rendered from 3D rigs into Doom/ROTT-style pixel art): [humans](docs/screenshots/sprites_humans.jpg), [animals](docs/screenshots/sprites_animals.jpg).
+
 ## Project docs (for humans and AIs)
 [PRD.md](PRD.md) · [PLAN.md](PLAN.md) · [ARCHITECTURE.md](ARCHITECTURE.md) · [task.md](task.md) (generated from [PRD.json](PRD.json)) · [assets.md](assets.md) (every asset, how to replace it) · [CONTINUE.md](CONTINUE.md) (resume here) · [docs/REFERENCE_NOTES.md](docs/REFERENCE_NOTES.md)
 

@@ -604,8 +604,8 @@
         {
           "id": "T-163",
           "title": "Playtest balance pass, bug list, README screenshots",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "README screenshot gallery added. TODO: full playtest/balance pass, bug list"
         },
         {
           "id": "T-165",
