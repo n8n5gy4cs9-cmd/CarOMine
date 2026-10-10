@@ -14,18 +14,13 @@
 - Author credit: Crowelian 2026 + Sonnet.
 
 ## STATE (update me!)
-- Done: P1, P2 (assets), world core, player walk, vehicle sim + windshield (all verified by headless screenshots).
-- Next: chase cam (C) + exterior view, crash body deformation, enemy spawn director for open world, perf pass (instancing), release builds/packaging (T-160..162), localization, mailbox, RoR importer (T-088), SSAO/colour grading, aurora/lighting tuning on real GPU.
-- CONSOLE: press backtick or F1 in game (pauses). `help` lists commands; cheats iddqd idkfa idclip dnstuff; also god/fly/give/spawn/tp/time/snow/car bring. Add new dev commands in src/console.rs exec_cmds + HELP text. Dev env: CAROMINE_CMDS="a;b" CAROMINE_CONSOLE_OPEN=1.
-- BUILD/REPAIR: src/build/{mod,sim,workshop}.rs. T near the car opens workshop (Tab pages). Start state = shell + boxes. Console: `build all|shell`, `parts`, `repair`, `fault <name>`. Dev: CAROMINE_RAW=1 CAROMINE_DRIVE=0,0 CAROMINE_IGNITE=60,100 CAROMINE_CMDS=... prints TOAST lines to log = scripted fault tests.
-- STORY: src/story.rs. Console: `story inspected` (skip to endgame), `tp 0 3400` (HQ), `gig`, `need`, `build all`. Dev: CAROMINE_AUTOSTART skips intro (set CAROMINE_INTRO=1 to see it), CAROMINE_DIALOG=home|phone|sauna|market|parts|inspect.
-- LIFE: src/life/{mod,needs,dialog,missions}.rs. Doors are interact zones (life::zones()). Add a shop/NPC = add a ZoneKind + dialog Screen.
-- Run game: `cargo run --release` (use `--release`; debug build is slow). Controls: WASD, Shift run, Ctrl crouch, Space jump, E enter/exit car, I ignition, W/S gas/brake-reverse, A/D steer, Space handbrake, L lights, V wipers.
-- Headless screenshot (needs `apt-get install mesa-vulkan-drivers xvfb libxkbcommon-x11-0`):
-  `CAROMINE_AUTOSTART=1 CAROMINE_SHOT=/tmp/s.png CAROMINE_SHOT_FRAMES=150 CAROMINE_HOUR=11 CAROMINE_POS=55,28,135,-8 xvfb-run -a -s "-screen 0 1280x720x24" env WGPU_BACKEND=vulkan ./target/debug/caromine`
-  Also CAROMINE_DRIVE=throttle,steer  CAROMINE_WS=0..1  CAROMINE_WIPERS=0..2  CAROMINE_SNOW=0..1 (see src/dev.rs).
-- Bevy 0.20 renames learned: SceneRoot->WorldAssetRoot, Events->Messages (MessageWriter, add_message), CursorOptions component, FontSize::Px, load_builder().with_settings().load(), DirectionalLight.shadow_maps_enabled, GlobalAmbientLight.
-- Known: car placeholder interior is crude (roof/hood slabs); enemies not spawned yet; no audio playback yet.
+- **Playable vertical slice is DONE and verified by headless screenshots/logs.** See task.md for the full list (~70% of PRD tasks done/partial).
+- Built: terrain/forest/farms/village/cabin, day-night + weather + aurora + fog, FPS (5 weapons, 6 enemy types + boss, flashlight), car (physics, faults, workshop, dash, grime), needs/sauna/shops/gigs, story (intro -> katsastus -> HQ boss -> ending), save/load, menus, EN/FI strings, console + cheats, SDF-rendered pixel art.
+- **ART PIPELINE** (important): sprites are *rendered from 3D* by `tools/sdfrender.py` (SDF ray-marcher: ramp shading, dither, AO, depth outlines). Characters `tools/gen_chars.py` (+`rig_humanoid.py`, `rig_quad.py`), weapons/hands `tools/gen_weapons.py`, trees/items `tools/gen_world.py`, car/wheel/steering meshes `tools/gen_car.py` (marching cubes -> .glb with baked grime vertex colours), dials/warning icons `tools/gen_dash.py`. `sh tools/gen_all.sh` regenerates everything (~6 min). Needs: pillow numpy scikit-image.
+- Sprite sheets declare their world size/grid in assets/data/sprites.json (enemy.rs reads it). Enemy sheet = 12 cols (idle, walk x4, attack x2, pain, death x4) x 8 angle rows. Weapon sheet = 8 frames 192x144 (idle, fire, recoil, reload x4; fists: right/left punches).
+- Release build check was started (target dir /tmp/claude-0/target-rel); result unknown - run `cargo build --release` and fix anything LTO-specific.
+- Next ideas (see task.md todo): SSAO/colour grading, wind gusts, mailbox, interiors, RoR importer (T-088), perf pass (T-160), rebinding UI/gamepad, localisation of the rest, more art polish (T-032 hand detail, T-034 Doom-style status bar + face), dynamic dirt, turn signals.
+- Environment notes: Linux cloud sandbox; lavapipe (software Vulkan) gives screenshots via xvfb. Python3 + Pillow + numpy + scikit-image for generators.
 - Toolchain: Bevy **0.20** needs rustc >= 1.97.1 (`rustup update stable`). Linux build deps: libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev. First cargo check ~3 min.
 - Bevy 0.20 API gotchas learned: `DirectionalLight.shadow_maps_enabled` (not shadows_enabled). Check `~/.cargo/registry/src/*/bevy_*-0.20*/` source when an API differs from older docs.
 - Helper: `tools/commit.sh T-xxx "msg"` commits + pushes to main.
