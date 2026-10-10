@@ -1,9 +1,14 @@
 //! CarOMine - by Crowelian 2026 + Sonnet.
 #![allow(dead_code)] // scaffolding; modules get wired in as phases land
+mod dev;
 mod manifest;
+mod player;
 mod settings;
 mod state;
+mod vehicle;
+mod world;
 
+use bevy::light::DirectionalLight;
 use bevy::prelude::*;
 use manifest::ManifestPlugin;
 use settings::SettingsPlugin;
@@ -12,41 +17,34 @@ use state::{GameState, StatePlugin};
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
-            primary_window: Some(Window {
-                title: "CarOMine".into(),
-                ..default()
-            }),
+            primary_window: Some(Window { title: "CarOMine".into(), resolution: (1280, 720).into(), ..default() }),
             ..default()
         }))
-        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin))
+        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin, world::WorldPlugin, player::PlayerPlugin, vehicle::VehiclePlugin, dev::DevPlugin))
         .insert_resource(ClearColor(Color::srgb(0.55, 0.65, 0.78)))
-        .add_systems(Startup, setup_placeholder_scene)
-        .add_systems(OnEnter(GameState::MainMenu), || info!("CarOMine main menu - press ENTER"))
-        .add_systems(OnEnter(GameState::Playing), || info!("Playing"))
+        .add_systems(Startup, setup_lights)
+        .add_systems(OnEnter(GameState::MainMenu), spawn_menu)
+        .add_systems(OnExit(GameState::MainMenu), despawn_menu)
         .run();
 }
 
-/// Temporary scene so the window shows something (replaced by world/ in P3).
-fn setup_placeholder_scene(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut mats: ResMut<Assets<StandardMaterial>>,
-) {
+fn setup_lights(mut commands: Commands) {
+    commands.spawn((DirectionalLight { shadow_maps_enabled: true, illuminance: 10_000.0, ..default() }, Transform::from_xyz(0.0, 50.0, 0.0).looking_at(Vec3::new(-1.0, 0.0, -0.5), Vec3::Y), world::sky::Sun));
+}
+
+#[derive(Component)]
+struct MenuUi;
+
+fn spawn_menu(mut commands: Commands) {
+    commands.spawn((MenuUi, Camera2d));
     commands.spawn((
-        Camera3d::default(),
-        Transform::from_xyz(-6.0, 4.0, 8.0).looking_at(Vec3::ZERO, Vec3::Y),
+        MenuUi,
+        Text::new("CarOMine\n\nPress ENTER to start\nWASD move  Shift run  Ctrl crouch  Space jump  Esc pause\n\nby Crowelian 2026 + Sonnet"),
+        TextFont { font_size: FontSize::Px(28.0), ..default() },
+        Node { position_type: PositionType::Absolute, left: Val::Px(60.0), top: Val::Px(60.0), ..default() },
     ));
-    commands.spawn((
-        DirectionalLight { shadow_maps_enabled: true, ..default() },
-        Transform::from_xyz(4.0, 8.0, 4.0).looking_at(Vec3::ZERO, Vec3::Y),
-    ));
-    commands.spawn((
-        Mesh3d(meshes.add(Plane3d::default().mesh().size(100.0, 100.0))),
-        MeshMaterial3d(mats.add(Color::srgb(0.93, 0.95, 1.0))),
-    ));
-    commands.spawn((
-        Mesh3d(meshes.add(Cuboid::new(2.0, 1.0, 4.0))),
-        MeshMaterial3d(mats.add(Color::srgb(0.7, 0.1, 0.1))),
-        Transform::from_xyz(0.0, 0.6, 0.0),
-    ));
+}
+
+fn despawn_menu(mut commands: Commands, q: Query<Entity, With<MenuUi>>) {
+    for e in &q { commands.entity(e).despawn(); }
 }
