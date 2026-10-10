@@ -75,15 +75,22 @@ pub fn update_weapon_sprite(
     let Ok((mut img, mut node)) = q.single_mut() else { return };
     let w = &WEAPONS[lo.current];
     img.image = a.sheets[lo.current].clone();
-    let frame = if lo.since_shot < 0.05 { 1 } else if lo.since_shot < 0.14 { 2 } else { 0 };
+    // sheet (tools/gen_weapons.py): 0 idle, 1 fire, 2 recoil, 3-6 reload stages; fists: 1/2 right punch, 3/4 left punch
+    let frame = if w.melee {
+        let right = lo.shots % 2 == 1;
+        if lo.since_shot < 0.12 { if right { 1 } else { 3 } } else if lo.since_shot < 0.28 { if right { 2 } else { 4 } } else { 0 }
+    } else if lo.reload_t > 0.0 {
+        let progress = (1.0 - lo.reload_t / 1.1).clamp(0.0, 0.999);
+        3 + (progress * 4.0) as usize
+    } else if lo.since_shot < 0.06 { 1 } else if lo.since_shot < 0.17 { 2 } else { 0 };
     img.texture_atlas = Some(TextureAtlas { layout: a.layout.clone(), index: frame });
     let vis = driving.is_empty();
     img.color = if vis { Color::WHITE } else { Color::NONE };
-    // walking bob + reload dip
+    // walking bob
     let speed = player.single().map(|p| Vec2::new(p.vel.x, p.vel.z).length()).unwrap_or(0.0);
     let bob = (time.elapsed_secs() * 9.0).sin() * (speed * 1.2).min(8.0);
-    let dip = if lo.reload_t > 0.0 { 120.0 * (1.0 - (lo.reload_t - 0.55).abs() / 0.55).clamp(0.0, 1.0) } else { 0.0 };
-    node.bottom = Val::Px(-20.0 + bob.abs() - dip);
-    node.margin.left = Val::Px(-200.0 + bob * 1.5);
+    node.width = Val::Px(768.0); node.height = Val::Px(576.0);
+    node.bottom = Val::Px(-30.0 + bob.abs());
+    node.margin.left = Val::Px(-384.0 + bob * 1.5);
     let _ = w;
 }

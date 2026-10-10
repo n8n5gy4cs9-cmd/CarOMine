@@ -1,10 +1,10 @@
 {
  "enemy.goon": {
   "frame": [
-   48,
-   64
+   72,
+   96
   ],
-  "cols": 10,
+  "cols": 12,
   "rows": 8,
   "angles": 8,
   "anims": {
@@ -21,20 +21,28 @@
     5,
     6
    ],
+   "pain": [
+    7
+   ],
    "die": [
-    7,
     8,
-    9
+    9,
+    10,
+    11
    ]
   },
-  "anchor": "bottom"
+  "anchor": "bottom",
+  "world": [
+   1.5,
+   2.0
+  ]
  },
  "enemy.hunter": {
   "frame": [
-   48,
-   64
+   72,
+   96
   ],
-  "cols": 10,
+  "cols": 12,
   "rows": 8,
   "angles": 8,
   "anims": {
@@ -51,20 +59,28 @@
     5,
     6
    ],
+   "pain": [
+    7
+   ],
    "die": [
-    7,
     8,
-    9
+    9,
+    10,
+    11
    ]
   },
-  "anchor": "bottom"
+  "anchor": "bottom",
+  "world": [
+   1.5,
+   2.0
+  ]
  },
  "enemy.neighbour": {
   "frame": [
-   48,
-   64
+   72,
+   96
   ],
-  "cols": 10,
+  "cols": 12,
   "rows": 8,
   "angles": 8,
   "anims": {
@@ -81,20 +97,28 @@
     5,
     6
    ],
+   "pain": [
+    7
+   ],
    "die": [
-    7,
     8,
-    9
+    9,
+    10,
+    11
    ]
   },
-  "anchor": "bottom"
+  "anchor": "bottom",
+  "world": [
+   1.5,
+   2.0
+  ]
  },
  "enemy.wolf": {
   "frame": [
-   48,
+   112,
    64
   ],
-  "cols": 10,
+  "cols": 12,
   "rows": 8,
   "angles": 8,
   "anims": {
@@ -111,20 +135,28 @@
     5,
     6
    ],
+   "pain": [
+    7
+   ],
    "die": [
-    7,
     8,
-    9
+    9,
+    10,
+    11
    ]
   },
-  "anchor": "bottom"
+  "anchor": "bottom",
+  "world": [
+   1.75,
+   1.0
+  ]
  },
  "enemy.moose": {
   "frame": [
-   48,
-   64
+   144,
+   112
   ],
-  "cols": 10,
+  "cols": 12,
   "rows": 8,
   "angles": 8,
   "anims": {
@@ -141,20 +173,28 @@
     5,
     6
    ],
+   "pain": [
+    7
+   ],
    "die": [
-    7,
     8,
-    9
+    9,
+    10,
+    11
    ]
   },
-  "anchor": "bottom"
+  "anchor": "bottom",
+  "world": [
+   3.2,
+   2.5
+  ]
  },
  "weapon.fists": {
   "frame": [
-   160,
-   128
+   192,
+   144
   ],
-  "cols": 3,
+  "cols": 8,
   "rows": 1,
   "anims": {
    "idle": [
@@ -163,15 +203,21 @@
    "fire": [
     1,
     2
+   ],
+   "reload": [
+    3,
+    4,
+    5,
+    6
    ]
   }
  },
  "weapon.pistol": {
   "frame": [
-   160,
-   128
+   192,
+   144
   ],
-  "cols": 3,
+  "cols": 8,
   "rows": 1,
   "anims": {
    "idle": [
@@ -180,15 +226,21 @@
    "fire": [
     1,
     2
+   ],
+   "reload": [
+    3,
+    4,
+    5,
+    6
    ]
   }
  },
  "weapon.shotgun": {
   "frame": [
-   160,
-   128
+   192,
+   144
   ],
-  "cols": 3,
+  "cols": 8,
   "rows": 1,
   "anims": {
    "idle": [
@@ -197,15 +249,21 @@
    "fire": [
     1,
     2
+   ],
+   "reload": [
+    3,
+    4,
+    5,
+    6
    ]
   }
  },
  "weapon.smg": {
   "frame": [
-   160,
-   128
+   192,
+   144
   ],
-  "cols": 3,
+  "cols": 8,
   "rows": 1,
   "anims": {
    "idle": [
@@ -214,15 +272,21 @@
    "fire": [
     1,
     2
+   ],
+   "reload": [
+    3,
+    4,
+    5,
+    6
    ]
   }
  },
  "weapon.rifle": {
   "frame": [
-   160,
-   128
+   192,
+   144
   ],
-  "cols": 3,
+  "cols": 8,
   "rows": 1,
   "anims": {
    "idle": [
@@ -231,7 +295,51 @@
    "fire": [
     1,
     2
+   ],
+   "reload": [
+    3,
+    4,
+    5,
+    6
    ]
   }
+ },
+ "enemy.director": {
+  "frame": [
+   84,
+   112
+  ],
+  "cols": 12,
+  "rows": 8,
+  "angles": 8,
+  "anims": {
+   "idle": [
+    0
+   ],
+   "walk": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attack": [
+    5,
+    6
+   ],
+   "pain": [
+    7
+   ],
+   "die": [
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "anchor": "bottom",
+  "world": [
+   1.8,
+   2.4
+  ]
  }
 }

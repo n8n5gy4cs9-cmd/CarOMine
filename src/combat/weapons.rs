@@ -33,10 +33,11 @@ pub struct Loadout {
     pub cooldown: f32,
     pub reload_t: f32,
     pub since_shot: f32,
+    pub shots: u32,
 }
 impl Default for Loadout {
     fn default() -> Self {
-        Self { current: 0, owned: [true, true, false, false, false], mag: [0, 12, 0, 0, 0], reserve: [0, 24, 0, 0, 0], cooldown: 0.0, reload_t: 0.0, since_shot: 9.0 }
+        Self { current: 0, owned: [true, true, false, false, false], mag: [0, 12, 0, 0, 0], reserve: [0, 24, 0, 0, 0], cooldown: 0.0, reload_t: 0.0, since_shot: 9.0, shots: 0 }
     }
 }
 
@@ -45,7 +46,7 @@ pub struct WeaponAssets { pub sheets: Vec<Handle<Image>>, pub layout: Handle<Tex
 
 pub fn load_weapon_assets(mut commands: Commands, server: Res<AssetServer>, man: Res<AssetManifest>, mut layouts: ResMut<Assets<TextureAtlasLayout>>) {
     let sheets = WEAPONS.iter().map(|w| crate::world::billboard::load_nearest(&server, man.path(&format!("weapon.{}", w.id)))).collect();
-    let layout = layouts.add(TextureAtlasLayout::from_grid(UVec2::new(160, 128), 3, 1, None, None));
+    let layout = layouts.add(TextureAtlasLayout::from_grid(UVec2::new(192, 144), 8, 1, None, None));
     commands.insert_resource(WeaponAssets { sheets, layout });
 }
 
@@ -91,7 +92,7 @@ pub fn switch_and_fire(
         if lo.mag[cur] == 0 { return; }
         lo.mag[cur] -= 1;
     }
-    lo.cooldown = w.rate; lo.since_shot = 0.0;
+    lo.cooldown = w.rate; lo.since_shot = 0.0; lo.shots = lo.shots.wrapping_add(1);
     sfx.write(crate::audio::Sfx::new(match w.id { "pistol" => "sfx.pistol", "shotgun" => "sfx.shotgun", "smg" => "sfx.smg", "rifle" => "sfx.rifle", _ => "sfx.hit" }));
     let Ok(c) = cam.single() else { return };
     let origin = c.translation();

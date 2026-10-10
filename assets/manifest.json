@@ -159,45 +159,53 @@
   "license": "CC0",
   "notes": "key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here"
  },
+ "enemy.director": {
+  "path": "sprites/enemies/director.png",
+  "kind": "sprite",
+  "use": "Enemy 'director' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
+  "license": "CC0",
+  "notes": "12 cols x 8 angle rows, frame 84x112px, world 1.8x2.4 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
+ },
  "enemy.goon": {
   "path": "sprites/enemies/goon.png",
   "kind": "sprite",
-  "use": "Enemy 'goon' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
-  "source": "generated (tools/)",
+  "use": "Enemy 'goon' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
   "license": "CC0",
-  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+  "notes": "12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
  },
  "enemy.hunter": {
   "path": "sprites/enemies/hunter.png",
   "kind": "sprite",
-  "use": "Enemy 'hunter' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
-  "source": "generated (tools/)",
+  "use": "Enemy 'hunter' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
   "license": "CC0",
-  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+  "notes": "12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
  },
  "enemy.moose": {
   "path": "sprites/enemies/moose.png",
   "kind": "sprite",
-  "use": "Enemy 'moose' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
-  "source": "generated (tools/)",
+  "use": "Enemy 'moose' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
   "license": "CC0",
-  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+  "notes": "12 cols x 8 angle rows, frame 144x112px, world 3.2x2.5 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
  },
  "enemy.neighbour": {
   "path": "sprites/enemies/neighbour.png",
   "kind": "sprite",
-  "use": "Enemy 'neighbour' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
-  "source": "generated (tools/)",
+  "use": "Enemy 'neighbour' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
   "license": "CC0",
-  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+  "notes": "12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
  },
  "enemy.wolf": {
   "path": "sprites/enemies/wolf.png",
   "kind": "sprite",
-  "use": "Enemy 'wolf' billboard sheet (10 cols x 8 angle rows, frame 48x64)",
-  "source": "generated (tools/)",
+  "use": "Enemy 'wolf' billboard sheet (3D-rendered pixel art)",
+  "source": "generated (tools/gen_chars.py, SDF-rendered)",
   "license": "CC0",
-  "notes": "cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid."
+  "notes": "12 cols x 8 angle rows, frame 112x64px, world 1.75x1.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json"
  },
  "fence.0": {
   "path": "sprites/nature/fence_0.png",
@@ -986,41 +994,41 @@
  "weapon.fists": {
   "path": "sprites/weapons/fists.png",
   "kind": "sprite",
-  "use": "First-person weapon sheet 'fists': 3 frames 160x128 (idle, fire, recoil)",
-  "source": "generated (tools/)",
+  "use": "First-person weapon sheet 'fists' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract)",
+  "source": "generated (tools/gen_weapons.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=480x128"
+  "notes": "Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json"
  },
  "weapon.pistol": {
   "path": "sprites/weapons/pistol.png",
   "kind": "sprite",
-  "use": "First-person weapon sheet 'pistol': 3 frames 160x128 (idle, fire, recoil)",
-  "source": "generated (tools/)",
+  "use": "First-person weapon sheet 'pistol' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract)",
+  "source": "generated (tools/gen_weapons.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=480x128"
+  "notes": "Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json"
  },
  "weapon.rifle": {
   "path": "sprites/weapons/rifle.png",
   "kind": "sprite",
-  "use": "First-person weapon sheet 'rifle': 3 frames 160x128 (idle, fire, recoil)",
-  "source": "generated (tools/)",
+  "use": "First-person weapon sheet 'rifle' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract)",
+  "source": "generated (tools/gen_weapons.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=480x128"
+  "notes": "Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json"
  },
  "weapon.shotgun": {
   "path": "sprites/weapons/shotgun.png",
   "kind": "sprite",
-  "use": "First-person weapon sheet 'shotgun': 3 frames 160x128 (idle, fire, recoil)",
-  "source": "generated (tools/)",
+  "use": "First-person weapon sheet 'shotgun' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract)",
+  "source": "generated (tools/gen_weapons.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=480x128"
+  "notes": "Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json"
  },
  "weapon.smg": {
   "path": "sprites/weapons/smg.png",
   "kind": "sprite",
-  "use": "First-person weapon sheet 'smg': 3 frames 160x128 (idle, fire, recoil)",
-  "source": "generated (tools/)",
+  "use": "First-person weapon sheet 'smg' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract)",
+  "source": "generated (tools/gen_weapons.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=480x128"
+  "notes": "Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json"
  }
 }

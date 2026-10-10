@@ -4,7 +4,7 @@
 > **Quick replace:** overwrite the file at *Path* (same name, same grid/size/format) **or** edit its `path` in `assets/manifest.json`. No code changes needed.
 > All current assets are **generated placeholders** (CC0) made by `tools/gen_*.py`. Regenerate everything: `sh tools/gen_all.sh`.
 
-## 1. Simple list (126 assets)
+## 1. Simple list (129 assets)
 
 | Use | Name (id) | Path (under `assets/`) | Source |
 |---|---|---|---|
@@ -23,11 +23,12 @@
 | Static billboard: bush variant 0 | `bush.0` | `sprites/nature/bush_0.png` | generated (tools/) |
 | Static billboard: bush variant 1 | `bush.1` | `sprites/nature/bush_1.png` | generated (tools/) |
 | Static billboard: bush variant 2 | `bush.2` | `sprites/nature/bush_2.png` | generated (tools/) |
-| Enemy 'goon' billboard sheet | `enemy.goon` | `sprites/enemies/goon.png` | generated (tools/) |
-| Enemy 'hunter' billboard sheet | `enemy.hunter` | `sprites/enemies/hunter.png` | generated (tools/) |
-| Enemy 'moose' billboard sheet | `enemy.moose` | `sprites/enemies/moose.png` | generated (tools/) |
-| Enemy 'neighbour' billboard sheet | `enemy.neighbour` | `sprites/enemies/neighbour.png` | generated (tools/) |
-| Enemy 'wolf' billboard sheet | `enemy.wolf` | `sprites/enemies/wolf.png` | generated (tools/) |
+| Enemy 'director' billboard sheet | `enemy.director` | `sprites/enemies/director.png` | generated (tools/gen_chars.py, SDF-rendered) |
+| Enemy 'goon' billboard sheet | `enemy.goon` | `sprites/enemies/goon.png` | generated (tools/gen_chars.py, SDF-rendered) |
+| Enemy 'hunter' billboard sheet | `enemy.hunter` | `sprites/enemies/hunter.png` | generated (tools/gen_chars.py, SDF-rendered) |
+| Enemy 'moose' billboard sheet | `enemy.moose` | `sprites/enemies/moose.png` | generated (tools/gen_chars.py, SDF-rendered) |
+| Enemy 'neighbour' billboard sheet | `enemy.neighbour` | `sprites/enemies/neighbour.png` | generated (tools/gen_chars.py, SDF-rendered) |
+| Enemy 'wolf' billboard sheet | `enemy.wolf` | `sprites/enemies/wolf.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Static billboard: fence variant 0 | `fence.0` | `sprites/nature/fence_0.png` | generated (tools/) |
 | Sun/moon disc with glow 128x128 | `fx.disc` | `sprites/fx/disc.png` | generated (tools/) |
 | Soft puff 64x64 | `fx.puff` | `sprites/fx/puff.png` | generated (tools/) |
@@ -71,11 +72,11 @@
 | Windshield snow overlay level 4/5 | `ui.windshield_snow_4` | `sprites/ui/windshield_snow_4.png` | generated (tools/) |
 | Windshield snow overlay level 5/5 | `ui.windshield_snow_5` | `sprites/ui/windshield_snow_5.png` | generated (tools/) |
 | Wiper blade 128x8 | `ui.wiper` | `sprites/ui/wiper.png` | generated (tools/) |
-| First-person weapon sheet 'fists': 3 frames 160x128 | `weapon.fists` | `sprites/weapons/fists.png` | generated (tools/) |
-| First-person weapon sheet 'pistol': 3 frames 160x128 | `weapon.pistol` | `sprites/weapons/pistol.png` | generated (tools/) |
-| First-person weapon sheet 'rifle': 3 frames 160x128 | `weapon.rifle` | `sprites/weapons/rifle.png` | generated (tools/) |
-| First-person weapon sheet 'shotgun': 3 frames 160x128 | `weapon.shotgun` | `sprites/weapons/shotgun.png` | generated (tools/) |
-| First-person weapon sheet 'smg': 3 frames 160x128 | `weapon.smg` | `sprites/weapons/smg.png` | generated (tools/) |
+| First-person weapon sheet 'fists' with gloved hands: 8 frames 192x144 | `weapon.fists` | `sprites/weapons/fists.png` | generated (tools/gen_weapons.py, SDF-rendered) |
+| First-person weapon sheet 'pistol' with gloved hands: 8 frames 192x144 | `weapon.pistol` | `sprites/weapons/pistol.png` | generated (tools/gen_weapons.py, SDF-rendered) |
+| First-person weapon sheet 'rifle' with gloved hands: 8 frames 192x144 | `weapon.rifle` | `sprites/weapons/rifle.png` | generated (tools/gen_weapons.py, SDF-rendered) |
+| First-person weapon sheet 'shotgun' with gloved hands: 8 frames 192x144 | `weapon.shotgun` | `sprites/weapons/shotgun.png` | generated (tools/gen_weapons.py, SDF-rendered) |
+| First-person weapon sheet 'smg' with gloved hands: 8 frames 192x144 | `weapon.smg` | `sprites/weapons/smg.png` | generated (tools/gen_weapons.py, SDF-rendered) |
 | Tileable 128x128 texture: asphalt | `tex.asphalt` | `textures/asphalt.png` | generated (tools/) |
 | Tileable 128x128 texture: brick | `tex.brick` | `textures/brick.png` | generated (tools/) |
 | Tileable 128x128 texture: dirt_frozen | `tex.dirt_frozen` | `textures/dirt_frozen.png` | generated (tools/) |
@@ -134,10 +135,12 @@
 | Driving music | `music.drive` | `music/drive.wav` | generated (tools/) |
 | Main menu theme | `music.menu` | `music/menu.wav` | generated (tools/) |
 | Night / quiet exploration ambience | `music.night` | `music/night.wav` | generated (tools/) |
+| UI text table: English | `data.strings_en` | `data/strings_en.json` | hand-written (tools/strings) |
+| UI text table: Finnish | `data.strings_fi` | `data/strings_fi.json` | hand-written (tools/strings) |
 
 ## 2. Detailed notes
 
-### sprite (68)
+### sprite (69)
 
 **Format:** PNG RGBA, transparent bg, nearest-neighbour friendly. Enemy sheets = grid described in `assets/data/sprites.json` (frame size, cols, rows, anims). Billboards are bottom-anchored. Keep same cell size when replacing, or update sprites.json.
 
@@ -156,11 +159,12 @@
 - `bush.0` - Static billboard: bush variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/bush_0.png`. License: CC0.  size=80x56
 - `bush.1` - Static billboard: bush variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/bush_1.png`. License: CC0.  size=80x56
 - `bush.2` - Static billboard: bush variant 2 (bottom-anchored, snow-covered). Path `sprites/nature/bush_2.png`. License: CC0.  size=80x56
-- `enemy.goon` - Enemy 'goon' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/goon.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
-- `enemy.hunter` - Enemy 'hunter' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/hunter.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
-- `enemy.moose` - Enemy 'moose' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/moose.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
-- `enemy.neighbour` - Enemy 'neighbour' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/neighbour.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
-- `enemy.wolf` - Enemy 'wolf' billboard sheet (10 cols x 8 angle rows, frame 48x64). Path `sprites/enemies/wolf.png`. License: CC0. cols: 0 idle,1-4 walk,5-6 attack,7-9 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid.
+- `enemy.director` - Enemy 'director' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/director.png`. License: CC0. 12 cols x 8 angle rows, frame 84x112px, world 1.8x2.4 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
+- `enemy.goon` - Enemy 'goon' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/goon.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
+- `enemy.hunter` - Enemy 'hunter' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/hunter.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
+- `enemy.moose` - Enemy 'moose' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/moose.png`. License: CC0. 12 cols x 8 angle rows, frame 144x112px, world 3.2x2.5 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
+- `enemy.neighbour` - Enemy 'neighbour' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/neighbour.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
+- `enemy.wolf` - Enemy 'wolf' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/wolf.png`. License: CC0. 12 cols x 8 angle rows, frame 112x64px, world 1.75x1.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `fence.0` - Static billboard: fence variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/fence_0.png`. License: CC0.  size=96x64
 - `fx.disc` - Sun/moon disc with glow 128x128. Path `sprites/fx/disc.png`. License: CC0.  size=128x128
 - `fx.puff` - Soft puff 64x64 (breath vapour, exhaust, steam, snow spray, chimney smoke). Path `sprites/fx/puff.png`. License: CC0.  size=64x64
@@ -204,11 +208,11 @@
 - `ui.windshield_snow_4` - Windshield snow overlay level 4/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style. Path `sprites/ui/windshield_snow_4.png`. License: CC0.  size=512x256
 - `ui.windshield_snow_5` - Windshield snow overlay level 5/5 (512x256, blended over view; wipers clear a sweep). Amiga-Celica style. Path `sprites/ui/windshield_snow_5.png`. License: CC0.  size=512x256
 - `ui.wiper` - Wiper blade 128x8. Path `sprites/ui/wiper.png`. License: CC0.  size=128x8
-- `weapon.fists` - First-person weapon sheet 'fists': 3 frames 160x128 (idle, fire, recoil). Path `sprites/weapons/fists.png`. License: CC0.  size=480x128
-- `weapon.pistol` - First-person weapon sheet 'pistol': 3 frames 160x128 (idle, fire, recoil). Path `sprites/weapons/pistol.png`. License: CC0.  size=480x128
-- `weapon.rifle` - First-person weapon sheet 'rifle': 3 frames 160x128 (idle, fire, recoil). Path `sprites/weapons/rifle.png`. License: CC0.  size=480x128
-- `weapon.shotgun` - First-person weapon sheet 'shotgun': 3 frames 160x128 (idle, fire, recoil). Path `sprites/weapons/shotgun.png`. License: CC0.  size=480x128
-- `weapon.smg` - First-person weapon sheet 'smg': 3 frames 160x128 (idle, fire, recoil). Path `sprites/weapons/smg.png`. License: CC0.  size=480x128
+- `weapon.fists` - First-person weapon sheet 'fists' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract). Path `sprites/weapons/fists.png`. License: CC0. Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json
+- `weapon.pistol` - First-person weapon sheet 'pistol' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract). Path `sprites/weapons/pistol.png`. License: CC0. Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json
+- `weapon.rifle` - First-person weapon sheet 'rifle' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract). Path `sprites/weapons/rifle.png`. License: CC0. Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json
+- `weapon.shotgun` - First-person weapon sheet 'shotgun' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract). Path `sprites/weapons/shotgun.png`. License: CC0. Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json
+- `weapon.smg` - First-person weapon sheet 'smg' with gloved hands: 8 frames 192x144 (0 idle, 1 fire, 2 recoil, 3-6 reload; fists: 1 right punch, 2 right retract, 3 left punch, 4 left retract). Path `sprites/weapons/smg.png`. License: CC0. Replace keeping the 8x1 grid; HUD reads assets/data/sprites.json
 
 ### texture (14)
 
@@ -287,6 +291,13 @@
 - `music.drive` - Driving music (mid-tempo). Path `music/drive.wav`. License: CC0. 40.00s LOOP wav mono 22050Hz
 - `music.menu` - Main menu theme (melancholic Finnish minor, slow). Path `music/menu.wav`. License: CC0. 54.86s LOOP wav mono 22050Hz
 - `music.night` - Night / quiet exploration ambience. Path `music/night.wav`. License: CC0. 64.00s LOOP wav mono 22050Hz
+
+### data (2)
+
+**Format:** 
+
+- `data.strings_en` - UI text table: English. Path `data/strings_en.json`. License: CC0. key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here
+- `data.strings_fi` - UI text table: Finnish. Path `data/strings_fi.json`. License: CC0. key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here
 
 ## 3. Licensing log
 

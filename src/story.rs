@@ -127,10 +127,9 @@ fn hq(
                 spawn_house(&mut commands, ba, &mut meshes, &mut mats, &HouseSpec { pos: HQ + Vec2::new(dx, dz), yaw: 0.0, w, d, h: 5.0, wall, windows: 6, door: true, open_front: false });
             }
             for i in 0..7 { let a = i as f32 * 0.9; let p = HQ + Vec2::new(a.cos() * 14.0, a.sin() * 14.0); let e = spawn_enemy(&mut commands, ea, &mut mats, if i % 3 == 0 { EKind::Hunter } else { EKind::Goon }, p); let _ = e; }
-            let b = spawn_enemy(&mut commands, ea, &mut mats, EKind::Goon, HQ + Vec2::new(0.0, 4.0));
+            let b = spawn_enemy(&mut commands, ea, &mut mats, EKind::Director, HQ + Vec2::new(0.0, 4.0));
             commands.entity(b).insert((Boss, Name::new("The Director")));
-            commands.entity(b).entry::<Transform>().and_modify(|mut t| t.scale = Vec3::splat(1.7));
-            commands.entity(b).entry::<Enemy>().and_modify(|mut e| { e.hp = 700.0; e.alerted = true; });
+            commands.entity(b).entry::<Enemy>().and_modify(|mut e| { e.alerted = true; });
         }
     }
     if story.hq_spawned && !story.boss_dead {

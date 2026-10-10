@@ -87,8 +87,8 @@ fn dev_lineup(
     let (Some(a), Ok(pt)) = (a, player.single()) else { return };
     use crate::combat::enemy::*;
     let fwd = pt.rotation * Vec3::NEG_Z; let right = pt.rotation * Vec3::X;
-    for (i, k) in [Kind::Goon, Kind::Hunter, Kind::Neighbour, Kind::Wolf, Kind::Moose].iter().enumerate() {
-        let p = pt.translation + fwd * 9.0 + right * (i as f32 - 2.0) * 3.2;
+    for (i, k) in [Kind::Goon, Kind::Hunter, Kind::Neighbour, Kind::Director, Kind::Wolf, Kind::Moose].iter().enumerate() {
+        let p = pt.translation + fwd * 11.0 + right * (i as f32 - 2.5) * 3.4;
         spawn_enemy(&mut commands, &a, &mut mats, *k, Vec2::new(p.x, p.z));
     }
 }

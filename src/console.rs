@@ -229,7 +229,7 @@ fn exec_cmds(
                 if let (Some(d), Ok((mut t, _))) = (dest, player.single_mut()) { t.translation = Vec3::new(d.x, height_at(d.x, d.y) + 0.5, d.y); out.push(format!("teleported to {:.0},{:.0}", d.x, d.y)); } else { out.push("usage: tp <x z|cabin|village|garage|lake|shop>".into()); }
             }
             "spawn" => {
-                let kind = match a(1) { "goon" => Some(Kind::Goon), "hunter" => Some(Kind::Hunter), "neighbour" | "neighbor" => Some(Kind::Neighbour), "wolf" => Some(Kind::Wolf), "moose" => Some(Kind::Moose), _ => None };
+                let kind = match a(1) { "goon" => Some(Kind::Goon), "hunter" => Some(Kind::Hunter), "neighbour" | "neighbor" => Some(Kind::Neighbour), "wolf" => Some(Kind::Wolf), "moose" => Some(Kind::Moose), "director" | "boss" => Some(Kind::Director), _ => None };
                 match (kind, &ea, player.single()) {
                     (Some(k), Some(ea), Ok((t, _))) => {
                         let n = num(2).unwrap_or(1.0) as i32;

@@ -7,7 +7,7 @@ use crate::world::scatter::Obstacle;
 use bevy::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum Kind { Goon, Hunter, Neighbour, Wolf, Moose }
+pub enum Kind { Goon, Hunter, Neighbour, Wolf, Moose, Director }
 
 pub struct Def {
     pub name: &'static str,
@@ -28,6 +28,7 @@ pub fn def(k: Kind) -> Def {
         Kind::Hunter => Def { name: "rogue hunter", sprite: "enemy.hunter", hp: 80.0, speed: 2.8, w: 1.5, h: 2.0, sight: 90.0, ranged: true, range: 60.0, damage: 14.0, rate: 2.6, accuracy: 0.5 },
         Kind::Neighbour => Def { name: "drunk neighbour", sprite: "enemy.neighbour", hp: 40.0, speed: 2.2, w: 1.5, h: 2.0, sight: 30.0, ranged: false, range: 1.8, damage: 8.0, rate: 0.9, accuracy: 1.0 },
         Kind::Wolf => Def { name: "wolf", sprite: "enemy.wolf", hp: 35.0, speed: 7.0, w: 1.4, h: 1.0, sight: 45.0, ranged: false, range: 1.6, damage: 10.0, rate: 0.7, accuracy: 1.0 },
+        Kind::Director => Def { name: "The Director", sprite: "enemy.director", hp: 700.0, speed: 2.8, w: 1.8, h: 2.4, sight: 90.0, ranged: true, range: 55.0, damage: 12.0, rate: 0.9, accuracy: 0.6 },
         Kind::Moose => Def { name: "moose", sprite: "enemy.moose", hp: 220.0, speed: 6.0, w: 3.2, h: 2.4, sight: 35.0, ranged: false, range: 2.6, damage: 28.0, rate: 1.6, accuracy: 1.0 },
     }
 }
@@ -54,13 +55,24 @@ pub struct Enemy {
 #[derive(Resource)]
 pub struct EnemyAssets { pub mesh: std::collections::HashMap<u8, Handle<Mesh>>, pub tex: std::collections::HashMap<u8, Handle<Image>> }
 fn key(k: Kind) -> u8 { k as u8 }
-const KINDS: [Kind; 5] = [Kind::Goon, Kind::Hunter, Kind::Neighbour, Kind::Wolf, Kind::Moose];
+const KINDS: [Kind; 6] = [Kind::Goon, Kind::Hunter, Kind::Neighbour, Kind::Wolf, Kind::Moose, Kind::Director];
+/// Sheet layout (tools/gen_chars.py): 12 cols - 0 idle, 1-4 walk, 5-6 attack, 7 pain, 8-11 death; 8 angle rows.
+pub const SHEET_COLS: u32 = 12;
+
+/// World size (metres) of a sprite sheet frame, from assets/data/sprites.json (written by the art generators).
+fn sheet_world_size(id: &str) -> Option<(f32, f32)> {
+    let txt = std::fs::read_to_string("assets/data/sprites.json").ok()?;
+    let v: serde_json::Value = serde_json::from_str(&txt).ok()?;
+    let w = v.get(id)?.get("world")?;
+    Some((w.get(0)?.as_f64()? as f32, w.get(1)?.as_f64()? as f32))
+}
 
 pub fn load_enemy_assets(mut commands: Commands, server: Res<AssetServer>, man: Res<AssetManifest>, mut meshes: ResMut<Assets<Mesh>>) {
     let mut a = EnemyAssets { mesh: Default::default(), tex: Default::default() };
     for k in KINDS {
         let d = def(k);
-        a.mesh.insert(key(k), meshes.add(feet_quad(d.w * 1.25, d.h * 1.25 * 64.0 / 48.0 * 0.75)));
+        let (qw, qh) = sheet_world_size(d.sprite).unwrap_or((d.w * 1.25, d.h * 1.25));
+        a.mesh.insert(key(k), meshes.add(feet_quad(qw, qh)));
         a.tex.insert(key(k), load_nearest(&server, man.path(d.sprite)));
     }
     commands.insert_resource(a);
@@ -76,7 +88,7 @@ pub fn spawn_enemy(commands: &mut Commands, a: &EnemyAssets, mats: &mut Assets<S
         MeshMaterial3d(mats.add(m)),
         Transform::from_xyz(pos.x, height_at(pos.x, pos.y), pos.y),
         Billboard,
-        AngleSprite { cols: 10, rows: 8, col: 0, facing: 0.0 },
+        AngleSprite { cols: SHEET_COLS, rows: 8, col: 0, facing: 0.0 },
         Hittable { radius: d.w * 0.32, height: d.h },
         Enemy { kind: k, hp: d.hp, state: State::Idle, yaw: 0.0, cooldown: 1.0, attack_anim: 0.0, walk_t: 0.0, dead_t: 0.0, wander: pos, wander_t: 0.0, flash: 0.0, alerted: false },
     )).id()
@@ -181,8 +193,9 @@ pub fn animate(mut q: Query<(&mut Enemy, &mut AngleSprite, &MeshMaterial3d<Stand
     for (e, mut s, mh) in &mut q {
         s.facing = e.yaw;
         s.col = match e.state {
-            State::Dead => 7 + ((e.dead_t / 0.18) as u32).min(2),
+            State::Dead => 8 + ((e.dead_t / 0.16) as u32).min(3),
             _ if e.attack_anim > 0.0 => 5 + (e.attack_anim > 0.12) as u32,
+            _ if e.flash > 0.0 => 7,
             State::Chase | State::Attack | State::Idle if e.walk_t > 0.0 && e.state == State::Chase => 1 + (e.walk_t * 4.0) as u32 % 4,
             State::Idle => if e.walk_t.fract() > 0.0 && e.wander_t > 0.0 && (e.walk_t * 3.0) as u32 % 2 == 1 { 1 + (e.walk_t * 3.0) as u32 % 4 } else { 0 },
             _ => 0,
