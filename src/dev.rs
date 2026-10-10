@@ -19,7 +19,8 @@ impl Plugin for DevPlugin {
     }
 }
 
-fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>) {
+fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>, mut fl: ResMut<crate::combat::flashlight::Flashlight>) {
+    if std::env::var("CAROMINE_FLASH").is_ok() { fl.on = true; }
     if let Ok(h) = std::env::var("CAROMINE_HOUR") { if let Ok(h) = h.parse() { tod.hour = h; tod.speed = 0.0; } }
     if let Ok(s) = std::env::var("CAROMINE_SNOW") { if let Ok(s) = s.parse() { w.intensity = s; } }
 }

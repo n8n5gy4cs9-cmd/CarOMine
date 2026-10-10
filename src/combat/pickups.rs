@@ -7,7 +7,7 @@ use crate::world::layout::*;
 use bevy::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Debug)]
-pub enum PickupKind { Medkit, AmmoPistol, AmmoShells, AmmoRifle, Money, Coffee, Sausage }
+pub enum PickupKind { Medkit, AmmoPistol, AmmoShells, AmmoRifle, Money, Coffee, Sausage, Batteries }
 
 #[derive(Component)]
 pub struct Pickup(pub PickupKind);
@@ -21,7 +21,7 @@ pub struct PickupAssets { mesh: Handle<Mesh>, mats: Vec<(PickupKind, Handle<Stan
 pub fn load_pickup_assets(mut commands: Commands, server: Res<AssetServer>, man: Res<AssetManifest>, mut meshes: ResMut<Assets<Mesh>>, mut mats: ResMut<Assets<StandardMaterial>>) {
     commands.init_resource::<DropQueue>();
     let mesh = meshes.add(feet_quad(0.6, 0.6));
-    let defs = [(PickupKind::Medkit, "item.medkit"), (PickupKind::AmmoPistol, "item.ammo_pistol"), (PickupKind::AmmoShells, "item.ammo_shells"), (PickupKind::AmmoRifle, "item.ammo_rifle"), (PickupKind::Money, "item.money"), (PickupKind::Coffee, "item.coffee"), (PickupKind::Sausage, "item.sausage")];
+    let defs = [(PickupKind::Medkit, "item.medkit"), (PickupKind::AmmoPistol, "item.ammo_pistol"), (PickupKind::AmmoShells, "item.ammo_shells"), (PickupKind::AmmoRifle, "item.ammo_rifle"), (PickupKind::Money, "item.money"), (PickupKind::Coffee, "item.coffee"), (PickupKind::Sausage, "item.sausage"), (PickupKind::Batteries, "item.battery")];
     let list = defs.iter().map(|(k, id)| {
         let mut m = sprite_material(load_nearest(&server, man.path(id)));
         m.emissive = LinearRgba::gray(0.25);
@@ -41,6 +41,7 @@ pub fn collect(
     a: Option<Res<PickupAssets>>,
     mut stats: ResMut<PlayerStats>,
     mut lo: ResMut<Loadout>,
+    mut fl: ResMut<super::flashlight::Flashlight>,
     player: Query<&Transform, With<crate::player::Player>>,
     q: Query<(Entity, &Transform, &Pickup)>,
     mut started: Local<bool>,
@@ -50,7 +51,7 @@ pub fn collect(
     if !*started {
         *started = true;
         // starter loot around the cabin
-        for (i, k) in [PickupKind::Medkit, PickupKind::AmmoPistol, PickupKind::Coffee, PickupKind::Sausage, PickupKind::Money].iter().enumerate() {
+        for (i, k) in [PickupKind::Medkit, PickupKind::AmmoPistol, PickupKind::Coffee, PickupKind::Sausage, PickupKind::Money, PickupKind::Batteries].iter().enumerate() {
             let p = CABIN + Vec2::new(-3.0 + i as f32 * 1.4, 6.0);
             spawn_pickup(&mut commands, &a, *k, Vec3::new(p.x, height_at(p.x, p.y), p.y));
         }
@@ -69,7 +70,8 @@ pub fn collect(
             (_, x) if x < 0.3 => PickupKind::Money,
             (Kind::Hunter, x) if x < 0.7 => PickupKind::AmmoRifle,
             (Kind::Goon, x) if x < 0.7 => PickupKind::AmmoPistol,
-            (_, x) if x < 0.85 => PickupKind::Medkit,
+            (_, x) if x < 0.78 => PickupKind::Batteries,
+            (_, x) if x < 0.88 => PickupKind::Medkit,
             _ => PickupKind::Sausage,
         };
         spawn_pickup(&mut commands, &a, k, pos);
@@ -84,6 +86,7 @@ pub fn collect(
             PickupKind::AmmoShells => { lo.reserve[2] += 8; true }
             PickupKind::AmmoRifle => { lo.reserve[4] += 5; true }
             PickupKind::Money => { stats.money += 20; true }
+            PickupKind::Batteries => { fl.battery = 1.0; true }
             PickupKind::Coffee | PickupKind::Sausage => { stats.hp = (stats.hp + 10.0).min(100.0); true }
         };
         if used { commands.entity(e).despawn(); sfx.write(crate::audio::Sfx::new("sfx.pickup")); }

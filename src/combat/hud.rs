@@ -34,6 +34,7 @@ pub fn spawn_hud(mut commands: Commands, server: Res<AssetServer>, man: Res<Asse
 pub fn update_hud(
     stats: Res<PlayerStats>,
     lo: Res<Loadout>,
+    fl: Res<super::flashlight::Flashlight>,
     tod: Res<crate::world::sky::TimeOfDay>,
     ws: Res<crate::vehicle::windshield::Windshield>,
     cars: Query<&Car, With<crate::vehicle::Driven>>,
@@ -42,7 +43,7 @@ pub fn update_hud(
     )>,
     mut hurt: Query<&mut BackgroundColor, With<HudHurt>>,
 ) {
-    if let Ok(mut t) = texts.p0().single_mut() { t.0 = format!("HP {:.0}  ARMOR {:.0}  EUR {}", stats.hp.ceil(), stats.armor.ceil(), stats.money); }
+    if let Ok(mut t) = texts.p0().single_mut() { t.0 = format!("HP {:.0}  ARMOR {:.0}  EUR {}   LIGHT {} {:.0}%", stats.hp.ceil(), stats.armor.ceil(), stats.money, if fl.on { "ON" } else { "off" }, fl.battery * 100.0); }
     if let Ok(mut t) = texts.p1().single_mut() {
         let w = &WEAPONS[lo.current];
         t.0 = if w.melee { w.name.to_string() } else if lo.reload_t > 0.0 { format!("{} - reloading...", w.name) } else { format!("{}  {}/{}", w.name, lo.mag[lo.current], lo.reserve[lo.current]) };

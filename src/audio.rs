@@ -79,7 +79,7 @@ fn music(
     driven: Query<(), With<Driven>>,
     enemies: Query<(&crate::combat::enemy::Enemy, &Transform)>,
     player: Query<&Transform, With<crate::player::Player>>,
-    cur: Query<(Entity, &Music, Option<&AudioSink>)>,
+    cur: Query<(Entity, &Music)>,
     mut sinks: Query<&mut AudioSink, With<Music>>,
     mut hold: Local<f32>,
     time: Res<Time>,
@@ -91,7 +91,7 @@ fn music(
     let want = want_music(*state.get(), night, !driven.is_empty(), *hold > 0.0);
     let vol = Volume::Linear(settings.music_volume * settings.master_volume);
     let mut have = false;
-    for (e, m, _) in &cur {
+    for (e, m) in &cur {
         if m.0 == want { have = true; } else { commands.entity(e).despawn(); }
     }
     for mut s in &mut sinks { s.set_volume(vol); }

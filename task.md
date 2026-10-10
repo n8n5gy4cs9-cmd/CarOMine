@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **34/74 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **36/74 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -76,7 +76,7 @@
 - [ ] **T-050** Fog + atmosphere: height fog, morning mist, weather-driven fog density, blizzard whiteout, horizon haze, fog colour tied to sky
 - [ ] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke
 
-## P4 Player + FPS (4/9)
+## P4 Player + FPS (6/9)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
@@ -91,8 +91,10 @@
 - [~] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
   _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
 - [ ] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside
-- [ ] **T-052** Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway
-- [ ] **T-053** Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'
+- [x] **T-052** Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway  
+  _note: combat/flashlight.rs: F toggle, battery drain 7min, flicker <15%, sway, batteries pickup, HUD %; shadows on_
+- [x] **T-053** Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'  
+  _note: X mounts/unmounts light on equipped gun (muzzle offset, tighter beam); fists = hand-held. Works for ALL weapons_
 
 ## P5 Vehicle simulation (3/9)
 

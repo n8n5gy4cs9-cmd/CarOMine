@@ -1,5 +1,6 @@
 //! FPS layer: weapons, hitscan, enemies (billboard sprites), pickups, player health.
 pub mod enemy;
+pub mod flashlight;
 pub mod hud;
 pub mod pickups;
 pub mod weapons;
@@ -41,12 +42,15 @@ impl Plugin for CombatPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<PlayerStats>()
             .init_resource::<weapons::Loadout>()
+            .init_resource::<flashlight::Flashlight>()
             .add_message::<HitEvent>()
             .add_systems(Startup, (enemy::load_enemy_assets, pickups::load_pickup_assets, weapons::load_weapon_assets))
             .add_systems(OnEnter(GameState::Playing), (enemy::spawn_initial, hud::spawn_hud))
             .add_systems(
                 Update,
                 (
+                    flashlight::spawn_beam,
+                    flashlight::update,
                     weapons::switch_and_fire,
                     enemy::apply_hits,
                     enemy::ai,

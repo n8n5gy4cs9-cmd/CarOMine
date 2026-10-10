@@ -256,14 +256,14 @@
         {
           "id": "T-052",
           "title": "Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "combat/flashlight.rs: F toggle, battery drain 7min, flicker <15%, sway, batteries pickup, HUD %; shadows on"
         },
         {
           "id": "T-053",
           "title": "Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "X mounts/unmounts light on equipped gun (muzzle offset, tighter beam); fists = hand-held. Works for ALL weapons"
         }
       ]
     },
