@@ -28,20 +28,20 @@
         {
           "id": "T-011",
           "title": "Asset manifest loader: assets/manifest.json -> every asset id resolves to a file path (easy replace)",
-          "status": "wip",
-          "notes": "Generator side done (assetlib.reg); Rust loader = T-011b"
+          "status": "done",
+          "notes": "src/manifest.rs, src/settings.rs, .github/workflows/ci.yml"
         },
         {
           "id": "T-012",
           "title": "Config + keybinds (RON/JSON), settings menu stub",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/manifest.rs, src/settings.rs, .github/workflows/ci.yml"
         },
         {
           "id": "T-013",
           "title": "GitHub Actions CI: cargo check/clippy/test on macOS, Windows, Linux",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/manifest.rs, src/settings.rs, .github/workflows/ci.yml"
         },
         {
           "id": "T-014",
@@ -52,8 +52,8 @@
         {
           "id": "T-011b",
           "title": "Rust side: load assets/manifest.json into AssetManifest resource (id->path)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/manifest.rs, src/settings.rs, .github/workflows/ci.yml"
         }
       ]
     },

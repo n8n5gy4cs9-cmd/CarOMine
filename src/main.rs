@@ -1,7 +1,12 @@
 //! CarOMine - by Crowelian 2026 + Sonnet.
+#![allow(dead_code)] // scaffolding; modules get wired in as phases land
+mod manifest;
+mod settings;
 mod state;
 
 use bevy::prelude::*;
+use manifest::ManifestPlugin;
+use settings::SettingsPlugin;
 use state::{GameState, StatePlugin};
 
 fn main() {
@@ -13,7 +18,7 @@ fn main() {
             }),
             ..default()
         }))
-        .add_plugins(StatePlugin)
+        .add_plugins((ManifestPlugin, SettingsPlugin, StatePlugin))
         .insert_resource(ClearColor(Color::srgb(0.55, 0.65, 0.78)))
         .add_systems(Startup, setup_placeholder_scene)
         .add_systems(OnEnter(GameState::MainMenu), || info!("CarOMine main menu - press ENTER"))
