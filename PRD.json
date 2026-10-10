@@ -172,8 +172,8 @@
         {
           "id": "T-041",
           "title": "Snow terrain material + footprints/tire tracks decals",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "world/tracks.rs: ring-buffered decals - tyre tracks (wider when sliding), footprints, blood splats; slope-aligned"
         },
         {
           "id": "T-042",
@@ -191,7 +191,7 @@
           "id": "T-044",
           "title": "Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river",
           "status": "wip",
-          "notes": "road = vertex-colour packed snow + spur to cabin. TODO: spline meshes, junctions, bridge, markers/poles, river"
+          "notes": "road = packed-snow vertex colours + spur + orange snow poles every 24 m. TODO: spline meshes, junctions, bridge, signs, river"
         },
         {
           "id": "T-045",
@@ -280,8 +280,8 @@
         {
           "id": "T-065",
           "title": "Damage/hit feedback, gibs/blood (snow-red), enemy drops",
-          "status": "wip",
-          "notes": "hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs"
+          "status": "done",
+          "notes": "blood puffs on hit (head higher), blood splat decal on death, red hit flash, hurt overlay, enemy drops"
         },
         {
           "id": "T-066",
@@ -352,14 +352,14 @@
         {
           "id": "T-086",
           "title": "Lights: headlights/high-beam/fog, brake lights, interior light; battery drain",
-          "status": "wip",
-          "notes": "headlights toggle L. TODO: brake lights, interior light, battery drain"
+          "status": "done",
+          "notes": "headlights (spot), tail lights, brake lights glow on snow, battery drain; interior dome light TODO"
         },
         {
           "id": "T-087",
           "title": "Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "engine pitch by rpm, tyre noise, wind, wiper sweeps, crash, horn, starter. (car radio TODO)"
         },
         {
           "id": "T-088",
@@ -394,6 +394,12 @@
         {
           "id": "T-093",
           "title": "Dash polish: backlight at night, turn signals + indicator ticks, fuel gauge calibration, odometer persistence, dynamic dirt accumulation, windshield dirt/wiper smear, 3D gauge cluster on the dash mesh",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-094",
+          "title": "Car radio: toggle, plays music tracks, tuner static between stations",
           "status": "todo",
           "notes": ""
         }
@@ -604,8 +610,8 @@
         {
           "id": "T-165",
           "title": "Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "paths.rs: saves/settings in OS data dir (CAROMINE_DATA_DIR to override); odometer saved"
         }
       ]
     }

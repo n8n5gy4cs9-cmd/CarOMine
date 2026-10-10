@@ -29,13 +29,14 @@ pub struct SaveData {
     #[serde(default)] pub story: crate::story::Story,
     #[serde(default)] pub needs: (f32, f32, f32, u32, u32, u32),
     #[serde(default)] pub fuel_cans: u32,
+    #[serde(default)] pub odo: f32,
 }
 
 pub const SLOTS: [&str; 4] = ["autosave", "slot1", "slot2", "slot3"];
-fn path(slot: &str) -> String { format!("saves/{slot}.json") }
+fn path(slot: &str) -> std::path::PathBuf { crate::paths::data_dir().join("saves").join(format!("{slot}.json")) }
 
 pub fn write(slot: &str, d: &SaveData) -> Result<(), String> {
-    std::fs::create_dir_all("saves").map_err(|e| e.to_string())?;
+    std::fs::create_dir_all(crate::paths::data_dir().join("saves")).map_err(|e| e.to_string())?;
     std::fs::write(path(slot), serde_json::to_string_pretty(d).map_err(|e| e.to_string())?).map_err(|e| e.to_string())
 }
 pub fn read(slot: &str) -> Option<SaveData> { serde_json::from_str(&std::fs::read_to_string(path(slot)).ok()?).ok() }
@@ -88,7 +89,7 @@ fn do_save(
             parts_installed: ALL.iter().map(|s| parts.get(*s).installed).collect(), parts_cond: ALL.iter().map(|s| parts.get(*s).cond).collect(),
             tyre: parts.tyre.to_u8(), flat: parts.flat, coolant: parts.coolant, battery: parts.battery, temp: parts.temp, frozen: parts.frozen_line,
             inv_parts: inv.parts.iter().map(|s| (s.slot.idx(), s.cond, s.tyre.to_u8())).collect(), dry_gas: inv.dry_gas, coolant_cans: inv.coolant_cans,
-            story: story.clone(), needs: (needs.hunger, needs.energy, needs.warmth, needs.food, needs.coffee, needs.logs), fuel_cans: inv.fuel_cans,
+            odo: c.odo_m, story: story.clone(), needs: (needs.hunger, needs.energy, needs.warmth, needs.food, needs.coffee, needs.logs), fuel_cans: inv.fuel_cans,
         };
         match write(&r.0, &d) { Ok(()) => { if r.0 != "autosave" { toasts.say(format!("Game saved ({}).", r.0)); } } Err(e) => toasts.say(format!("Save failed: {e}")) }
     }
@@ -133,6 +134,7 @@ fn apply_load(
     fl.battery = d.flash_battery; fl.on = false;
     tod.hour = d.hour; weather.intensity = d.snow;
     ct.translation = Vec3::from_array(d.car_pos); ct.translation.y = height_at(ct.translation.x, ct.translation.z);
+    if d.odo > 0.0 { c.odo_m = d.odo; }
     c.yaw = d.car_yaw; c.v_long = 0.0; c.v_lat = 0.0; c.yaw_rate = 0.0; c.fuel = d.car_fuel; c.running = false;
     for (i, s) in ALL.iter().enumerate() { parts.set(*s, d.parts_installed.get(i).copied().unwrap_or(false), d.parts_cond.get(i).copied().unwrap_or(0.0)); }
     parts.tyre = TyreType::from_u8(d.tyre); parts.flat = d.flat; parts.coolant = d.coolant; parts.battery = d.battery; parts.temp = d.temp; parts.frozen_line = d.frozen;

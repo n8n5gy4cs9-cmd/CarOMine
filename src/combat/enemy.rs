@@ -108,13 +108,15 @@ pub fn spawn_initial(mut commands: Commands, a: Option<Res<EnemyAssets>>, mut ma
     for (k, p) in spots { spawn_enemy(&mut commands, &a, &mut mats, k, p); }
 }
 
-pub fn apply_hits(mut hits: MessageReader<HitEvent>, mut q: Query<(&mut Enemy, &Transform)>, mut sfx: MessageWriter<crate::audio::Sfx>) {
+pub fn apply_hits(mut hits: MessageReader<HitEvent>, mut q: Query<(&mut Enemy, &Transform)>, mut sfx: MessageWriter<crate::audio::Sfx>, mut commands: Commands, fx: Option<Res<crate::world::atmosphere::FxAssets>>, mut mats: ResMut<Assets<StandardMaterial>>, tracks: Option<ResMut<crate::world::tracks::Tracks>>) {
+    let mut tracks = tracks;
     for h in hits.read() {
         if let Ok((mut e, t)) = q.get_mut(h.target) {
             if e.state == State::Dead { continue; }
             e.hp -= h.damage; e.flash = 0.12; e.alerted = true;
             sfx.write(crate::audio::Sfx::at("sfx.hit", t.translation + Vec3::Y).vol(0.7));
-            if e.hp <= 0.0 { e.state = State::Dead; e.dead_t = 0.0; sfx.write(crate::audio::Sfx::at(match e.kind { Kind::Wolf => "sfx.wolf_growl", Kind::Moose => "sfx.moose_call", _ => "sfx.enemy_die" }, t.translation)); }
+            if let Some(fx) = &fx { for i in 0..3 { let a = i as f32 * 2.1 + t.translation.x; crate::world::atmosphere::spawn_puff(&mut commands, fx, &mut mats, t.translation + Vec3::Y * if h.headshot { 1.8 } else { 1.2 }, Vec3::new(a.cos() * 0.8, 0.9, a.sin() * 0.8), 0.7, 0.1, 0.45, 0.8, Color::srgb(0.7, 0.04, 0.05)); } }
+            if e.hp <= 0.0 { e.state = State::Dead; e.dead_t = 0.0; if let Some(tr) = tracks.as_mut() { tr.put(&mut commands, crate::world::tracks::Kind::Blood, t.translation, t.translation.x, Vec2::new(1.6, 1.1)); } sfx.write(crate::audio::Sfx::at(match e.kind { Kind::Wolf => "sfx.wolf_growl", Kind::Moose => "sfx.moose_call", _ => "sfx.enemy_die" }, t.translation)); }
         }
     }
 }

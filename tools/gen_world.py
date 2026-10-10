@@ -22,7 +22,7 @@ ROCK = Mat((104, 106, 114), noise="cloth", nscale=28, namp=0.2, snow=0.65)
 LEAF = Mat((40, 78, 44), noise="cloth", nscale=34, namp=0.16, snow=0.6)
 WOODF = Mat((120, 88, 58), noise="streak", nscale=55, namp=0.12, snow=0.7)
 SNOW = Mat((240, 244, 252), noise="cloth", nscale=22, namp=0.05)
-METAL = Mat((58, 60, 70), spec=0.6)
+METAL = Mat((104, 108, 120), noise="streak", nscale=80, namp=0.06, spec=0.6)
 LAMPG = Mat((255, 236, 160), emissive=True)
 
 def spruce(seed):
@@ -111,7 +111,15 @@ def lamp(seed):
     s.box(V(0.45, 3.62, 0), V(0.14, 0.06, 0.1), METAL, rnd=0.02); s.sphere(V(0.45, 3.55, 0), 0.07, LAMPG)
     return s, (1.2, 4.0), (36, 120)
 
-TREES = {"tree.spruce": (spruce, 3), "tree.pine": (pine, 2), "tree.birch": (birch, 2), "tree.bare": (bare, 2), "bush": (bush, 3), "rock": (rock, 2), "snowdrift": (drift, 2), "fence": (fence, 1), "streetlamp": (lamp, 1)}
+def roadpole(seed):
+    s = Scene()
+    s.capsule(V(0, 0, 0), V(0, 1.7, 0), 0.045, 0.04, Mat((236, 238, 240), noise="cloth", nscale=40, namp=0.05, snow=0.0))
+    s.capsule(V(0, 1.45, 0), V(0, 1.7, 0), 0.047, 0.047, Mat((255, 110, 20), spec=0.3))                       # orange reflective tip
+    s.capsule(V(0, 1.22, 0), V(0, 1.3, 0), 0.047, 0.047, Mat((20, 20, 24)))
+    s.ellipsoid(V(0, 1.72, 0), V(0.05, 0.035, 0.05), SNOW)
+    return s, (0.4, 2.0), (16, 80)
+
+TREES = {"roadpole": (roadpole, 1), "tree.spruce": (spruce, 3), "tree.pine": (pine, 2), "tree.birch": (birch, 2), "tree.bare": (bare, 2), "bush": (bush, 3), "rock": (rock, 2), "snowdrift": (drift, 2), "fence": (fence, 1), "streetlamp": (lamp, 1)}
 
 def main(only=None):
     for k, (fn, n) in TREES.items():

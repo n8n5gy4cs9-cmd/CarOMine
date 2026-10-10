@@ -1,15 +1,15 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **56/91 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **61/92 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
 
 - [~] **T-032** ART PASS 2 - Player first-person hands + weapons: regenerate fists, pistol, shotgun, SMG, hunting rifle (+flashlight attachment, muzzle flash, shell ejection) as Doom/ROTT-style hand-shaded sprites: gloved/knuckled hands w/ sleeves, metal highlights, wood grain, 4+ frames (idle, fire, recoil, reload), higher res (e.g. 192x144)
 - [~] **T-033** ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)
-- [ ] **T-041** Snow terrain material + footprints/tire tracks decals
 - [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)
 - [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river
+- [~] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna
 
 ## P0 Planning (1/1)
 
@@ -63,17 +63,18 @@
 - [x] **T-035** Art tooling: tools/pixelkit.py (palette ramps, dither, outline, shading from a 3D-ish light model, sheet packer) so every sprite is built from shaded primitives; keep manifest ids/grids/sprites.json unchanged so replacement is drop-in  
   _note: tooling is sdfrender.py (SDF ray-marcher: ramp shading, ordered dither, AO, depth edge outlines) + rigs; replaces the planned pixelkit_
 
-## P3 World (4/13)
+## P3 World (5/13)
 
 - [x] **T-040** Heightmap terrain chunks (noise, flat Finnish countryside, gentle hills), LOD + streaming, ~8x8 km  
   _note: world/terrain.rs: streamed 64m chunks, noise hills, roads, lake; verified via headless screenshot_
-- [ ] **T-041** Snow terrain material + footprints/tire tracks decals
+- [x] **T-041** Snow terrain material + footprints/tire tracks decals  
+  _note: world/tracks.rs: ring-buffered decals - tyre tracks (wider when sliding), footprints, blood splats; slope-aligned_
 - [~] **T-042** Billboard system (Build-engine style: y-axis billboards, 8-angle selection, distance fade, batching/instancing)  
   _note: face-camera + 8-angle selection done (billboard.rs); GPU instancing/batching perf pass still TODO (T-160)_
 - [x] **T-043** Forest/bush scatter (spruce/pine/birch), density map, fields, clearings  
   _note: world/scatter.rs: deterministic forest/bush/rock scatter with collision obstacles_
 - [~] **T-044** Roads (gravel/asphalt spline), junctions, bridges, a frozen lake, a river  
-  _note: road = vertex-colour packed snow + spur to cabin. TODO: spline meshes, junctions, bridge, markers/poles, river_
+  _note: road = packed-snow vertex colours + spur + orange snow poles every 24 m. TODO: spline meshes, junctions, bridge, signs, river_
 - [~] **T-045** Nurmijarvi village: houses (2D/3D hybrid), home cabin + garage, K-market, gas station, church, sauna  
   _note: world/village.rs: cabin, sauna, open garage shed, K-market, 6 houses, glowing night windows, collision. TODO: church w/ steeple, gas station, interiors, far-LOD facade billboards, home furniture_
 - [~] **T-046** Day/night cycle, sun/moon, aurora borealis at night, fog, sky  
@@ -91,7 +92,7 @@
 - [x] **T-068** Farmsteads: deterministic farm sites (house, barn, sauna, fenced yard, flattened + cleared) streamed with chunks  
   _note: layout::farm_site_in_cell + village::spawn_farm_
 
-## P4 Player + FPS (8/10)
+## P4 Player + FPS (9/10)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
@@ -103,8 +104,8 @@
   _note: 5 enemy defs: goon, hunter, neighbour, wolf, moose (placed at fixed spots; wider spawning in T-066)_
 - [~] **T-064** Pickups, health, armor, items, interaction raycast (E key)  
   _note: pickups.rs: medkit/ammo/money/coffee/sausage auto-collect + enemy drops. TODO: E-interact items, armor, inventory_
-- [~] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
-  _note: hit flash + hurt overlay + corpses. TODO: blood/snow splats, gibs_
+- [x] **T-065** Damage/hit feedback, gibs/blood (snow-red), enemy drops  
+  _note: blood puffs on hit (head higher), blood splat decal on death, red hit flash, hurt overlay, enemy drops_
 - [x] **T-066** Agency missions: 'side jobs' for money, combat arenas in the countryside  
   _note: life/missions.rs: gig board (phone) with Hunt/Deliver/Recover gigs, waypoint beacon, compass HUD, rewards; console gig cmds_
 - [x] **T-052** Flashlight (F): handheld SpotLight, battery drain, flicker when low, sway  
@@ -114,7 +115,7 @@
 - [x] **T-067** Enemy population director (combat/director.rs): spawns by area/time/weather near player, culls far  
   _note: combat/director.rs_
 
-## P5 Vehicle simulation (9/14)
+## P5 Vehicle simulation (11/15)
 
 - [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
   _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
@@ -128,15 +129,17 @@
   _note: visible body squash/tilt from panel damage (vehicle::body_damage). TODO: real mesh deformation, dents/decals, broken-off parts_
 - [x] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  
   _note: windshield: 20 strips, snow per strip, wiper sweeps a fan-shaped cleared arc, wiper blade wear scales clearing, frost, night tint_
-- [~] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain  
-  _note: headlights toggle L. TODO: brake lights, interior light, battery drain_
-- [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
+- [x] **T-086** Lights: headlights/high-beam/fog, brake lights, interior light; battery drain  
+  _note: headlights (spot), tail lights, brake lights glow on snow, battery drain; interior dome light TODO_
+- [x] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio  
+  _note: engine pitch by rpm, tyre noise, wind, wiper sweeps, crash, horn, starter. (car radio TODO)_
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
 - [x] **T-089** Car model: smooth SDF-meshed sedan (marching cubes) with hollow cabin, interior (dashboard, seats), glass, bumpers, lamps, wheel arches
 - [x] **T-090** Baked grime: per-vertex mud/slush up the lower body + arches, rust at sills, stone chips, scratches, sun-faded roof, dirty glass; muddy tyres/rims
 - [x] **T-091** Working steering wheel: separate glTF, spins with steering input (7x ratio, tilted column)
 - [x] **T-092** Instrument cluster (vehicle/dash.rs): analog tacho, speedo, fuel, coolant temp, oil, volts with inertia; 9 warning lights (battery, oil, check-engine, brake, temp, fuel, lights, ICE warning, wipers); clock, outside temp, gear, odometer
 - [ ] **T-093** Dash polish: backlight at night, turn signals + indicator ticks, fuel gauge calibration, odometer persistence, dynamic dirt accumulation, windshield dirt/wiper smear, 3D gauge cluster on the dash mesh
+- [ ] **T-094** Car radio: toggle, plays music tracks, tuner static between stations
 
 ## P6 Car building + repair (6/9)
 
@@ -194,7 +197,7 @@
 - [ ] **T-146** Pause menu: 'Quit to main menu' (needs world teardown/reset), new-game reset
 - [ ] **T-147** Key rebinding UI + gamepad support
 
-## P9 Polish + release (0/5)
+## P9 Polish + release (1/5)
 
 - [ ] **T-160** Performance pass (M1 Max 60fps+, instancing, culling)
 - [~] **T-161** macOS .app bundle (cargo-bundle / scripts), Apple Silicon universal build  
@@ -202,4 +205,5 @@
 - [~] **T-162** Windows + Linux builds, CI release artifacts  
   _note: packaging/linux_windows.md instructions; CI release artifacts TODO_
 - [ ] **T-163** Playtest balance pass, bug list, README screenshots
-- [ ] **T-165** Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling
+- [x] **T-165** Move saves/settings to OS data dir (dirs crate); macOS app bundle cwd handling  
+  _note: paths.rs: saves/settings in OS data dir (CAROMINE_DATA_DIR to override); odometer saved_

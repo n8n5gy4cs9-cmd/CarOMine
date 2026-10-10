@@ -9,6 +9,7 @@ mod i18n;
 mod life;
 mod manifest;
 mod menu;
+mod paths;
 mod player;
 mod save;
 mod settings;

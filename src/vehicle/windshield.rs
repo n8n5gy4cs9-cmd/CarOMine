@@ -57,7 +57,7 @@ fn wiper_angle(t: f32) -> f32 { 10.0 + t * 160.0 }
 /// Angle at which strip i is swept (strip 0 = left edge). The blade starts on the right (10deg) and sweeps to the left (170deg).
 fn strip_angle(i: usize) -> f32 { wiper_angle(1.0 - (i as f32 + 0.5) / COLS as f32) }
 
-pub fn update(time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky::TimeOfDay>, mut ws: ResMut<Windshield>, car: Query<&Car, With<Driven>>, parked: Query<&Car, Without<Driven>>) {
+pub fn update(mut sfx: MessageWriter<crate::audio::Sfx>, time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky::TimeOfDay>, mut ws: ResMut<Windshield>, car: Query<&Car, With<Driven>>, parked: Query<&Car, Without<Driven>>) {
     let dt = time.delta_secs().min(0.05);
     let driven = car.single().ok();
     let speed = driven.map(|c| c.v_long.abs()).unwrap_or(0.0);
@@ -72,7 +72,7 @@ pub fn update(time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky
         if ws.wiper_dir == 0.0 { ws.wiper_dir = 1.0; }
         let before = wiper_angle(ws.wiper_t);
         ws.wiper_t += dt / period * 2.0 * ws.wiper_dir;
-        if ws.wiper_t >= 1.0 { ws.wiper_t = 1.0; ws.wiper_dir = -1.0; }
+        if ws.wiper_t >= 1.0 { ws.wiper_t = 1.0; ws.wiper_dir = -1.0; sfx.write(crate::audio::Sfx::new("sfx.wiper").vol(0.6)); }
         if ws.wiper_t <= 0.0 { ws.wiper_t = 0.0; ws.wiper_dir = if wipers > 0 { 1.0 } else { 0.0 }; }
         let after = wiper_angle(ws.wiper_t);
         let (lo, hi) = (before.min(after) - 1.0, before.max(after) + 1.0);

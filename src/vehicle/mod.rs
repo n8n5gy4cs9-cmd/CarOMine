@@ -95,6 +95,8 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
                     c.spawn((WorldAssetRoot(wheel_scene()), Transform::from_xyz(side * 0.78, 0.32, fz), WheelVisual { front, side }));
                 }
             }
+            // brake / tail lights
+            for sx in [-0.65f32, 0.65] { c.spawn((PointLight { intensity: 0.0, range: 7.0, color: Color::srgb(1.0, 0.05, 0.03), shadow_maps_enabled: false, ..default() }, Transform::from_xyz(sx, 0.85, 2.45), TailLight)); }
             // steering wheel (driver side, left-hand drive)
             c.spawn((WorldAssetRoot(server.load(bevy::gltf::GltfAssetLabel::Scene(0).from_asset(man.path("car.steering")))), Transform::from_xyz(-0.38, 1.0, -0.47).with_rotation(Quat::from_rotation_x(STEER_TILT)), SteeringWheel));
             // headlights
@@ -112,6 +114,8 @@ pub fn spawn_car(commands: &mut Commands, server: &AssetServer, man: &crate::man
 
 #[derive(Component)]
 pub struct Headlight;
+#[derive(Component)]
+pub struct TailLight;
 
 /// The car body model; squashed/tilted according to panel damage so crashes are visible.
 #[derive(Component)]

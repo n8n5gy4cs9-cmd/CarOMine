@@ -15,7 +15,7 @@ pub struct Kind {
 #[derive(Resource)]
 pub struct ScatterAssets {
     pub spruce: Kind, pub pine: Kind, pub birch: Kind, pub bare: Kind,
-    pub bush: Kind, pub rock: Kind, pub fence: Kind, pub lamp: Kind,
+    pub bush: Kind, pub rock: Kind, pub fence: Kind, pub lamp: Kind, pub pole: Kind,
 }
 
 /// Obstacle for player/vehicle collision (cylinder in XZ).
@@ -37,6 +37,7 @@ pub fn setup_scatter(mut commands: Commands, server: Res<AssetServer>, man: Res<
         rock: kind("rock", 2, 1.9, 1.3, 0.8),
         fence: kind("fence", 1, 2.4, 1.6, 0.0),
         lamp: kind("streetlamp", 1, 1.2, 4.0, 0.15),
+        pole: kind("roadpole", 1, 0.4, 2.0, 0.0),
     });
 }
 
@@ -54,7 +55,24 @@ pub fn put(commands: &mut Commands, parent: Entity, k: &Kind, variant: u32, pos:
     commands.entity(parent).add_child(e);
 }
 
+/// Orange-tipped snow poles lining the main road every 24 m (Finnish lumitolppa).
+fn road_poles(commands: &mut Commands, parent: Entity, c: IVec2, a: &ScatterAssets) {
+    let (z0, z1) = (c.y as f32 * CHUNK, (c.y + 1) as f32 * CHUNK);
+    let (x0, x1) = (c.x as f32 * CHUNK, (c.x + 1) as f32 * CHUNK);
+    let mut k = (z0 / 24.0).ceil() as i32;
+    while (k as f32) * 24.0 < z1 {
+        let z = k as f32 * 24.0; let rx = road_x(z);
+        let slope = (road_x(z + 1.0) - road_x(z - 1.0)) / 2.0; let off = 5.4 * (1.0 + slope * slope).sqrt();
+        for sgn in [-1.0f32, 1.0] {
+            let x = rx + sgn * off;
+            if x >= x0 && x < x1 && Vec2::new(x, z).distance(CABIN) > 40.0 && Vec2::new(x, z).distance(VILLAGE) > 70.0 { put(commands, parent, &a.pole, 0, Vec3::new(x, height_at(x, z), z), 1.0); }
+        }
+        k += 1;
+    }
+}
+
 pub fn scatter_chunk(commands: &mut Commands, parent: Entity, c: IVec2, a: &ScatterAssets) {
+    road_poles(commands, parent, c, a);
     let cell = 4.5;
     let n = (CHUNK / cell) as i32;
     let (ox, oz) = (c.x as f32 * CHUNK, c.y as f32 * CHUNK);

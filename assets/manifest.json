@@ -471,6 +471,14 @@
   "license": "CC0",
   "notes": "glb, metres, +Y up, -Z forward"
  },
+ "roadpole.0": {
+  "path": "sprites/nature/roadpole_0.png",
+  "kind": "sprite",
+  "use": "Static billboard: roadpole variant 0 (bottom-anchored, snow-covered; world 0.4x2.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
+  "license": "CC0",
+  "notes": "size=16x80; keep aspect when replacing"
+ },
  "rock.0": {
   "path": "sprites/nature/rock_0.png",
   "kind": "sprite",

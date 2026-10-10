@@ -196,7 +196,11 @@ pub fn visuals(
     mut wheels: Query<(&WheelVisual, &mut Transform, &ChildOf), Without<Car>>,
     cars: Query<&Car>,
     mut lights: Query<(&mut SpotLight, &ChildOf), With<Headlight>>,
+    mut tails: Query<(&mut PointLight, &ChildOf), (With<TailLight>, Without<Headlight>)>,
 ) {
+    for (mut l, p) in &mut tails {
+        if let Ok(c) = cars.get(p.parent()) { l.intensity = if !c.electrics { 0.0 } else if c.brake > 0.1 || c.handbrake { 300_000.0 } else if c.lights { 40_000.0 } else { 0.0 }; }
+    }
     for (mut tr, p) in &mut steer {
         if let Ok(c) = cars.get(p.parent()) { tr.rotation = Quat::from_rotation_x(STEER_TILT) * Quat::from_rotation_z(c.steer * 7.0); }
     }

@@ -5,6 +5,7 @@ pub mod noise;
 pub mod scatter;
 pub mod sky;
 pub mod terrain;
+pub mod tracks;
 pub mod village;
 pub mod weather;
 
@@ -14,7 +15,7 @@ use bevy::prelude::*;
 pub struct WorldPlugin;
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(atmosphere::AtmospherePlugin)
+        app.add_plugins((atmosphere::AtmospherePlugin, tracks::TracksPlugin))
             .init_resource::<terrain::Chunks>()
             .init_resource::<sky::TimeOfDay>()
             .init_resource::<weather::Weather>()

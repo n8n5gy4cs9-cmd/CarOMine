@@ -21,15 +21,15 @@ impl Default for Settings {
     }
 }
 
-const PATH: &str = "settings.json";
+fn path() -> std::path::PathBuf { crate::paths::data_dir().join("settings.json") }
 
 impl Settings {
     pub fn load() -> Self {
-        std::fs::read_to_string(PATH).ok().and_then(|s| serde_json::from_str(&s).ok()).unwrap_or_default()
+        std::fs::read_to_string(path()).ok().and_then(|s| serde_json::from_str(&s).ok()).unwrap_or_default()
     }
     pub fn save(&self) {
         if let Ok(s) = serde_json::to_string_pretty(self) {
-            let _ = std::fs::write(PATH, s);
+            let _ = std::fs::write(path(), s);
         }
     }
 }
