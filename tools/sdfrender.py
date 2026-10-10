@@ -30,9 +30,11 @@ def shift(a, dy, dx, fill=0):
     return out
 
 class Mat:
-    def __init__(self, base, noise=None, nscale=40.0, namp=0.12, spec=0.0, emissive=False, n=5):
-        self.base, self.noise, self.nscale, self.namp, self.spec, self.emissive = base, noise, nscale, namp, spec, emissive
+    def __init__(self, base, noise=None, nscale=40.0, namp=0.12, spec=0.0, emissive=False, n=5, snow=0.0):
+        self.base, self.noise, self.nscale, self.namp, self.spec, self.emissive, self.snow = base, noise, nscale, namp, spec, emissive, snow
         self.ramp = ramp(base, n)
+
+SNOW_RAMP = ramp((246, 249, 255), 5, warm=0.03)
 
 def hash3(p, seed=0.0):
     x = np.sin(p[:, 0] * 127.1 + p[:, 1] * 311.7 + p[:, 2] * 74.7 + seed) * 43758.5453
@@ -158,7 +160,13 @@ def render(scene, w=72, h=96, x_range=(-0.75, 0.75), y_range=(0.0, 2.0), steps=4
             nr = len(m.ramp)
             if m.emissive: idxr = np.full(len(sel), nr - 1)
             else: idxr = np.clip(np.floor(vv * (nr - 1) + (bay[sel] - 0.5) * dither + 0.5), 0, nr - 1).astype(int)
-            out[sel] = m.ramp[idxr]
+            col = m.ramp[idxr]
+            if m.snow:
+                # snow settles on upward-facing surfaces (with a ragged, noisy edge)
+                ny = n[sel][:, 1] + (vnoise(P[sel], 55.0, seed=7.0) - 0.5) * 0.5
+                cover = ny > (0.62 - 0.5 * m.snow)
+                col = np.where(cover[:, None], SNOW_RAMP[np.clip(idxr, 0, len(SNOW_RAMP) - 1)], col)
+            out[sel] = col
         img[hi, :3] = out; img[hi, 3] = 255
     img = img.reshape(h, w, 4); depth = depth.reshape(h, w)
     # internal edges from depth discontinuities (separates limbs from torso like hand-painted sprites)

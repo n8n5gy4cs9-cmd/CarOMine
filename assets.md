@@ -20,48 +20,48 @@
 | Building facade billboard 'sauna' | `building.sauna_lit` | `sprites/buildings/sauna_lit.png` | generated (tools/) |
 | Building facade billboard 'shop' | `building.shop` | `sprites/buildings/shop.png` | generated (tools/) |
 | Building facade billboard 'shop' | `building.shop_lit` | `sprites/buildings/shop_lit.png` | generated (tools/) |
-| Static billboard: bush variant 0 | `bush.0` | `sprites/nature/bush_0.png` | generated (tools/) |
-| Static billboard: bush variant 1 | `bush.1` | `sprites/nature/bush_1.png` | generated (tools/) |
-| Static billboard: bush variant 2 | `bush.2` | `sprites/nature/bush_2.png` | generated (tools/) |
+| Static billboard: bush variant 0 | `bush.0` | `sprites/nature/bush_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: bush variant 1 | `bush.1` | `sprites/nature/bush_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: bush variant 2 | `bush.2` | `sprites/nature/bush_2.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Enemy 'director' billboard sheet | `enemy.director` | `sprites/enemies/director.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Enemy 'goon' billboard sheet | `enemy.goon` | `sprites/enemies/goon.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Enemy 'hunter' billboard sheet | `enemy.hunter` | `sprites/enemies/hunter.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Enemy 'moose' billboard sheet | `enemy.moose` | `sprites/enemies/moose.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Enemy 'neighbour' billboard sheet | `enemy.neighbour` | `sprites/enemies/neighbour.png` | generated (tools/gen_chars.py, SDF-rendered) |
 | Enemy 'wolf' billboard sheet | `enemy.wolf` | `sprites/enemies/wolf.png` | generated (tools/gen_chars.py, SDF-rendered) |
-| Static billboard: fence variant 0 | `fence.0` | `sprites/nature/fence_0.png` | generated (tools/) |
+| Static billboard: fence variant 0 | `fence.0` | `sprites/nature/fence_0.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Sun/moon disc with glow 128x128 | `fx.disc` | `sprites/fx/disc.png` | generated (tools/) |
 | Soft puff 64x64 | `fx.puff` | `sprites/fx/puff.png` | generated (tools/) |
-| Pickup/inventory icon: item.ammo_pistol | `item.ammo_pistol` | `sprites/items/ammo_pistol.png` | generated (tools/) |
-| Pickup/inventory icon: item.ammo_rifle | `item.ammo_rifle` | `sprites/items/ammo_rifle.png` | generated (tools/) |
-| Pickup/inventory icon: item.ammo_shells | `item.ammo_shells` | `sprites/items/ammo_shells.png` | generated (tools/) |
-| Pickup/inventory icon: item.battery | `item.battery` | `sprites/items/battery.png` | generated (tools/) |
-| Pickup/inventory icon: item.bolts | `item.bolts` | `sprites/items/bolts.png` | generated (tools/) |
-| Pickup/inventory icon: item.coffee | `item.coffee` | `sprites/items/coffee.png` | generated (tools/) |
-| Pickup/inventory icon: item.dry_gas | `item.dry_gas` | `sprites/items/dry_gas.png` | generated (tools/) |
-| Pickup/inventory icon: item.fuel_can | `item.fuel_can` | `sprites/items/fuel_can.png` | generated (tools/) |
-| Pickup/inventory icon: item.key | `item.key` | `sprites/items/key.png` | generated (tools/) |
-| Pickup/inventory icon: item.medkit | `item.medkit` | `sprites/items/medkit.png` | generated (tools/) |
-| Pickup/inventory icon: item.money | `item.money` | `sprites/items/money.png` | generated (tools/) |
-| Pickup/inventory icon: item.sausage | `item.sausage` | `sprites/items/sausage.png` | generated (tools/) |
-| Pickup/inventory icon: item.snow_brush | `item.snow_brush` | `sprites/items/snow_brush.png` | generated (tools/) |
-| Pickup/inventory icon: item.sparkplug | `item.sparkplug` | `sprites/items/sparkplug.png` | generated (tools/) |
-| Pickup/inventory icon: item.tire | `item.tire` | `sprites/items/tire.png` | generated (tools/) |
-| Pickup/inventory icon: item.wrench | `item.wrench` | `sprites/items/wrench.png` | generated (tools/) |
-| Static billboard: rock variant 0 | `rock.0` | `sprites/nature/rock_0.png` | generated (tools/) |
-| Static billboard: rock variant 1 | `rock.1` | `sprites/nature/rock_1.png` | generated (tools/) |
-| Static billboard: snowdrift variant 0 | `snowdrift.0` | `sprites/nature/snowdrift_0.png` | generated (tools/) |
-| Static billboard: snowdrift variant 1 | `snowdrift.1` | `sprites/nature/snowdrift_1.png` | generated (tools/) |
-| Static billboard: streetlamp variant 0 | `streetlamp.0` | `sprites/nature/streetlamp_0.png` | generated (tools/) |
-| Static billboard: tree.bare variant 0 | `tree.bare.0` | `sprites/nature/tree_bare_0.png` | generated (tools/) |
-| Static billboard: tree.bare variant 1 | `tree.bare.1` | `sprites/nature/tree_bare_1.png` | generated (tools/) |
-| Static billboard: tree.birch variant 0 | `tree.birch.0` | `sprites/nature/tree_birch_0.png` | generated (tools/) |
-| Static billboard: tree.birch variant 1 | `tree.birch.1` | `sprites/nature/tree_birch_1.png` | generated (tools/) |
-| Static billboard: tree.pine variant 0 | `tree.pine.0` | `sprites/nature/tree_pine_0.png` | generated (tools/) |
-| Static billboard: tree.pine variant 1 | `tree.pine.1` | `sprites/nature/tree_pine_1.png` | generated (tools/) |
-| Static billboard: tree.spruce variant 0 | `tree.spruce.0` | `sprites/nature/tree_spruce_0.png` | generated (tools/) |
-| Static billboard: tree.spruce variant 1 | `tree.spruce.1` | `sprites/nature/tree_spruce_1.png` | generated (tools/) |
-| Static billboard: tree.spruce variant 2 | `tree.spruce.2` | `sprites/nature/tree_spruce_2.png` | generated (tools/) |
+| Pickup/inventory icon: item.ammo_pistol | `item.ammo_pistol` | `sprites/items/ammo_pistol.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.ammo_rifle | `item.ammo_rifle` | `sprites/items/ammo_rifle.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.ammo_shells | `item.ammo_shells` | `sprites/items/ammo_shells.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.battery | `item.battery` | `sprites/items/battery.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.bolts | `item.bolts` | `sprites/items/bolts.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.coffee | `item.coffee` | `sprites/items/coffee.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.dry_gas | `item.dry_gas` | `sprites/items/dry_gas.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.fuel_can | `item.fuel_can` | `sprites/items/fuel_can.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.key | `item.key` | `sprites/items/key.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.medkit | `item.medkit` | `sprites/items/medkit.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.money | `item.money` | `sprites/items/money.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.sausage | `item.sausage` | `sprites/items/sausage.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.snow_brush | `item.snow_brush` | `sprites/items/snow_brush.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.sparkplug | `item.sparkplug` | `sprites/items/sparkplug.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.tire | `item.tire` | `sprites/items/tire.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Pickup/inventory icon: item.wrench | `item.wrench` | `sprites/items/wrench.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: rock variant 0 | `rock.0` | `sprites/nature/rock_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: rock variant 1 | `rock.1` | `sprites/nature/rock_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: snowdrift variant 0 | `snowdrift.0` | `sprites/nature/snowdrift_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: snowdrift variant 1 | `snowdrift.1` | `sprites/nature/snowdrift_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: streetlamp variant 0 | `streetlamp.0` | `sprites/nature/streetlamp_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.bare variant 0 | `tree.bare.0` | `sprites/nature/tree_bare_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.bare variant 1 | `tree.bare.1` | `sprites/nature/tree_bare_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.birch variant 0 | `tree.birch.0` | `sprites/nature/tree_birch_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.birch variant 1 | `tree.birch.1` | `sprites/nature/tree_birch_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.pine variant 0 | `tree.pine.0` | `sprites/nature/tree_pine_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.pine variant 1 | `tree.pine.1` | `sprites/nature/tree_pine_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.spruce variant 0 | `tree.spruce.0` | `sprites/nature/tree_spruce_0.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.spruce variant 1 | `tree.spruce.1` | `sprites/nature/tree_spruce_1.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: tree.spruce variant 2 | `tree.spruce.2` | `sprites/nature/tree_spruce_2.png` | generated (tools/gen_world.py, SDF-rendered) |
 | HUD bar frame 256x24 | `ui.bar_frame` | `sprites/ui/bar_frame.png` | generated (tools/) |
 | Crosshair 32x32 | `ui.crosshair` | `sprites/ui/crosshair.png` | generated (tools/) |
 | Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells | `ui.font` | `sprites/ui/font_atlas.png` | generated (tools/) |
@@ -156,48 +156,48 @@
 - `building.sauna_lit` - Building facade billboard 'sauna' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal. Path `sprites/buildings/sauna_lit.png`. License: CC0.  size=256x192
 - `building.shop` - Building facade billboard 'shop' (day) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal. Path `sprites/buildings/shop.png`. License: CC0.  size=256x192
 - `building.shop_lit` - Building facade billboard 'shop' (night/lit windows) 128x96 x2; used as 2D/3D hybrid far-LOD + wall decal. Path `sprites/buildings/shop_lit.png`. License: CC0.  size=256x192
-- `bush.0` - Static billboard: bush variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/bush_0.png`. License: CC0.  size=80x56
-- `bush.1` - Static billboard: bush variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/bush_1.png`. License: CC0.  size=80x56
-- `bush.2` - Static billboard: bush variant 2 (bottom-anchored, snow-covered). Path `sprites/nature/bush_2.png`. License: CC0.  size=80x56
+- `bush.0` - Static billboard: bush variant 0 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/bush_0.png`. License: CC0. size=80x56; keep aspect when replacing
+- `bush.1` - Static billboard: bush variant 1 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/bush_1.png`. License: CC0. size=80x56; keep aspect when replacing
+- `bush.2` - Static billboard: bush variant 2 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/bush_2.png`. License: CC0. size=80x56; keep aspect when replacing
 - `enemy.director` - Enemy 'director' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/director.png`. License: CC0. 12 cols x 8 angle rows, frame 84x112px, world 1.8x2.4 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `enemy.goon` - Enemy 'goon' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/goon.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `enemy.hunter` - Enemy 'hunter' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/hunter.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `enemy.moose` - Enemy 'moose' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/moose.png`. License: CC0. 12 cols x 8 angle rows, frame 144x112px, world 3.2x2.5 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `enemy.neighbour` - Enemy 'neighbour' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/neighbour.png`. License: CC0. 12 cols x 8 angle rows, frame 72x96px, world 1.5x2.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
 - `enemy.wolf` - Enemy 'wolf' billboard sheet (3D-rendered pixel art). Path `sprites/enemies/wolf.png`. License: CC0. 12 cols x 8 angle rows, frame 112x64px, world 1.75x1.0 m. cols: 0 idle,1-4 walk,5-6 attack,7 pain,8-11 death; rows: view angle 0=facing camera, +45deg each. Replace keeping the grid + update assets/data/sprites.json
-- `fence.0` - Static billboard: fence variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/fence_0.png`. License: CC0.  size=96x64
+- `fence.0` - Static billboard: fence variant 0 (bottom-anchored, snow-covered; world 2.4x1.6 m). Path `sprites/nature/fence_0.png`. License: CC0. size=96x64; keep aspect when replacing
 - `fx.disc` - Sun/moon disc with glow 128x128. Path `sprites/fx/disc.png`. License: CC0.  size=128x128
 - `fx.puff` - Soft puff 64x64 (breath vapour, exhaust, steam, snow spray, chimney smoke). Path `sprites/fx/puff.png`. License: CC0.  size=64x64
-- `item.ammo_pistol` - Pickup/inventory icon: item.ammo_pistol (32x32 x2). Path `sprites/items/ammo_pistol.png`. License: CC0.  size=64x64
-- `item.ammo_rifle` - Pickup/inventory icon: item.ammo_rifle (32x32 x2). Path `sprites/items/ammo_rifle.png`. License: CC0.  size=64x64
-- `item.ammo_shells` - Pickup/inventory icon: item.ammo_shells (32x32 x2). Path `sprites/items/ammo_shells.png`. License: CC0.  size=64x64
-- `item.battery` - Pickup/inventory icon: item.battery (32x32 x2). Path `sprites/items/battery.png`. License: CC0.  size=64x64
-- `item.bolts` - Pickup/inventory icon: item.bolts (32x32 x2). Path `sprites/items/bolts.png`. License: CC0.  size=64x64
-- `item.coffee` - Pickup/inventory icon: item.coffee (32x32 x2). Path `sprites/items/coffee.png`. License: CC0.  size=64x64
-- `item.dry_gas` - Pickup/inventory icon: item.dry_gas (32x32 x2). Path `sprites/items/dry_gas.png`. License: CC0.  size=64x64
-- `item.fuel_can` - Pickup/inventory icon: item.fuel_can (32x32 x2). Path `sprites/items/fuel_can.png`. License: CC0.  size=64x64
-- `item.key` - Pickup/inventory icon: item.key (32x32 x2). Path `sprites/items/key.png`. License: CC0.  size=64x64
-- `item.medkit` - Pickup/inventory icon: item.medkit (32x32 x2). Path `sprites/items/medkit.png`. License: CC0.  size=64x64
-- `item.money` - Pickup/inventory icon: item.money (32x32 x2). Path `sprites/items/money.png`. License: CC0.  size=64x64
-- `item.sausage` - Pickup/inventory icon: item.sausage (32x32 x2). Path `sprites/items/sausage.png`. License: CC0.  size=64x64
-- `item.snow_brush` - Pickup/inventory icon: item.snow_brush (32x32 x2). Path `sprites/items/snow_brush.png`. License: CC0.  size=64x64
-- `item.sparkplug` - Pickup/inventory icon: item.sparkplug (32x32 x2). Path `sprites/items/sparkplug.png`. License: CC0.  size=64x64
-- `item.tire` - Pickup/inventory icon: item.tire (32x32 x2). Path `sprites/items/tire.png`. License: CC0.  size=64x64
-- `item.wrench` - Pickup/inventory icon: item.wrench (32x32 x2). Path `sprites/items/wrench.png`. License: CC0.  size=64x64
-- `rock.0` - Static billboard: rock variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/rock_0.png`. License: CC0.  size=80x56
-- `rock.1` - Static billboard: rock variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/rock_1.png`. License: CC0.  size=80x56
-- `snowdrift.0` - Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/snowdrift_0.png`. License: CC0.  size=128x40
-- `snowdrift.1` - Static billboard: snowdrift variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/snowdrift_1.png`. License: CC0.  size=128x40
-- `streetlamp.0` - Static billboard: streetlamp variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/streetlamp_0.png`. License: CC0.  size=48x160
-- `tree.bare.0` - Static billboard: tree.bare variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/tree_bare_0.png`. License: CC0.  size=128x192
-- `tree.bare.1` - Static billboard: tree.bare variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/tree_bare_1.png`. License: CC0.  size=128x192
-- `tree.birch.0` - Static billboard: tree.birch variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/tree_birch_0.png`. License: CC0.  size=128x224
-- `tree.birch.1` - Static billboard: tree.birch variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/tree_birch_1.png`. License: CC0.  size=128x224
-- `tree.pine.0` - Static billboard: tree.pine variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/tree_pine_0.png`. License: CC0.  size=128x224
-- `tree.pine.1` - Static billboard: tree.pine variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/tree_pine_1.png`. License: CC0.  size=128x224
-- `tree.spruce.0` - Static billboard: tree.spruce variant 0 (bottom-anchored, snow-covered). Path `sprites/nature/tree_spruce_0.png`. License: CC0.  size=128x224
-- `tree.spruce.1` - Static billboard: tree.spruce variant 1 (bottom-anchored, snow-covered). Path `sprites/nature/tree_spruce_1.png`. License: CC0.  size=128x224
-- `tree.spruce.2` - Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered). Path `sprites/nature/tree_spruce_2.png`. License: CC0.  size=128x224
+- `item.ammo_pistol` - Pickup/inventory icon: item.ammo_pistol (64x64, 3/4 view). Path `sprites/items/ammo_pistol.png`. License: CC0.
+- `item.ammo_rifle` - Pickup/inventory icon: item.ammo_rifle (64x64, 3/4 view). Path `sprites/items/ammo_rifle.png`. License: CC0.
+- `item.ammo_shells` - Pickup/inventory icon: item.ammo_shells (64x64, 3/4 view). Path `sprites/items/ammo_shells.png`. License: CC0.
+- `item.battery` - Pickup/inventory icon: item.battery (64x64, 3/4 view). Path `sprites/items/battery.png`. License: CC0.
+- `item.bolts` - Pickup/inventory icon: item.bolts (64x64, 3/4 view). Path `sprites/items/bolts.png`. License: CC0.
+- `item.coffee` - Pickup/inventory icon: item.coffee (64x64, 3/4 view). Path `sprites/items/coffee.png`. License: CC0.
+- `item.dry_gas` - Pickup/inventory icon: item.dry_gas (64x64, 3/4 view). Path `sprites/items/dry_gas.png`. License: CC0.
+- `item.fuel_can` - Pickup/inventory icon: item.fuel_can (64x64, 3/4 view). Path `sprites/items/fuel_can.png`. License: CC0.
+- `item.key` - Pickup/inventory icon: item.key (64x64, 3/4 view). Path `sprites/items/key.png`. License: CC0.
+- `item.medkit` - Pickup/inventory icon: item.medkit (64x64, 3/4 view). Path `sprites/items/medkit.png`. License: CC0.
+- `item.money` - Pickup/inventory icon: item.money (64x64, 3/4 view). Path `sprites/items/money.png`. License: CC0.
+- `item.sausage` - Pickup/inventory icon: item.sausage (64x64, 3/4 view). Path `sprites/items/sausage.png`. License: CC0.
+- `item.snow_brush` - Pickup/inventory icon: item.snow_brush (64x64, 3/4 view). Path `sprites/items/snow_brush.png`. License: CC0.
+- `item.sparkplug` - Pickup/inventory icon: item.sparkplug (64x64, 3/4 view). Path `sprites/items/sparkplug.png`. License: CC0.
+- `item.tire` - Pickup/inventory icon: item.tire (64x64, 3/4 view). Path `sprites/items/tire.png`. License: CC0.
+- `item.wrench` - Pickup/inventory icon: item.wrench (64x64, 3/4 view). Path `sprites/items/wrench.png`. License: CC0.
+- `rock.0` - Static billboard: rock variant 0 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/rock_0.png`. License: CC0. size=80x56; keep aspect when replacing
+- `rock.1` - Static billboard: rock variant 1 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/rock_1.png`. License: CC0. size=80x56; keep aspect when replacing
+- `snowdrift.0` - Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered; world 2.6x0.9 m). Path `sprites/nature/snowdrift_0.png`. License: CC0. size=80x28; keep aspect when replacing
+- `snowdrift.1` - Static billboard: snowdrift variant 1 (bottom-anchored, snow-covered; world 2.6x0.9 m). Path `sprites/nature/snowdrift_1.png`. License: CC0. size=80x28; keep aspect when replacing
+- `streetlamp.0` - Static billboard: streetlamp variant 0 (bottom-anchored, snow-covered; world 1.2x4.0 m). Path `sprites/nature/streetlamp_0.png`. License: CC0. size=36x120; keep aspect when replacing
+- `tree.bare.0` - Static billboard: tree.bare variant 0 (bottom-anchored, snow-covered; world 4.0x6.0 m). Path `sprites/nature/tree_bare_0.png`. License: CC0. size=96x144; keep aspect when replacing
+- `tree.bare.1` - Static billboard: tree.bare variant 1 (bottom-anchored, snow-covered; world 4.0x6.0 m). Path `sprites/nature/tree_bare_1.png`. License: CC0. size=96x144; keep aspect when replacing
+- `tree.birch.0` - Static billboard: tree.birch variant 0 (bottom-anchored, snow-covered; world 4.0x7.0 m). Path `sprites/nature/tree_birch_0.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.birch.1` - Static billboard: tree.birch variant 1 (bottom-anchored, snow-covered; world 4.0x7.0 m). Path `sprites/nature/tree_birch_1.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.pine.0` - Static billboard: tree.pine variant 0 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_pine_0.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.pine.1` - Static billboard: tree.pine variant 1 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_pine_1.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.spruce.0` - Static billboard: tree.spruce variant 0 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_spruce_0.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.spruce.1` - Static billboard: tree.spruce variant 1 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_spruce_1.png`. License: CC0. size=96x168; keep aspect when replacing
+- `tree.spruce.2` - Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered; world 5.0x8.75 m). Path `sprites/nature/tree_spruce_2.png`. License: CC0. size=96x168; keep aspect when replacing
 - `ui.bar_frame` - HUD bar frame 256x24 (health/needs/fuel). Path `sprites/ui/bar_frame.png`. License: CC0.  size=256x24
 - `ui.crosshair` - Crosshair 32x32. Path `sprites/ui/crosshair.png`. License: CC0.  size=32x32
 - `ui.font` - Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells (fallback; real TTF can replace). Path `sprites/ui/font_atlas.png`. License: CC0.  size=192x108

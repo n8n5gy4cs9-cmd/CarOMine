@@ -142,8 +142,8 @@
         {
           "id": "T-033",
           "title": "ART PASS 3 - World sprites: trees (spruce/pine/birch/dead), bushes, rocks, fences, lamps, items/pickups, building facades regenerated with the same pixel-realistic shaded style + lighting ramps; consistent palette (limited ~64 colour master palette, cold blue shadows / warm highlights)",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "tools/gen_world.py: spruce x3, pine x2, birch x2, bare x2, bushes, rocks, drifts, fence, lamp + 16 item icons SDF-rendered with snow-on-top shading. TODO: buildings/facades, textures (still flat generated), vehicle sprites"
         },
         {
           "id": "T-034",

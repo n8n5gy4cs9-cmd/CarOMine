@@ -243,7 +243,7 @@ def gen_ui():
     save_img(im, "sprites/ui/font_atlas.png", "ui.font", "Bitmap font atlas ASCII 32..127, 16x6 grid of 12x18 cells (fallback; real TTF can replace)")
 
 if __name__ == "__main__":
-    gen_nature(); gen_items(); gen_textures(); gen_buildings(); gen_ui(); print("sprites ok")
+    gen_textures(); gen_buildings(); gen_ui(); print("sprites ok")
 
 def gen_fx():
     """Soft puff sprite for smoke / breath / snow spray."""

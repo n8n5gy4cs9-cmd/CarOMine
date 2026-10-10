@@ -106,26 +106,26 @@
  "bush.0": {
   "path": "sprites/nature/bush_0.png",
   "kind": "sprite",
-  "use": "Static billboard: bush variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: bush variant 0 (bottom-anchored, snow-covered; world 1.9x1.3 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=80x56"
+  "notes": "size=80x56; keep aspect when replacing"
  },
  "bush.1": {
   "path": "sprites/nature/bush_1.png",
   "kind": "sprite",
-  "use": "Static billboard: bush variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: bush variant 1 (bottom-anchored, snow-covered; world 1.9x1.3 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=80x56"
+  "notes": "size=80x56; keep aspect when replacing"
  },
  "bush.2": {
   "path": "sprites/nature/bush_2.png",
   "kind": "sprite",
-  "use": "Static billboard: bush variant 2 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: bush variant 2 (bottom-anchored, snow-covered; world 1.9x1.3 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=80x56"
+  "notes": "size=80x56; keep aspect when replacing"
  },
  "car.body": {
   "path": "models/car_body.glb",
@@ -210,10 +210,10 @@
  "fence.0": {
   "path": "sprites/nature/fence_0.png",
   "kind": "sprite",
-  "use": "Static billboard: fence variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: fence variant 0 (bottom-anchored, snow-covered; world 2.4x1.6 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=96x64"
+  "notes": "size=96x64; keep aspect when replacing"
  },
  "fx.disc": {
   "path": "sprites/fx/disc.png",
@@ -234,130 +234,130 @@
  "item.ammo_pistol": {
   "path": "sprites/items/ammo_pistol.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.ammo_pistol (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.ammo_pistol (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.ammo_rifle": {
   "path": "sprites/items/ammo_rifle.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.ammo_rifle (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.ammo_rifle (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.ammo_shells": {
   "path": "sprites/items/ammo_shells.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.ammo_shells (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.ammo_shells (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.battery": {
   "path": "sprites/items/battery.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.battery (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.battery (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.bolts": {
   "path": "sprites/items/bolts.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.bolts (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.bolts (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.coffee": {
   "path": "sprites/items/coffee.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.coffee (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.coffee (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.dry_gas": {
   "path": "sprites/items/dry_gas.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.dry_gas (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.dry_gas (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.fuel_can": {
   "path": "sprites/items/fuel_can.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.fuel_can (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.fuel_can (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.key": {
   "path": "sprites/items/key.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.key (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.key (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.medkit": {
   "path": "sprites/items/medkit.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.medkit (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.medkit (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.money": {
   "path": "sprites/items/money.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.money (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.money (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.sausage": {
   "path": "sprites/items/sausage.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.sausage (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.sausage (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.snow_brush": {
   "path": "sprites/items/snow_brush.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.snow_brush (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.snow_brush (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.sparkplug": {
   "path": "sprites/items/sparkplug.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.sparkplug (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.sparkplug (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.tire": {
   "path": "sprites/items/tire.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.tire (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.tire (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "item.wrench": {
   "path": "sprites/items/wrench.png",
   "kind": "sprite",
-  "use": "Pickup/inventory icon: item.wrench (32x32 x2)",
-  "source": "generated (tools/)",
+  "use": "Pickup/inventory icon: item.wrench (64x64, 3/4 view)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=64x64"
+  "notes": ""
  },
  "music.combat": {
   "path": "music/combat.wav",
@@ -466,18 +466,18 @@
  "rock.0": {
   "path": "sprites/nature/rock_0.png",
   "kind": "sprite",
-  "use": "Static billboard: rock variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: rock variant 0 (bottom-anchored, snow-covered; world 1.9x1.3 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=80x56"
+  "notes": "size=80x56; keep aspect when replacing"
  },
  "rock.1": {
   "path": "sprites/nature/rock_1.png",
   "kind": "sprite",
-  "use": "Static billboard: rock variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: rock variant 1 (bottom-anchored, snow-covered; world 1.9x1.3 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=80x56"
+  "notes": "size=80x56; keep aspect when replacing"
  },
  "sfx.coffee_pour": {
   "path": "sfx/coffee_pour.wav",
@@ -706,26 +706,26 @@
  "snowdrift.0": {
   "path": "sprites/nature/snowdrift_0.png",
   "kind": "sprite",
-  "use": "Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered; world 2.6x0.9 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x40"
+  "notes": "size=80x28; keep aspect when replacing"
  },
  "snowdrift.1": {
   "path": "sprites/nature/snowdrift_1.png",
   "kind": "sprite",
-  "use": "Static billboard: snowdrift variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: snowdrift variant 1 (bottom-anchored, snow-covered; world 2.6x0.9 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x40"
+  "notes": "size=80x28; keep aspect when replacing"
  },
  "streetlamp.0": {
   "path": "sprites/nature/streetlamp_0.png",
   "kind": "sprite",
-  "use": "Static billboard: streetlamp variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: streetlamp variant 0 (bottom-anchored, snow-covered; world 1.2x4.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=48x160"
+  "notes": "size=36x120; keep aspect when replacing"
  },
  "tex.asphalt": {
   "path": "textures/asphalt.png",
@@ -842,74 +842,74 @@
  "tree.bare.0": {
   "path": "sprites/nature/tree_bare_0.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.bare variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.bare variant 0 (bottom-anchored, snow-covered; world 4.0x6.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x192"
+  "notes": "size=96x144; keep aspect when replacing"
  },
  "tree.bare.1": {
   "path": "sprites/nature/tree_bare_1.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.bare variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.bare variant 1 (bottom-anchored, snow-covered; world 4.0x6.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x192"
+  "notes": "size=96x144; keep aspect when replacing"
  },
  "tree.birch.0": {
   "path": "sprites/nature/tree_birch_0.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.birch variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.birch variant 0 (bottom-anchored, snow-covered; world 4.0x7.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.birch.1": {
   "path": "sprites/nature/tree_birch_1.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.birch variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.birch variant 1 (bottom-anchored, snow-covered; world 4.0x7.0 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.pine.0": {
   "path": "sprites/nature/tree_pine_0.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.pine variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.pine variant 0 (bottom-anchored, snow-covered; world 5.0x8.75 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.pine.1": {
   "path": "sprites/nature/tree_pine_1.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.pine variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.pine variant 1 (bottom-anchored, snow-covered; world 5.0x8.75 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.spruce.0": {
   "path": "sprites/nature/tree_spruce_0.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.spruce variant 0 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.spruce variant 0 (bottom-anchored, snow-covered; world 5.0x8.75 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.spruce.1": {
   "path": "sprites/nature/tree_spruce_1.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.spruce variant 1 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.spruce variant 1 (bottom-anchored, snow-covered; world 5.0x8.75 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "tree.spruce.2": {
   "path": "sprites/nature/tree_spruce_2.png",
   "kind": "sprite",
-  "use": "Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered)",
-  "source": "generated (tools/)",
+  "use": "Static billboard: tree.spruce variant 2 (bottom-anchored, snow-covered; world 5.0x8.75 m)",
+  "source": "generated (tools/gen_world.py, SDF-rendered)",
   "license": "CC0",
-  "notes": " size=128x224"
+  "notes": "size=96x168; keep aspect when replacing"
  },
  "ui.bar_frame": {
   "path": "sprites/ui/bar_frame.png",
