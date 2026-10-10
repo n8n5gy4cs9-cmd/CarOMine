@@ -264,6 +264,12 @@
           "title": "Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'",
           "status": "done",
           "notes": "X mounts/unmounts light on equipped gun (muzzle offset, tighter beam); fists = hand-held. Works for ALL weapons"
+        },
+        {
+          "id": "T-067",
+          "title": "Enemy population director (combat/director.rs): spawns by area/time/weather near player, culls far",
+          "status": "done",
+          "notes": "combat/director.rs"
         }
       ]
     },
@@ -292,8 +298,8 @@
         {
           "id": "T-083",
           "title": "Enter/exit car, steering wheel view, interior cam, mirrors, handbrake",
-          "status": "wip",
-          "notes": "enter/exit with E + driver cam done. TODO: chase/exterior cam, mirrors, steering wheel model"
+          "status": "done",
+          "notes": "driver seat + chase camera (C, mouse orbit); mirrors/wheel model TODO"
         },
         {
           "id": "T-084",

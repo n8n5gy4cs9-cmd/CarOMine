@@ -60,6 +60,10 @@ impl Car {
     pub fn speed_kmh(&self) -> f32 { self.v_long.abs() * 3.6 }
 }
 
+/// C toggles between the driver seat and a chase camera.
+#[derive(Resource, Default)]
+pub struct ChaseCam(pub bool);
+
 /// Marker: this car is currently being driven by the player.
 #[derive(Component)]
 pub struct Driven;
@@ -149,19 +153,30 @@ pub fn driver_look(
     mut player: Query<(&mut Transform, &mut Player), (Without<Car>, Without<PlayerCamera>)>,
     mut cam: Query<&mut Transform, (With<PlayerCamera>, Without<Car>, Without<Player>)>,
     mut look: Local<(f32, f32)>,
+    keys: Res<ButtonInput<KeyCode>>,
+    mut chase: ResMut<ChaseCam>,
 ) {
+    if keys.just_pressed(KeyCode::KeyC) { chase.0 = !chase.0; }
     let (Ok(ct), Ok((mut pt, _)), Ok(mut c)) = (car.single(), player.single_mut(), cam.single_mut()) else { return };
     pt.translation = ct.translation;
     look.0 = (look.0 - motion.delta.x * settings.mouse_sensitivity).clamp(-2.3, 2.3);
     look.1 = (look.1 - motion.delta.y * settings.mouse_sensitivity).clamp(-1.2, 1.0);
     // gently recentre yaw so you naturally look forward
-    c.rotation = Quat::from_rotation_y(look.0) * Quat::from_rotation_x(look.1);
+    if chase.0 {
+        // orbit around the car with the mouse; default behind and above
+        let orbit = Quat::from_rotation_y(look.0 * 0.6) * Quat::from_rotation_x(-0.2 + look.1 * 0.4);
+        c.translation = orbit * Vec3::new(0.0, 0.0, 7.5) + Vec3::new(0.0, 1.8, 0.0);
+        c.rotation = orbit;
+    } else {
+        c.translation = Vec3::new(-0.38, 1.12, -0.15);
+        c.rotation = Quat::from_rotation_y(look.0) * Quat::from_rotation_x(look.1);
+    }
 }
 
 pub struct VehiclePlugin;
 impl Plugin for VehiclePlugin {
     fn build(&self, app: &mut App) {
-        app.add_message::<Crash>()
+        app.add_message::<Crash>().init_resource::<ChaseCam>()
             .init_resource::<windshield::Windshield>()
             .add_systems(OnEnter(GameState::Playing), (spawn_start_car, windshield::spawn_overlay))
             .add_systems(

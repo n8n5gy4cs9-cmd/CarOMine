@@ -65,6 +65,7 @@ pub fn update(time: Res<Time>, weather: Res<Weather>, tod: Res<crate::world::sky
 }
 
 pub fn show(
+    chase: Res<super::ChaseCam>,
     tod: Res<crate::world::sky::TimeOfDay>,
     ws: Res<Windshield>,
     imgs: Option<Res<WindshieldImages>>,
@@ -76,7 +77,7 @@ pub fn show(
     mut wiper: Query<(&mut Node, &mut UiTransform, &mut Visibility), (With<WsWiper>, Without<WsRoot>)>,
 ) {
     let Some(imgs) = imgs else { return };
-    let in_car = !driven.is_empty();
+    let in_car = !driven.is_empty() && !chase.0;
     if let Ok(mut v) = root.single_mut() { *v = if in_car { Visibility::Inherited } else { Visibility::Hidden }; }
     // glass is lit by the world: dark at night (headlights / street light keep a floor)
     let lit = 0.35 + 0.65 * crate::world::sky::sky_state(tod.hour).day;

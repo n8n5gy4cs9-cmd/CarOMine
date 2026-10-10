@@ -1,4 +1,5 @@
 //! FPS layer: weapons, hitscan, enemies (billboard sprites), pickups, player health.
+pub mod director;
 pub mod enemy;
 pub mod flashlight;
 pub mod hud;
@@ -52,6 +53,7 @@ impl Plugin for CombatPlugin {
                     flashlight::spawn_beam,
                     flashlight::update,
                     weapons::switch_and_fire,
+                    director::run,
                     enemy::apply_hits,
                     enemy::ai,
                     enemy::animate,

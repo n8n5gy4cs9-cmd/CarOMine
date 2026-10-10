@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **45/78 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **47/79 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -79,7 +79,7 @@
 - [~] **T-051** Atmospheric effects: stars + moon/sun discs, aurora borealis, breath vapour, exhaust smoke, tyre snow spray, wind-blown snow gusts, snow on tree billboards, chimney smoke  
   _note: stars, sun+moon discs, aurora curtains (night+clear), breath vapour, exhaust (dark smoke if engine/plugs bad), hood steam when overheating, tyre snow spray, cabin chimney smoke. TODO: wind gusts of snow, sauna smoke, headlight beams in fog_
 
-## P4 Player + FPS (7/9)
+## P4 Player + FPS (8/10)
 
 - [x] **T-060** First-person controller (walk/run/crouch/jump, slippery-ice option), collision vs terrain/buildings  
   _note: player.rs: walk/run/crouch/jump, ice inertia, tree collision. (no weapons yet)_
@@ -99,8 +99,10 @@
   _note: combat/flashlight.rs: F toggle, battery drain 7min, flicker <15%, sway, batteries pickup, HUD %; shadows on_
 - [x] **T-053** Weapon-mounted flashlight: attachment unlockable per weapon (pistol/shotgun/SMG/rifle), beam follows weapon, toggle F; console 'give flashlight'  
   _note: X mounts/unmounts light on equipped gun (muzzle offset, tighter beam); fists = hand-held. Works for ALL weapons_
+- [x] **T-067** Enemy population director (combat/director.rs): spawns by area/time/weather near player, culls far  
+  _note: combat/director.rs_
 
-## P5 Vehicle simulation (3/9)
+## P5 Vehicle simulation (4/9)
 
 - [x] **T-080** Raycast vehicle: chassis, 4 wheels, suspension, steering, drivetrain (RWD/FWD), gearbox  
   _note: CUSTOM bicycle model (no physics crate): vehicle/physics.rs, auto gearbox, terrain follow, tree collisions + Crash message_
@@ -108,8 +110,8 @@
   _note: friction circle; spec.rs mu(surface,tyre): summer/winter/studded x snow/packed/ice/gravel_
 - [x] **T-082** Engine model: torque curve, temperature, oil, fuel, battery, starter, choke  
   _note: engine temp, battery, fuel, starter attempts, torque curve, belt, alternator (build/sim.rs)_
-- [~] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake  
-  _note: enter/exit with E + driver cam done. TODO: chase/exterior cam, mirrors, steering wheel model_
+- [x] **T-083** Enter/exit car, steering wheel view, interior cam, mirrors, handbrake  
+  _note: driver seat + chase camera (C, mouse orbit); mirrors/wheel model TODO_
 - [~] **T-084** Crash damage: deformable-look (mesh vertex displacement + swap states), per-part HP, broken parts drop  
   _note: part damage on crash done. TODO: visible body deformation/mesh swap, smoke, broken parts drop_
 - [~] **T-085** Windshield snow accumulation (Toyota Celica / Amiga style), wipers, defrost, washer fluid  

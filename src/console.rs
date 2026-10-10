@@ -242,6 +242,7 @@ fn exec_cmds(
             "killall" => { let n = enemies.iter().count(); for e in &enemies { commands.entity(e).despawn(); } out.push(format!("removed {n} enemies")); }
             "car" => match a(1) {
                 "bring" => { if let (Ok((pt, _)), Ok((mut ct, mut c))) = (player.single(), cars.single_mut()) { let p = pt.translation + pt.rotation * Vec3::NEG_Z * 6.0; ct.translation = Vec3::new(p.x, height_at(p.x, p.z), p.z); c.v_long = 0.0; c.v_lat = 0.0; c.yaw_rate = 0.0; out.push("car brought".into()); } }
+                "place" => { if let (Some(x), Some(z), Ok((mut ct, mut c))) = (num(2), num(3), cars.single_mut()) { let yaw = num(4).unwrap_or(0.0).to_radians(); ct.translation = Vec3::new(x, height_at(x, z), z); c.yaw = yaw; c.v_long = 0.0; c.v_lat = 0.0; c.yaw_rate = 0.0; out.push(format!("car placed at {x:.0},{z:.0} yaw {:.0}", yaw.to_degrees())); } else { out.push("usage: car place <x> <z> [yaw_deg]".into()); } }
                 "goto" => { if let (Ok((mut pt, _)), Ok((ct, _))) = (player.single_mut(), cars.single()) { pt.translation = ct.translation + Vec3::new(3.0, 1.0, 0.0); out.push("teleported to car".into()); } }
                 "tyres" | "tires" => { if let Ok(mut p) = bparts.single_mut() { p.tyre = match a(2) { "winter" => TyreType::Winter, "studded" => TyreType::Studded, _ => TyreType::Summer }; out.push(format!("tyres: {}", p.tyre.name())); } }
                 "lights" => { if let Ok((_, mut c)) = cars.single_mut() { c.lights = !c.lights; } }

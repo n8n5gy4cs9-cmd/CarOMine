@@ -15,7 +15,7 @@ struct DevState { menu_frames: u32, frames: u32, shot_taken_at: Option<u32> }
 pub struct DevPlugin;
 impl Plugin for DevPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds, dev_workshop, dev_ignite, dev_dialog));
+        app.init_resource::<DevState>().add_systems(Startup, apply_env).add_systems(Update, (drive, dev_car, dev_lineup, dev_cmds, dev_workshop, dev_ignite, dev_dialog, dev_logcar));
     }
 }
 
@@ -71,6 +71,7 @@ fn dev_car(
     commands.entity(ce).insert(crate::vehicle::Driven);
     if let Ok(c) = cam.single() { commands.entity(c).insert(ChildOf(ce)).insert(Transform::from_xyz(-0.38, 1.12, -0.15)); }
     for mut v in &mut pv { *v = Visibility::Hidden; }
+    if std::env::var("CAROMINE_CHASE").is_ok() { commands.insert_resource(crate::vehicle::ChaseCam(true)); }
     commands.insert_resource(crate::vehicle::physics::DevDrive { throttle: n.first().copied().unwrap_or(0.0), steer: n.get(1).copied().unwrap_or(0.0), handbrake: n.get(2).copied().unwrap_or(0.0) > 0.5 });
 }
 
@@ -120,4 +121,15 @@ fn dev_dialog(d: Res<DevState>, mut insp: MessageWriter<crate::story::RunInspect
     dlg.sel = 0; missions.ensure_board();
     if v == "inspect" { dlg.screen = Screen::Inspect; }
     next.set(GameState::Dialog);
+}
+
+/// CAROMINE_LOGCAR=1: print car telemetry once per ~0.5 s of game time.
+fn dev_logcar(time: Res<Time>, cars: Query<(&crate::vehicle::Car, &Transform)>, mut acc: Local<f32>) {
+    if std::env::var("CAROMINE_LOGCAR").is_err() { return; }
+    *acc += time.delta_secs().min(0.05);
+    if *acc < 0.5 { return; }
+    *acc = 0.0;
+    if let Ok((c, t)) = cars.single() {
+        info!("CAR v={:5.1}km/h lat={:4.1} gear={} rpm={:4.0} yawrate={:5.2} slip={:.2} run={} pos=({:.0},{:.0})", c.speed_kmh(), c.v_lat, c.gear, c.rpm, c.yaw_rate, c.slip, c.running, t.translation.x, t.translation.z);
+    }
 }
