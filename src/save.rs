@@ -26,6 +26,9 @@ pub struct SaveData {
     pub parts_installed: Vec<bool>, pub parts_cond: Vec<f32>,
     pub tyre: u8, pub flat: bool, pub coolant: f32, pub battery: f32, pub temp: f32, pub frozen: bool,
     pub inv_parts: Vec<(usize, f32, u8)>, pub dry_gas: u32, pub coolant_cans: u32,
+    #[serde(default)] pub story: crate::story::Story,
+    #[serde(default)] pub needs: (f32, f32, f32, u32, u32, u32),
+    #[serde(default)] pub fuel_cans: u32,
 }
 
 pub const SLOTS: [&str; 4] = ["autosave", "slot1", "slot2", "slot3"];
@@ -70,6 +73,8 @@ fn do_save(
     car: Query<(&Transform, &Car, &CarParts)>,
     stats: Res<PlayerStats>, lo: Res<Loadout>, fl: Res<Flashlight>, tod: Res<TimeOfDay>, weather: Res<Weather>, inv: Res<Inventory>,
     mut toasts: ResMut<crate::build::Toasts>,
+    story: Res<crate::story::Story>,
+    needs: Res<crate::life::needs::Needs>,
 ) {
     for r in req.read() {
         let (Ok((pt, p)), Ok((ct, c, parts))) = (player.single(), car.single()) else { continue };
@@ -83,6 +88,7 @@ fn do_save(
             parts_installed: ALL.iter().map(|s| parts.get(*s).installed).collect(), parts_cond: ALL.iter().map(|s| parts.get(*s).cond).collect(),
             tyre: parts.tyre.to_u8(), flat: parts.flat, coolant: parts.coolant, battery: parts.battery, temp: parts.temp, frozen: parts.frozen_line,
             inv_parts: inv.parts.iter().map(|s| (s.slot.idx(), s.cond, s.tyre.to_u8())).collect(), dry_gas: inv.dry_gas, coolant_cans: inv.coolant_cans,
+            story: story.clone(), needs: (needs.hunger, needs.energy, needs.warmth, needs.food, needs.coffee, needs.logs), fuel_cans: inv.fuel_cans,
         };
         match write(&r.0, &d) { Ok(()) => { if r.0 != "autosave" { toasts.say(format!("Game saved ({}).", r.0)); } } Err(e) => toasts.say(format!("Save failed: {e}")) }
     }
@@ -93,6 +99,9 @@ fn autosave(time: Res<Time>, mut t: ResMut<AutoSave>, state: Res<State<GameState
     t.0 += time.delta_secs();
     if t.0 > 180.0 { t.0 = 0.0; req.write(SaveRequest("autosave".into())); }
 }
+
+#[derive(bevy::ecs::system::SystemParam)]
+struct LoadExtra<'w> { story: ResMut<'w, crate::story::Story>, needs: ResMut<'w, crate::life::needs::Needs> }
 
 #[allow(clippy::too_many_arguments)]
 fn apply_load(
@@ -106,7 +115,9 @@ fn apply_load(
     mut vis: Query<&mut Visibility, With<Player>>,
     mut toasts: ResMut<crate::build::Toasts>,
     state: Res<State<GameState>>,
+    extra: LoadExtra,
 ) {
+    let LoadExtra { mut story, mut needs } = extra;
     if pending.0.is_none() || *state.get() != GameState::Playing { return; }
     let (Ok((pe, mut pt, mut p)), Ok((ce, mut ct, mut c, mut parts))) = (player.single_mut(), car.single_mut()) else { return };
     let d = pending.0.take().unwrap();
@@ -126,7 +137,9 @@ fn apply_load(
     for (i, s) in ALL.iter().enumerate() { parts.set(*s, d.parts_installed.get(i).copied().unwrap_or(false), d.parts_cond.get(i).copied().unwrap_or(0.0)); }
     parts.tyre = TyreType::from_u8(d.tyre); parts.flat = d.flat; parts.coolant = d.coolant; parts.battery = d.battery; parts.temp = d.temp; parts.frozen_line = d.frozen;
     inv.parts = d.inv_parts.iter().filter(|(i, _, _)| *i < N).map(|(i, c, t)| StockPart { slot: ALL[*i], cond: *c, tyre: TyreType::from_u8(*t) }).collect();
-    inv.dry_gas = d.dry_gas; inv.coolant_cans = d.coolant_cans;
+    inv.dry_gas = d.dry_gas; inv.coolant_cans = d.coolant_cans; inv.fuel_cans = d.fuel_cans;
+    *story = d.story.clone(); story.intro_shown = true;
+    if d.needs != (0.0, 0.0, 0.0, 0, 0, 0) { needs.hunger = d.needs.0; needs.energy = d.needs.1; needs.warmth = d.needs.2; needs.food = d.needs.3; needs.coffee = d.needs.4; needs.logs = d.needs.5; }
     let _ = Slot::Engine;
     toasts.say("Game loaded.");
 }

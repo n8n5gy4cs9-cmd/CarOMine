@@ -19,7 +19,8 @@ impl Plugin for DevPlugin {
     }
 }
 
-fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>, mut fl: ResMut<crate::combat::flashlight::Flashlight>) {
+fn apply_env(mut tod: ResMut<TimeOfDay>, mut w: ResMut<Weather>, mut fl: ResMut<crate::combat::flashlight::Flashlight>, mut story: ResMut<crate::story::Story>) {
+    if std::env::var("CAROMINE_AUTOSTART").is_ok() && std::env::var("CAROMINE_INTRO").is_err() { story.intro_shown = true; }
     if std::env::var("CAROMINE_FLASH").is_ok() { fl.on = true; }
     if let Ok(h) = std::env::var("CAROMINE_HOUR") { if let Ok(h) = h.parse() { tod.hour = h; tod.speed = 0.0; } }
     if let Ok(s) = std::env::var("CAROMINE_SNOW") { if let Ok(s) = s.parse() { w.intensity = s; } }
@@ -110,11 +111,13 @@ fn dev_ignite(d: Res<DevState>, mut w: MessageWriter<crate::build::Ignition>) {
 }
 
 /// CAROMINE_DIALOG=home|phone|sauna|market|parts: open that dialog at frame 25.
-fn dev_dialog(d: Res<DevState>, mut next: ResMut<NextState<GameState>>, mut dlg: ResMut<crate::life::dialog::Dialog>, mut missions: ResMut<crate::life::missions::Missions>) {
+fn dev_dialog(d: Res<DevState>, mut insp: MessageWriter<crate::story::RunInspection>, mut next: ResMut<NextState<GameState>>, mut dlg: ResMut<crate::life::dialog::Dialog>, mut missions: ResMut<crate::life::missions::Missions>) {
     use crate::life::dialog::Screen;
     let Ok(v) = std::env::var("CAROMINE_DIALOG") else { return };
+    if d.frames == 40 && v == "inspect" { insp.write(crate::story::RunInspection); }
     if d.frames != 25 { return; }
     dlg.screen = match v.as_str() { "phone" => Screen::Phone, "sauna" => Screen::Sauna, "market" => Screen::Market, "parts" => Screen::Parts, _ => Screen::Home };
     dlg.sel = 0; missions.ensure_board();
+    if v == "inspect" { dlg.screen = Screen::Inspect; }
     next.set(GameState::Dialog);
 }

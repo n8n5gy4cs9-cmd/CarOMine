@@ -382,8 +382,8 @@
         {
           "id": "T-108",
           "title": "Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "Katsastus station in village: 9-point inspection (brakes, tyres, winter tyres, lights, glass, wipers, body, emissions...), 30 EUR fee, +100 EUR on pass"
         }
       ]
     },
@@ -412,8 +412,8 @@
         {
           "id": "T-123",
           "title": "Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)",
-          "status": "todo",
-          "notes": ""
+          "status": "done",
+          "notes": "src/story.rs: intro dialog, auto-tracked objectives (build->run->winter tyres->katsastus->Helsinki), HQ compound + boss 'The Director', ending screen, story saved"
         },
         {
           "id": "T-124",
@@ -424,8 +424,8 @@
         {
           "id": "T-125",
           "title": "Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs",
-          "status": "todo",
-          "notes": ""
+          "status": "wip",
+          "notes": "flavour text: intro, Kela, katsastus, makkara, sauna. TODO: NPC dialogue, radio chatter, easter eggs, Finnish strings"
         },
         {
           "id": "T-126",
@@ -436,6 +436,12 @@
         {
           "id": "T-127",
           "title": "Mailbox: parts ordered by phone arrive next day (MSC Teemo style); TV with Finnish channels; cabin interior (walkable)",
+          "status": "todo",
+          "notes": ""
+        },
+        {
+          "id": "T-128",
+          "title": "Boss fight polish: unique boss sprite, phases, minions; second endgame area; New Game+",
           "status": "todo",
           "notes": ""
         }

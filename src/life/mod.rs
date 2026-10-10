@@ -8,14 +8,14 @@ use crate::world::layout::*;
 use bevy::prelude::*;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum ZoneKind { Home, Sauna, Market, AutoShop }
+pub enum ZoneKind { Home, Sauna, Market, AutoShop, Inspection }
 
 #[derive(Clone, Copy)]
 pub struct Zone { pub pos: Vec2, pub radius: f32, pub kind: ZoneKind }
 
 impl Zone {
     pub fn prompt(&self) -> &'static str {
-        match self.kind { ZoneKind::Home => "E: cabin (sleep / eat / phone / firewood)", ZoneKind::Sauna => "E: sauna", ZoneKind::Market => "E: K-market", ZoneKind::AutoShop => "E: Auto parts shop" }
+        match self.kind { ZoneKind::Home => "E: cabin (sleep / eat / phone / firewood)", ZoneKind::Sauna => "E: sauna", ZoneKind::Market => "E: K-market", ZoneKind::AutoShop => "E: Auto parts shop", ZoneKind::Inspection => "E: Katsastus - vehicle inspection (30 EUR)" }
     }
 }
 
@@ -29,6 +29,7 @@ pub fn zones() -> Vec<Zone> {
         Zone { pos: door(CABIN + Vec2::new(9.0, -4.0), 0.0, 3.4), radius: 3.0, kind: ZoneKind::Sauna },
         Zone { pos: door(VILLAGE + Vec2::new(22.0, 0.0), -q, 9.0), radius: 3.4, kind: ZoneKind::Market },
         Zone { pos: door(VILLAGE + Vec2::new(18.0, 42.0), -q, 6.0), radius: 3.4, kind: ZoneKind::AutoShop },
+        Zone { pos: door(VILLAGE + Vec2::new(-24.0, -42.0), q, 7.0), radius: 3.6, kind: ZoneKind::Inspection },
     ]
 }
 

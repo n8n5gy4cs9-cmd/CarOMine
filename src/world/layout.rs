@@ -6,6 +6,8 @@ pub const SEED: u32 = 0xC4_20_26;
 pub const WORLD_HALF: f32 = 4000.0;
 pub const CABIN: Vec2 = Vec2::new(60.0, 40.0);
 pub const VILLAGE: Vec2 = Vec2::new(-20.0, -180.0);
+/// Agency HQ ("Helsinki") at the south edge of the map.
+pub const HQ: Vec2 = Vec2::new(0.0, 3500.0);
 pub const LAKE_C: Vec2 = Vec2::new(380.0, 120.0);
 pub const LAKE_R: f32 = 140.0;
 pub const ROAD_HALF_W: f32 = 3.6;
@@ -54,7 +56,7 @@ pub fn height_at(x: f32, z: f32) -> f32 {
         h += (rc - h) * (1.0 - smoothstep(ROAD_HALF_W, 16.0, rd));
     }
     // flatten yard around cabin and village
-    for (c, r) in [(CABIN, 26.0), (VILLAGE, 60.0)] {
+    for (c, r) in [(CABIN, 26.0), (VILLAGE, 60.0), (HQ, 50.0)] {
         let d = Vec2::new(x, z).distance(c);
         if d < r + 20.0 {
             let ch = base_height(c.x, c.y) * 0.9 + 0.2;

@@ -9,12 +9,12 @@ use crate::vehicle::spec::TyreType;
 use crate::world::sky::TimeOfDay;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
-pub enum Screen { Home, Phone, Sauna, Market, Parts }
+pub enum Screen { Home, Phone, Sauna, Market, Parts, Inspect, Intro, Ending }
 
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub enum Act {
     Close, Sleep, Eat, Coffee, Chop, Phone, Back, Accept(usize), Abandon,
-    SaunaHeat, SaunaBathe, BuyFood, BuyCoffee, BuyDryGas, BuyCoolant, BuyFuel, BuyBatteries, BuyPart(Slot, TyreType, i32), GoParts,
+    SaunaHeat, SaunaBathe, Inspect, BuyFood, BuyCoffee, BuyDryGas, BuyCoolant, BuyFuel, BuyBatteries, BuyPart(Slot, TyreType, i32), GoParts,
 }
 
 #[derive(Resource)]
@@ -31,7 +31,7 @@ pub fn spawn_ui(mut commands: Commands) {
 }
 
 fn title(s: Screen) -> &'static str {
-    match s { Screen::Home => "HOME - your cabin, Nurmijarvi", Screen::Phone => "PHONE - agency gig board", Screen::Sauna => "SAUNA", Screen::Market => "K-MARKET", Screen::Parts => "AUTO PARTS - Nurmijarven Osa" }
+    match s { Screen::Home => "HOME - your cabin, Nurmijarvi", Screen::Phone => "PHONE - agency gig board", Screen::Sauna => "SAUNA", Screen::Market => "K-MARKET", Screen::Parts => "AUTO PARTS - Nurmijarven Osa", Screen::Inspect => "KATSASTUS - vehicle inspection station", Screen::Intro => "CAROMINE", Screen::Ending => "THE END" }
 }
 
 pub struct View<'a> { pub needs: &'a Needs, pub stats: &'a PlayerStats, pub inv: &'a Inventory, pub missions: &'a Missions, pub hour: f32 }
@@ -60,6 +60,8 @@ pub fn rows(screen: Screen, v: &View) -> Vec<(String, Act)> {
             for (l, p, a) in [("Makkara (sausage) 3 EUR", 3, Act::BuyFood), ("Coffee bag 2 EUR", 2, Act::BuyCoffee), ("Dry gas 4 EUR", 4, Act::BuyDryGas), ("Coolant can 8 EUR", 8, Act::BuyCoolant), ("Fuel can (10 L) 15 EUR", 15, Act::BuyFuel), ("Flashlight batteries 4 EUR", 4, Act::BuyBatteries)] { let _ = p; r.push((l.to_string(), a)); }
             r.push(("Leave".into(), Act::Close));
         }
+        Screen::Inspect => { r.push(("Run the inspection (30 EUR)".into(), Act::Inspect)); r.push(("Leave".into(), Act::Close)); }
+        Screen::Intro | Screen::Ending => { r.push(("Continue".into(), Act::Close)); }
         Screen::Parts => {
             for s in ALL {
                 let i = s.info();
@@ -84,7 +86,7 @@ pub fn open(
 ) {
     if !keys.just_pressed(kb.interact) { return; }
     let Some(z) = near.0 else { return };
-    dlg.screen = match z.kind { ZoneKind::Home => Screen::Home, ZoneKind::Sauna => Screen::Sauna, ZoneKind::Market => Screen::Market, ZoneKind::AutoShop => Screen::Parts };
+    dlg.screen = match z.kind { ZoneKind::Home => Screen::Home, ZoneKind::Sauna => Screen::Sauna, ZoneKind::Market => Screen::Market, ZoneKind::AutoShop => Screen::Parts, ZoneKind::Inspection => Screen::Inspect };
     dlg.sel = 0; dlg.msg.clear();
     missions.ensure_board();
     let _ = &mut needs;
@@ -106,6 +108,7 @@ pub fn input(
     mut toasts: ResMut<Toasts>,
     mut save: MessageWriter<crate::save::SaveRequest>,
     mut sfx: MessageWriter<crate::audio::Sfx>,
+    mut inspect: MessageWriter<crate::story::RunInspection>,
     mut commands: Commands,
     targets: Query<Entity, With<MissionTarget>>,
     brief: Query<Entity, With<Briefcase>>,
@@ -148,6 +151,7 @@ pub fn input(
         Act::BuyFuel => { if buy(15, &mut stats) { inv.fuel_cans += 1; msg = "Bought a fuel can (10 L, use in workshop > Fluids).".into(); } else { msg = "Not enough money.".into(); } }
         Act::BuyBatteries => { if buy(4, &mut stats) { fl.battery = 1.0; msg = "Fresh batteries in the flashlight.".into(); } else { msg = "Not enough money.".into(); } }
         Act::GoParts => {}
+        Act::Inspect => { inspect.write(crate::story::RunInspection); }
         Act::BuyPart(s, t, p) => { if buy(p, &mut stats) { inv.parts.push(StockPart { slot: s, cond: 1.0, tyre: t }); msg = format!("Bought {} - it's in your boxes. Install via the workshop (T).", s.info().name); } else { msg = format!("Need {p} EUR."); } }
     }
     if !msg.is_empty() { dlg.msg = msg; }
@@ -166,6 +170,25 @@ pub fn refresh(
     let view = View { needs: &needs, stats: &stats, inv: &inv, missions: &missions, hour: tod.hour };
     let mut s = format!("{}      EUR {}   hunger {:.0}%  energy {:.0}%  warmth {:.0}%\n\n", title(dlg.screen), stats.money, needs.hunger * 100.0, needs.energy * 100.0, needs.warmth * 100.0);
     for (i, (l, _)) in rows(dlg.screen, &view).iter().enumerate() { s += &format!("{} {}\n", if i == dlg.sel { ">" } else { " " }, l); }
-    s += &format!("\n{}\n\n[Up/Down] choose  [Enter] do it  [Esc] leave", dlg.msg);
+    match dlg.screen {
+        Screen::Intro => s = INTRO.to_string() + "\n\n> Continue",
+        Screen::Ending => s = ENDING.to_string() + "\n\n> Continue (free roam)",
+        Screen::Inspect => { s += &format!("\nThe inspector checks:\n{}\n", crate::story::CHECK_LIST); s += &format!("\n{}\n\n[Enter] do it  [Esc] leave", dlg.msg); }
+        _ => s += &format!("\n{}\n\n[Up/Down] choose  [Enter] do it  [Esc] leave", dlg.msg),
+    }
     t.0 = s;
 }
+
+const INTRO: &str = "NURMIJARVI, FINLAND. DECEMBER.\n\n\
+You were the Agency's best field operative. Then budget cuts, a misplaced briefcase and one\n\
+very awkward Christmas party later, you are unemployed, living in a cabin in the countryside\n\
+with a pile of boxes in the garage: the remains of your old car.\n\n\
+The Agency wants the briefcase back. Their ex-colleagues have started turning up in the woods.\n\
+Kela pays 35 euros every morning. Coffee is 2. The sauna is warm. The roads are not.\n\n\
+Build the car. Pass the katsastus. Drive to Helsinki.\n\n\
+  T  workshop (next to the car)    E  doors / car    F  flashlight    ` console\n\
+  Garage shed is west of the cabin. Engine and gearbox are in the boxes.";
+const ENDING: &str = "The Director falls. The Agency's files burn in the Helsinki snow.\n\n\
+You drive home through the long blue dusk, wipers going, studded tyres crunching on the ice.\n\
+Somewhere in Nurmijarvi a sauna is heating up.\n\n\
+          CAROMINE\n          by Crowelian 2026 + Sonnet\n\nThanks for playing. You can keep roaming, taking gigs and tuning the car.";

@@ -155,6 +155,7 @@ pub fn spawn_village(mut commands: Commands, a: Option<Res<BuildingAssets>>, mut
     h(&mut commands, v.x + 25.0, v.y - 22.0, -std::f32::consts::FRAC_PI_2, 8.0, 5.5, 2.8, Wood, 3, true, false);
     h(&mut commands, v.x - 26.0, v.y + 28.0, std::f32::consts::FRAC_PI_2, 6.0, 5.0, 2.7, Yellow, 2, true, false);
     h(&mut commands, v.x + 18.0, v.y + 42.0, -std::f32::consts::FRAC_PI_2, 9.0, 6.0, 3.0, Brick, 4, true, false); // auto parts shop
+    h(&mut commands, v.x - 24.0, v.y - 42.0, std::f32::consts::FRAC_PI_2, 12.0, 7.0, 3.4, Brick, 3, true, false); // katsastus (inspection station)
 }
 
 /// Windows glow warm at night.

@@ -15,9 +15,11 @@
 
 ## STATE (update me!)
 - Done: P1, P2 (assets), world core, player walk, vehicle sim + windshield (all verified by headless screenshots).
-- Next: T-120 needs+sauna, T-121 money/jobs, T-123 story/intro, T-066 mission/spawn director, lighting/fog/atmosphere T-049..051, T-108 katsastus, T-107 shops, T-088 RoR importer, P9 perf+packaging. Saves: console save/load [slot]; menu: Esc pause.
+- Next: chase cam (C) + exterior view, crash body deformation, enemy spawn director for open world, perf pass (instancing), release builds/packaging (T-160..162), localization, mailbox, RoR importer (T-088), SSAO/colour grading, aurora/lighting tuning on real GPU.
 - CONSOLE: press backtick or F1 in game (pauses). `help` lists commands; cheats iddqd idkfa idclip dnstuff; also god/fly/give/spawn/tp/time/snow/car bring. Add new dev commands in src/console.rs exec_cmds + HELP text. Dev env: CAROMINE_CMDS="a;b" CAROMINE_CONSOLE_OPEN=1.
 - BUILD/REPAIR: src/build/{mod,sim,workshop}.rs. T near the car opens workshop (Tab pages). Start state = shell + boxes. Console: `build all|shell`, `parts`, `repair`, `fault <name>`. Dev: CAROMINE_RAW=1 CAROMINE_DRIVE=0,0 CAROMINE_IGNITE=60,100 CAROMINE_CMDS=... prints TOAST lines to log = scripted fault tests.
+- STORY: src/story.rs. Console: `story inspected` (skip to endgame), `tp 0 3400` (HQ), `gig`, `need`, `build all`. Dev: CAROMINE_AUTOSTART skips intro (set CAROMINE_INTRO=1 to see it), CAROMINE_DIALOG=home|phone|sauna|market|parts|inspect.
+- LIFE: src/life/{mod,needs,dialog,missions}.rs. Doors are interact zones (life::zones()). Add a shop/NPC = add a ZoneKind + dialog Screen.
 - Run game: `cargo run --release` (use `--release`; debug build is slow). Controls: WASD, Shift run, Ctrl crouch, Space jump, E enter/exit car, I ignition, W/S gas/brake-reverse, A/D steer, Space handbrake, L lights, V wipers.
 - Headless screenshot (needs `apt-get install mesa-vulkan-drivers xvfb libxkbcommon-x11-0`):
   `CAROMINE_AUTOSTART=1 CAROMINE_SHOT=/tmp/s.png CAROMINE_SHOT_FRAMES=150 CAROMINE_HOUR=11 CAROMINE_POS=55,28,135,-8 xvfb-run -a -s "-screen 0 1280x720x24" env WGPU_BACKEND=vulkan ./target/debug/caromine`

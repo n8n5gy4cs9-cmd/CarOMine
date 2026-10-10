@@ -147,10 +147,11 @@ struct Res0<'w> {
     save_req: MessageWriter<'w, crate::save::SaveRequest>,
     pending: ResMut<'w, crate::save::PendingLoad>,
     inv: ResMut<'w, crate::build::Inventory>,
+    story: ResMut<'w, crate::story::Story>,
 }
 
 const HELP: &str = "commands: help clear pos | tp <x z|cabin|village|garage|lake|shop> | time <hour> | timespeed <x> | snow <0..1> | ws <0..1> windshield snow
- gig [n|tp|done|abandon] need food|energy|warm <0..1> | save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
+ story inspected|hq | gig [n|tp|done|abandon] need food|energy|warm <0..1> | save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
  build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
 
 fn exec_cmds(
@@ -167,7 +168,7 @@ fn exec_cmds(
     mut cam: Query<&mut Projection, With<PlayerCamera>>,
     mut exit: MessageWriter<AppExit>,
 ) {
-    let Res0 { mut cheats, mut stats, mut lo, mut tod, mut weather, mut settings, mut ws, mut flash, mut missions, mut needs, mut save_req, mut pending, mut inv } = r;
+    let Res0 { mut cheats, mut stats, mut lo, mut tod, mut weather, mut settings, mut ws, mut flash, mut missions, mut needs, mut save_req, mut pending, mut inv, mut story } = r;
     for ConsoleLine(line) in lines.read() {
         let w: Vec<&str> = line.split_whitespace().collect();
         let a = |i: usize| w.get(i).copied().unwrap_or("");
@@ -195,6 +196,7 @@ fn exec_cmds(
                 }
             }
             "need" | "needs" => { let v = num(2).unwrap_or(1.0).clamp(0.0, 1.0); match a(1) { "food" | "hunger" => needs.hunger = v, "energy" => needs.energy = v, "warm" | "warmth" => needs.warmth = v, _ => { out.push(format!("hunger {:.0}% energy {:.0}% warmth {:.0}%   usage: need food|energy|warm <0..1>", needs.hunger * 100.0, needs.energy * 100.0, needs.warmth * 100.0)); } } }
+            "story" => { match a(1) { "inspected" => { story.inspected = true; story.intro_shown = true; out.push("inspection passed (cheat): HQ beacon active".into()); } "hq" => { out.push(format!("HQ at {:.0},{:.0}; use: tp {:.0} {:.0}", crate::world::layout::HQ.x, crate::world::layout::HQ.y, crate::world::layout::HQ.x, crate::world::layout::HQ.y - 120.0)); } "intro" => { story.intro_shown = true; } _ => out.push(format!("story: {:?}   usage: story inspected|hq|intro", *story)) } }
             "heal" => { stats.hp = 100.0; out.push("healed".into()); }
             "armor" => { stats.armor = 100.0; out.push("armor 100".into()); }
             "money" => { stats.money += num(1).unwrap_or(1000.0) as i32; out.push(format!("money {}", stats.money)); }
@@ -241,7 +243,7 @@ fn exec_cmds(
             "car" => match a(1) {
                 "bring" => { if let (Ok((pt, _)), Ok((mut ct, mut c))) = (player.single(), cars.single_mut()) { let p = pt.translation + pt.rotation * Vec3::NEG_Z * 6.0; ct.translation = Vec3::new(p.x, height_at(p.x, p.z), p.z); c.v_long = 0.0; c.v_lat = 0.0; c.yaw_rate = 0.0; out.push("car brought".into()); } }
                 "goto" => { if let (Ok((mut pt, _)), Ok((ct, _))) = (player.single_mut(), cars.single()) { pt.translation = ct.translation + Vec3::new(3.0, 1.0, 0.0); out.push("teleported to car".into()); } }
-                "tyres" | "tires" => { if let Ok((_, mut c)) = cars.single_mut() { c.tyres = match a(2) { "winter" => TyreType::Winter, "studded" => TyreType::Studded, _ => TyreType::Summer }; out.push(format!("tyres: {}", c.tyres.name())); } }
+                "tyres" | "tires" => { if let Ok(mut p) = bparts.single_mut() { p.tyre = match a(2) { "winter" => TyreType::Winter, "studded" => TyreType::Studded, _ => TyreType::Summer }; out.push(format!("tyres: {}", p.tyre.name())); } }
                 "lights" => { if let Ok((_, mut c)) = cars.single_mut() { c.lights = !c.lights; } }
                 "start" => { if let Ok((_, mut c)) = cars.single_mut() { c.running = true; c.fuel = c.fuel.max(5.0); out.push("engine started".into()); } }
                 _ => out.push("usage: car bring|goto|tyres <summer|winter|studded>|lights|start".into()),
@@ -265,7 +267,7 @@ fn exec_cmds(
             "" => {}
             other => out.push(format!("unknown command '{other}' (try 'help')")),
         }
-        for l in out { con.log.push(l); }
+        for l in out { info!("CONSOLE: {l}"); con.log.push(l); }
         while con.log.len() > 200 { con.log.remove(0); }
     }
     let _ = &mut player;

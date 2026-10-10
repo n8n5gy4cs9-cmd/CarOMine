@@ -1,6 +1,6 @@
 # CarOMine - TASKS
 
-> Generated from PRD.json by tools/tasks.py - do not hand-edit. **43/77 done.**
+> Generated from PRD.json by tools/tasks.py - do not hand-edit. **45/78 done.**
 > Legend: `[x]` done, `[~]` in progress, `[ ]` not started.
 
 ## NEXT UP
@@ -119,7 +119,7 @@
 - [ ] **T-087** Car audio: engine pitch by RPM, tires on snow, wipers, crash, radio
 - [ ] **T-088** RoR truck-file (.truck/.car) importer to load RoR cars as placeholder vehicles (parse nodes/beams -> simplified chassis)
 
-## P6 Car building + repair (5/9)
+## P6 Car building + repair (6/9)
 
 - [~] **T-100** Part database (JSON): engine, gearbox, brakes, tires, battery, etc. each swappable, with condition + stats  
   _note: src/build/mod.rs: 18 slots w/ condition, inventory, stock parts. TODO: move data to assets/data/parts.json (data-driven), more parts (exhaust, suspension, steering)_
@@ -137,9 +137,10 @@
   _note: buy winter(180)/studded(260) tyres done. TODO: block heater, chains, lights upgrade, engine tuning_
 - [x] **T-107** Physical shops (K-market, auto parts) with buy UI + mailbox delivery; currently buy anywhere in workshop  
   _note: K-market + Auto parts shop dialogs at village doors (lit lamps mark entrances). Mailbox delivery still TODO_
-- [ ] **T-108** Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions
+- [x] **T-108** Katsastus (inspection) mini-flow: checks brakes, lights, glass, body, emissions  
+  _note: Katsastus station in village: 9-point inspection (brakes, tyres, winter tyres, lights, glass, wipers, body, emissions...), 30 EUR fee, +100 EUR on pass_
 
-## P7 Game loop + life sim (3/8)
+## P7 Game loop + life sim (4/9)
 
 - [x] **T-120** Needs: hunger, thirst/coffee, warmth/cold, sleep, sauna; simple and forgiving  
   _note: life/needs.rs: hunger/energy/warmth, freezing/starving damage, car heater, pass-out, HUD_
@@ -147,12 +148,15 @@
   _note: Kela benefit +35 EUR each 08:00, gigs for money, K-market + auto parts shops, enemy loot_
 - [~] **T-122** Home cabin: bed, sauna, stove (wood), fridge, TV, mailbox, phone  
   _note: life/dialog.rs: cabin door dialog (sleep w/ autosave, fridge, coffee, firewood, phone), sauna (stove w/ logs, bathe). No walkable interiors yet; TV/mailbox TODO_
-- [ ] **T-123** Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)
+- [x] **T-123** Story: premise, intro cutscene, goals (build car -> katsastus -> drive to Helsinki for final mission)  
+  _note: src/story.rs: intro dialog, auto-tracked objectives (build->run->winter tyres->katsastus->Helsinki), HQ compound + boss 'The Director', ending screen, story saved_
 - [x] **T-124** Save/load system (JSON), autosave, multiple slots  
   _note: src/save.rs: JSON saves in ./saves (autosave every 3 min + slot1-3), player/car/parts/inventory/time/weather; console save/load; verified round trip_
-- [ ] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs
+- [~] **T-125** Finnish humour/flavour: NPC dialogue (Finnish+English), radio chatter, easter eggs  
+  _note: flavour text: intro, Kela, katsastus, makkara, sauna. TODO: NPC dialogue, radio chatter, easter eggs, Finnish strings_
 - [ ] **T-126** Localization (EN default, FI)
 - [ ] **T-127** Mailbox: parts ordered by phone arrive next day (MSC Teemo style); TV with Finnish channels; cabin interior (walkable)
+- [ ] **T-128** Boss fight polish: unique boss sprite, phases, minions; second endgame area; New Game+
 
 ## P8 UI + audio integration (4/8)
 
