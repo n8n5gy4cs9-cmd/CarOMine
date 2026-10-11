@@ -4,7 +4,7 @@
 > **Quick replace:** overwrite the file at *Path* (same name, same grid/size/format) **or** edit its `path` in `assets/manifest.json`. No code changes needed.
 > All current assets are **generated placeholders** (CC0) made by `tools/gen_*.py`. Regenerate everything: `sh tools/gen_all.sh`.
 
-## 1. Simple list (142 assets)
+## 1. Simple list (144 assets)
 
 | Use | Name (id) | Path (under `assets/`) | Source |
 |---|---|---|---|
@@ -48,6 +48,7 @@
 | Pickup/inventory icon: item.sparkplug | `item.sparkplug` | `sprites/items/sparkplug.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Pickup/inventory icon: item.tire | `item.tire` | `sprites/items/tire.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Pickup/inventory icon: item.wrench | `item.wrench` | `sprites/items/wrench.png` | generated (tools/gen_world.py, SDF-rendered) |
+| Static billboard: roadpole variant 0 | `roadpole.0` | `sprites/nature/roadpole_0.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Static billboard: rock variant 0 | `rock.0` | `sprites/nature/rock_0.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Static billboard: rock variant 1 | `rock.1` | `sprites/nature/rock_1.png` | generated (tools/gen_world.py, SDF-rendered) |
 | Static billboard: snowdrift variant 0 | `snowdrift.0` | `sprites/nature/snowdrift_0.png` | generated (tools/gen_world.py, SDF-rendered) |
@@ -148,12 +149,13 @@
 | Driving music | `music.drive` | `music/drive.wav` | generated (tools/) |
 | Main menu theme | `music.menu` | `music/menu.wav` | generated (tools/) |
 | Night / quiet exploration ambience | `music.night` | `music/night.wav` | generated (tools/) |
+| Car glass geometry measured from the mesh | `data.car` | `data/car.json` | generated (tools/gen_car.py) |
 | UI text table: English | `data.strings_en` | `data/strings_en.json` | hand-written (tools/strings) |
 | UI text table: Finnish | `data.strings_fi` | `data/strings_fi.json` | hand-written (tools/strings) |
 
 ## 2. Detailed notes
 
-### sprite (81)
+### sprite (82)
 
 **Format:** PNG RGBA, transparent bg, nearest-neighbour friendly. Enemy sheets = grid described in `assets/data/sprites.json` (frame size, cols, rows, anims). Billboards are bottom-anchored. Keep same cell size when replacing, or update sprites.json.
 
@@ -197,6 +199,7 @@
 - `item.sparkplug` - Pickup/inventory icon: item.sparkplug (64x64, 3/4 view). Path `sprites/items/sparkplug.png`. License: CC0.
 - `item.tire` - Pickup/inventory icon: item.tire (64x64, 3/4 view). Path `sprites/items/tire.png`. License: CC0.
 - `item.wrench` - Pickup/inventory icon: item.wrench (64x64, 3/4 view). Path `sprites/items/wrench.png`. License: CC0.
+- `roadpole.0` - Static billboard: roadpole variant 0 (bottom-anchored, snow-covered; world 0.4x2.0 m). Path `sprites/nature/roadpole_0.png`. License: CC0. size=16x80; keep aspect when replacing
 - `rock.0` - Static billboard: rock variant 0 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/rock_0.png`. License: CC0. size=80x56; keep aspect when replacing
 - `rock.1` - Static billboard: rock variant 1 (bottom-anchored, snow-covered; world 1.9x1.3 m). Path `sprites/nature/rock_1.png`. License: CC0. size=80x56; keep aspect when replacing
 - `snowdrift.0` - Static billboard: snowdrift variant 0 (bottom-anchored, snow-covered; world 2.6x0.9 m). Path `sprites/nature/snowdrift_0.png`. License: CC0. size=80x28; keep aspect when replacing
@@ -318,10 +321,11 @@
 - `music.menu` - Main menu theme (melancholic Finnish minor, slow). Path `music/menu.wav`. License: CC0. 54.86s LOOP wav mono 22050Hz
 - `music.night` - Night / quiet exploration ambience. Path `music/night.wav`. License: CC0. 64.00s LOOP wav mono 22050Hz
 
-### data (2)
+### data (3)
 
 **Format:** 
 
+- `data.car` - Car glass geometry measured from the mesh (windshield plane for the 3D snow/wipers) + driver eye position. Path `data/car.json`. License: CC0. replace together with car.body
 - `data.strings_en` - UI text table: English. Path `data/strings_en.json`. License: CC0. key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here
 - `data.strings_fi` - UI text table: Finnish. Path `data/strings_fi.json`. License: CC0. key->string; {n} placeholders. Add a language by adding strings_xx.json + registering here
 

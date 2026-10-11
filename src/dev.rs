@@ -69,7 +69,7 @@ fn dev_car(
     if let Ok(w) = std::env::var("CAROMINE_WIPERS") { car.wipers = w.parse().unwrap_or(0); }
     if let Ok(s) = std::env::var("CAROMINE_WS") { ws.set_all(s.parse().unwrap_or(0.0)); }
     commands.entity(ce).insert(crate::vehicle::Driven);
-    if let Ok(c) = cam.single() { commands.entity(c).insert(ChildOf(ce)).insert(Transform::from_xyz(-0.38, 1.12, -0.15)); }
+    if let Ok(c) = cam.single() { commands.entity(c).insert(ChildOf(ce)).insert(Transform::from_translation(crate::vehicle::windshield::DRIVER_EYE)); }
     for mut v in &mut pv { *v = Visibility::Hidden; }
     if std::env::var("CAROMINE_CHASE").is_ok() { commands.insert_resource(crate::vehicle::ChaseCam(true)); }
     commands.insert_resource(crate::vehicle::physics::DevDrive { throttle: n.first().copied().unwrap_or(0.0), steer: n.get(1).copied().unwrap_or(0.0), handbrake: n.get(2).copied().unwrap_or(0.0) > 0.5 });

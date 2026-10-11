@@ -100,6 +100,19 @@ def grime_colors(kind, verts, nrm):
     if kind == "glass": a = np.clip(0.27 + 0.55 * dirt, 0, 0.92)                                # dirty glass is more opaque
     return np.concatenate([np.clip(col, 0, 1), a[:, None]], 1).astype(np.float32)
 
+WIND = {}
+
+def fit_plane(P, N):
+    """Least-squares plane through glass vertices -> centre, outward normal (up/front), in-plane axes and extents (metres)."""
+    c = P.mean(0); _, _, vt = np.linalg.svd(P - c, full_matrices=False); n = vt[2]
+    if n @ np.array([0.0, 0.8, -0.6]) < 0: n = -n
+    u = np.array([1.0, 0, 0]) - n * n[0]; u /= np.linalg.norm(u); v = np.cross(u, n)          # u = right, v = up the slope
+    pu = (P - c) @ u; pv = (P - c) @ v
+    u0, u1 = np.percentile(pu, [1, 99]); v0, v1 = np.percentile(pv, [1, 99])
+    c2 = c + u * (u0 + u1) / 2 + v * (v0 + v1) / 2
+    return dict(center=[round(float(x), 4) for x in c2], normal=[round(float(x), 4) for x in n], u=[round(float(x), 4) for x in u], v=[round(float(x), 4) for x in v],
+                width=round(float(u1 - u0), 3), height=round(float(v1 - v0), 3))
+
 def make_car(paint=(150, 28, 30)):
     (xs, ys, zs), X, Y, Z = grid(-1.12, 1.12, 0.20, 1.62, -2.5, 2.5, G)
     f = F(X, Y, Z)
@@ -152,6 +165,9 @@ def make_car(paint=(150, 28, 30)):
         r = mesh_from_field(fl, origin, G)
         if r is None: continue
         verts, faces, nrm = r
+        if n == "glass":
+            sel = (verts[:, 2] < -0.7) & (verts[:, 1] > 0.95) & (np.abs(verts[:, 0]) < 0.74) & (nrm[:, 2] < -0.25) & (nrm[:, 1] > 0.3)
+            if sel.sum() > 50: WIND.update(fit_plane(verts[sel], nrm[sel]))
         cen = verts[faces].mean(1)
         plain = n in ("lamp", "tail")                                     # lamps keep their emissive colour (no grime)
         col_main = None if plain else grime_colors(n, verts, nrm)
@@ -214,6 +230,9 @@ def make_steering():
 
 def main():
     car, nf = make_car(); car.write(out("models/car_body.glb")); print("car faces", nf)
+    import json
+    json.dump({"windshield": WIND, "driver_eye": [-0.38, 1.27, 0.0]}, open(out("data/car.json"), "w"), indent=1); print("windshield", WIND)
+    reg("data.car", "data/car.json", "data", "Car glass geometry measured from the mesh (windshield plane for the 3D snow/wipers) + driver eye position", source="generated (tools/gen_car.py)", notes="replace together with car.body")
     reg("car.body", "models/car_body.glb", "model", "Player car body (smooth SDF mesh: paint, glass, trim, chrome, lamps, interior with dashboard/wheel/seats)", source="generated (tools/gen_car.py, marching cubes)", notes="origin mid-wheelbase on ground, -Z forward, wheels separate; replace with any glb (keep driver eye ~(-0.38,1.12,-0.15))")
     w, nf2 = make_wheel(); w.write(out("models/car_wheel.glb")); print("wheel faces", nf2)
     sw, nf3 = make_steering(); sw.write(out("models/car_steering.glb")); print("steering faces", nf3)

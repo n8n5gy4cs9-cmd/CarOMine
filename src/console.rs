@@ -261,7 +261,7 @@ fn exec_cmds(
                     c.fuel = c.spec.fuel_cap; c.oil = 0.0;
                     if a(1) == "start" { c.running = true; c.rpm = c.spec.idle_rpm; }
                 }
-                ws.set_all(0.0); ws.frost = 0.0;
+                ws.set_all(0.0); ws.set_frost(0.0);
                 out.push(format!("car fixed: all parts 100%, coolant/battery/fuel full, faults cleared{}", if a(1) == "start" { ", engine running" } else { " (add 'start' to also start the engine)" }));
             }
             "build" => { if let Ok(mut p) = bparts.single_mut() { match a(1) {

@@ -171,7 +171,7 @@ pub fn enter_exit(
         commands.entity(ce).insert(Driven);
         *pv = Visibility::Hidden;
         // driver seat (LHD): left, slightly forward of centre
-        commands.entity(cam).insert(ChildOf(ce)).insert(Transform::from_xyz(-0.38, 1.12, -0.15));
+        commands.entity(cam).insert(ChildOf(ce)).insert(Transform::from_translation(windshield::DRIVER_EYE));
         p.vel = Vec3::ZERO;
     }
 }
@@ -199,7 +199,7 @@ pub fn driver_look(
         c.translation = orbit * Vec3::new(0.0, 0.0, 7.5) + Vec3::new(0.0, 1.8, 0.0);
         c.rotation = orbit;
     } else {
-        c.translation = Vec3::new(-0.38, 1.12, -0.15);
+        c.translation = windshield::DRIVER_EYE;
         c.rotation = Quat::from_rotation_y(look.0) * Quat::from_rotation_x(look.1);
     }
 }
@@ -209,7 +209,7 @@ impl Plugin for VehiclePlugin {
     fn build(&self, app: &mut App) {
         app.add_message::<Crash>().init_resource::<ChaseCam>()
             .init_resource::<windshield::Windshield>()
-            .add_systems(OnEnter(GameState::Playing), (spawn_start_car, windshield::spawn_overlay, dash::spawn))
+            .add_systems(OnEnter(GameState::Playing), (spawn_start_car, dash::spawn))
             .add_systems(
                 Update,
                 (
@@ -219,9 +219,11 @@ impl Plugin for VehiclePlugin {
                     physics::visuals,
                     driver_look,
                     body_damage,
+                    dash::attach,
                     dash::update,
+                    windshield::attach,
                     windshield::update,
-                    windshield::show,
+                    windshield::blades,
                 )
                     .chain()
                     .run_if(in_state(GameState::Playing)),

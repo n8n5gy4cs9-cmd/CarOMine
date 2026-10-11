@@ -151,6 +151,14 @@
   "license": "CC0",
   "notes": ""
  },
+ "data.car": {
+  "path": "data/car.json",
+  "kind": "data",
+  "use": "Car glass geometry measured from the mesh (windshield plane for the 3D snow/wipers) + driver eye position",
+  "source": "generated (tools/gen_car.py)",
+  "license": "CC0",
+  "notes": "replace together with car.body"
+ },
  "data.strings_en": {
   "path": "data/strings_en.json",
   "kind": "data",
