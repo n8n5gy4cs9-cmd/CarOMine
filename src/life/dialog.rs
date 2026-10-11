@@ -192,3 +192,12 @@ const ENDING: &str = "The Director falls. The Agency's files burn in the Helsink
 You drive home through the long blue dusk, wipers going, studded tyres crunching on the ice.\n\
 Somewhere in Nurmijarvi a sauna is heating up.\n\n\
           CAROMINE\n          by Crowelian 2026 + Sonnet\n\nThanks for playing. You can keep roaming, taking gigs and tuning the car.";
+
+/// Show the dialog panel only in `GameState::Dialog`. Must run in every state: `refresh` only runs while the dialog is open,
+/// so it can never hide the panel again after you press Continue.
+pub fn sync_visibility(state: Res<State<GameState>>, mut root: Query<&mut Visibility, With<DlgRoot>>) {
+    if let Ok(mut v) = root.single_mut() {
+        let want = if *state.get() == GameState::Dialog { Visibility::Inherited } else { Visibility::Hidden };
+        if *v != want { *v = want; }
+    }
+}

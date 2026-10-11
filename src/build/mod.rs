@@ -124,7 +124,7 @@ impl Plugin for BuildPlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<Inventory>().init_resource::<Toasts>().add_message::<Ignition>()
             .add_systems(Startup, workshop::spawn_ui)
-            .add_systems(Update, (sim::tick_toasts, workshop::refresh_toast_ui))
+            .add_systems(Update, (sim::tick_toasts, workshop::refresh_toast_ui, workshop::sync_visibility))
             .add_systems(Update, (sim::sim, sim::on_crash).chain().before(crate::vehicle::physics::drive).run_if(in_state(GameState::Playing)))
             .add_systems(Update, workshop::open_close.run_if(in_state(GameState::Playing).or_else(in_state(GameState::Garage))))
             .add_systems(Update, (workshop::input, workshop::refresh).chain().run_if(in_state(GameState::Garage)));

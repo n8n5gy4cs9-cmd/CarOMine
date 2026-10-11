@@ -229,3 +229,11 @@ WINTER\n\
  Winter 180 EUR, studded 260 EUR: worth every cent.\n\
  Wipers + washer: snow piles on the glass fast when driving.\n\
  Heavy parts (engine, gearbox, radiator, alternator) only at the\n garage shed west of the cabin.\n";
+
+/// Show the workshop panel only in `GameState::Garage`. Runs in every state (see life::dialog::sync_visibility for why).
+pub fn sync_visibility(state: Res<State<GameState>>, mut root: Query<&mut Visibility, With<WsRootUi>>) {
+    if let Ok(mut v) = root.single_mut() {
+        let want = if *state.get() == GameState::Garage { Visibility::Inherited } else { Visibility::Hidden };
+        if *v != want { *v = want; }
+    }
+}

@@ -40,6 +40,7 @@ pub struct LifePlugin;
 impl Plugin for LifePlugin {
     fn build(&self, app: &mut App) {
         app.init_resource::<Nearby>().init_resource::<needs::Needs>().init_resource::<missions::Missions>().init_resource::<dialog::Dialog>()
+            .add_systems(Update, dialog::sync_visibility)
             .add_systems(Startup, (dialog::spawn_ui, needs::spawn_prompt, missions::spawn_hud))
             .add_systems(OnEnter(GameState::Playing), spawn_lamps)
             .add_systems(Update, (needs::tick, needs::kela, find_zone, dialog::open, missions::tick, needs::prompt).chain().run_if(in_state(GameState::Playing)))
