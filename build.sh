@@ -24,7 +24,7 @@ command -v cargo >/dev/null || { echo "cargo not found. Install Rust: https://ru
 # Bevy 0.20 needs a recent compiler
 need=1.97; have=$(rustc --version | awk '{print $2}')
 if [ "$(printf '%s\n%s\n' "$need" "$have" | sort -V | head -1)" != "$need" ]; then
-  echo "rustc $have is too old (need >= $need). Run: rustup update stable"; exit 1
+  echo "rustc $have is too old (need >= $need). rust-toolchain.toml pins 1.99.0 for this project via rustup (your global Rust is not changed); is rustup installed?"; exit 1
 fi
 
 # Assets are generated placeholders; (re)create them if missing or asked to.

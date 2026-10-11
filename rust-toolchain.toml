@@ -1,0 +1,6 @@
+# Project-local toolchain: rustup installs this version only for this directory on first use
+# (Bevy 0.20 needs rustc >= 1.97.1). Your global default toolchain and other projects are not touched.
+[toolchain]
+channel = "1.99.0"
+profile = "minimal"
+components = ["clippy", "rustfmt"]
