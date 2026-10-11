@@ -152,7 +152,7 @@ struct Res0<'w> {
 
 const HELP: &str = "commands: help clear pos | tp <x z|cabin|village|garage|lake|shop> | time <hour> | timespeed <x> | snow <0..1> | ws <0..1> windshield snow
  story inspected|hq | gig [n|tp|done|abandon] need food|energy|warm <0..1> | save/load [slot] | god fly speed <x> flashlight batteries heal armor money <n> | give <pistol|shotgun|smg|rifle|all> | ammo (inf) fuel (inf) | spawn <goon|hunter|neighbour|wolf|moose> [n] killall
- build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff";
+ fixcar [start] | build all|shell parts repair fault <name> | car bring|goto|tyres <summer|winter|studded>|lights|start | fov <deg> sens <x> | quit | cheat codes: iddqd idkfa idclip dnstuff idfixit";
 
 fn exec_cmds(
     mut lines: MessageReader<ConsoleLine>,
@@ -250,6 +250,20 @@ fn exec_cmds(
                 "start" => { if let Ok((_, mut c)) = cars.single_mut() { c.running = true; c.fuel = c.fuel.max(5.0); out.push("engine started".into()); } }
                 _ => out.push("usage: car bring|goto|tyres <summer|winter|studded>|lights|start".into()),
             },
+            "fixcar" | "fix" | "idfixit" => {
+                // one command to get a perfect car for testing: every part installed at 100%, all fluids/fuel full, no faults, clean glass
+                if let Ok(mut p) = bparts.single_mut() {
+                    let tyre = p.tyre;
+                    *p = crate::build::CarParts::fully_built();
+                    p.tyre = tyre; p.temp = 80.0;
+                }
+                if let Ok((_, mut c)) = cars.single_mut() {
+                    c.fuel = c.spec.fuel_cap; c.oil = 0.0;
+                    if a(1) == "start" { c.running = true; c.rpm = c.spec.idle_rpm; }
+                }
+                ws.set_all(0.0); ws.frost = 0.0;
+                out.push(format!("car fixed: all parts 100%, coolant/battery/fuel full, faults cleared{}", if a(1) == "start" { ", engine running" } else { " (add 'start' to also start the engine)" }));
+            }
             "build" => { if let Ok(mut p) = bparts.single_mut() { match a(1) {
                 "all" => { *p = crate::build::CarParts::fully_built(); out.push("car fully built (all parts 100%, coolant+battery full)".into()); }
                 "shell" => { *p = crate::build::CarParts::starter_shell(); *inv = crate::build::Inventory::default(); out.push("car reset to the shell + boxes (new game state)".into()); }
